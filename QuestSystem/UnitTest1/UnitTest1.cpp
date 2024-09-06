@@ -17,7 +17,8 @@ namespace UnitTest1
 		TEST_METHOD(TestMethod2)
 		{
 			QuestSystem qs;
-			qs.Init("hogehoge");
+			bool ret = qs.Init("sample.csv");
+			Assert::AreEqual(ret, true);
 		}
 	};
 }
