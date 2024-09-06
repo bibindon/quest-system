@@ -5,7 +5,7 @@
 
 こんな風に使う。
 
-```
+```cpp
 #pragma comment(lib, "QuestSystem.lib")
 
 #include <iostream>
