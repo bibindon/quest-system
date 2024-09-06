@@ -31,7 +31,8 @@ int main()
     std::cout << finishQuest.at(0) << std::endl; // "Q1"
 
     std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
-    std::cout << finishEvent.at(0) << std::endl; // "<speak><きんにくん>ゾンビを３匹倒してくれ"
+    std::cout << finishEvent.at(0) << std::endl; // "<speak><きんにくん>ありがとうございました"
+    std::cout << finishEvent.at(1) << std::endl; // "<image>kinniku.png"
 
     return 0;
 }
