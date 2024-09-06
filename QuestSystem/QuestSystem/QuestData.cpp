@@ -110,3 +110,13 @@ void QuestData::SetState(const eQuestState state)
     m_eQuestState = state;
 }
 
+std::unordered_map<int, int> QuestData::GetCurrentFinishOpt2()
+{
+    return m_currentFinishOption2;
+}
+
+void QuestData::SetCurrentFinishOpt2(const std::unordered_map<int, int>& currentFinishOption2)
+{
+    m_currentFinishOption2 = currentFinishOption2;
+}
+

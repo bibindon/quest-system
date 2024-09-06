@@ -173,6 +173,12 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                 std::vector<std::string> work = questData.GetFinishOption2();
                 work.push_back(buffComma);
                 questData.SetFinishOption2(work);
+
+                std::unordered_map<int, int> work2 = questData.GetCurrentFinishOpt2();
+                int work3 = 0;
+                std::stringstream(buffComma) >> work3;
+                work2[work.size()-1] = work3;
+                questData.SetCurrentFinishOpt2(work2);
             }
             else if (col == 7)
             {
@@ -332,9 +338,15 @@ void QuestSystem::SetDefeatEnemy(const std::string& enemy)
                 {
                     if (m_vecQuestData.at(i).GetFinishOption1().at(j) == enemy)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        std::unordered_map<int, int> work2 = m_vecQuestData.at(i).GetCurrentFinishOpt2();
+                        work2[j]--;
+                        m_vecQuestData.at(i).SetCurrentFinishOpt2(work2);
+                        if (work2[j] <= 0)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
                     }
                 }
             }

@@ -55,7 +55,6 @@ namespace UnitTest1
             QuestSystem qs;
             bool ret = qs.Init("sample.csv");
             qs.SetTalk("きんにくん");
-            // TODO 3匹倒したら、というところができていない。
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetTalk("きんにくん");

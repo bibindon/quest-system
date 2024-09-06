@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include <unordered_map>
 
 enum class eStartType
 {
@@ -67,6 +68,9 @@ public:
     eQuestState GetState();
     void SetState(const eQuestState state);
 
+    std::unordered_map<int, int> GetCurrentFinishOpt2();
+    void SetCurrentFinishOpt2(const std::unordered_map<int, int>&);
+
 private:
 
     std::string m_id;
@@ -83,6 +87,7 @@ private:
     std::deque<bool> m_vecFinishFlag;
 
     eQuestState m_eQuestState = eQuestState::NOT_START;
+    std::unordered_map<int, int> m_currentFinishOption2;
 
 };
 
