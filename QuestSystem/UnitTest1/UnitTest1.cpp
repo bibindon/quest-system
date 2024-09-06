@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../QuestSystem/QuestSystem.h"
+#include <iostream>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -60,6 +61,21 @@ namespace UnitTest1
             qs.SetTalk("きんにくん");
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)0);
+        }
+        TEST_METHOD(TestMethod7)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetTalk("きんにくん");
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            std::cout << startedQuest.at(0) << std::endl; // "Q1"
+            qs.SetDefeatEnemy("スライム");
+            qs.SetDefeatEnemy("スライム");
+            qs.SetDefeatEnemy("スライム");
+            qs.SetTalk("きんにくん");
+            std::vector<std::string> finishQuest = qs.GetFinishQuest();
+            Assert::AreEqual(finishQuest.size(), (size_t)1);
+            Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
         }
     };
 }
