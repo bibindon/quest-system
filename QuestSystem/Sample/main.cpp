@@ -6,8 +6,8 @@
 
 int main()
 {
-	QuestSystem qs;
-	qs.Init("hogehoge");
-	std::cout << "sample" << std::endl;
-	return 0;
+    QuestSystem qs;
+    qs.Init("hogehoge");
+    std::cout << "sample" << std::endl;
+    return 0;
 }
