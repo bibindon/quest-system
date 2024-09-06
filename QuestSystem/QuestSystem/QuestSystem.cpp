@@ -104,63 +104,81 @@ bool QuestSystem::Init(const std::string& csvFilePath)
             }
             if (col == 0)
             {
-                questData.m_id = buffComma;
+                questData.SetId(buffComma);
             }
             else if (col == 1)
             {
+                std::vector<eStartType> work = questData.GetStartType();
+                std::deque<bool> work2 = questData.GetStartFlag();
                 if (buffComma == "人と話したら")
                 {
-                    questData.m_vecStartType.push_back(eStartType::TALK);
-                    questData.m_vecStartFlag.push_back(false);
+                    work.push_back(eStartType::TALK);
+                    work2.push_back(false);
                 }
                 else if (buffComma == "クエストが完了していたら")
                 {
-                    questData.m_vecStartType.push_back(eStartType::QUEST_FINISHED);
-                    questData.m_vecStartFlag.push_back(false);
+                    work.push_back(eStartType::QUEST_FINISHED);
+                    work2.push_back(false);
                 }
                 else if (buffComma == "クエストが完了していないなら")
                 {
-                    questData.m_vecStartType.push_back(eStartType::QUEST_NOT_FINISHED);
-                    questData.m_vecStartFlag.push_back(true);
+                    work.push_back(eStartType::QUEST_NOT_FINISHED);
+                    work2.push_back(true);
                 }
+                questData.SetStartType(work);
+                questData.SetStartFlag(work2);
             }
             else if (col == 2)
             {
-                questData.m_vecStartOption1.push_back(buffComma);
+                std::vector<std::string> work = questData.GetStartOption1();
+                work.push_back(buffComma);
+                questData.SetStartOption1(work);
             }
             else if (col == 3)
             {
-                questData.m_vecStartEvent.push_back(buffComma);
+                std::vector<std::string> work = questData.GetStartEvent();
+                work.push_back(buffComma);
+                questData.SetStartEvent(work);
             }
             else if (col == 4)
             {
+                std::vector<eFinishType> work = questData.GetFinishType();
+                std::deque<bool> work2 = questData.GetFinishFlag();
                 if (buffComma == "敵を倒したら")
                 {
-                    questData.m_vecFinishType.push_back(eFinishType::DEFEAT_ENEMY);
-                    questData.m_vecFinishFlag.push_back(false);
+                    work.push_back(eFinishType::DEFEAT_ENEMY);
+                    work2.push_back(false);
                 }
                 else if (buffComma == "人と話したら")
                 {
-                    questData.m_vecFinishType.push_back(eFinishType::TALK);
-                    questData.m_vecFinishFlag.push_back(false);
+                    work.push_back(eFinishType::TALK);
+                    work2.push_back(false);
                 }
                 else if (buffComma == "自動完了")
                 {
-                    questData.m_vecFinishType.push_back(eFinishType::AUTO);
-                    questData.m_vecFinishFlag.push_back(true);
+                    work.push_back(eFinishType::AUTO);
+                    work2.push_back(true);
                 }
+                questData.SetFinishType(work);
+                questData.SetFinishFlag(work2);
             }
             else if (col == 5)
             {
-                questData.m_vecFinishOption1.push_back(buffComma);
+                std::vector<std::string> work = questData.GetFinishOption1();
+                work.push_back(buffComma);
+                questData.SetFinishOption1(work);
             }
             else if (col == 6)
             {
-                questData.m_vecFinishOption2.push_back(buffComma);
+                std::vector<std::string> work = questData.GetFinishOption2();
+                work.push_back(buffComma);
+                questData.SetFinishOption2(work);
             }
             else if (col == 7)
             {
-                questData.m_vecFinishEvent.push_back(buffComma);
+                std::vector<std::string> work = questData.GetFinishEvent();
+                work.push_back(buffComma);
+                questData.SetFinishEvent(work);
             }
 
             if (doubleQuoteMode == false)
@@ -190,10 +208,10 @@ std::vector<std::string> QuestSystem::GetStartQuest()
     std::vector<std::string> result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        if (m_vecQuestData.at(i).m_eQuestState == eQuestState::START)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
-            result.push_back(m_vecQuestData.at(i).m_id);
-            m_vecQuestData.at(i).m_eQuestState = eQuestState::STARTED;
+            result.push_back(m_vecQuestData.at(i).GetId());
+            m_vecQuestData.at(i).SetState(eQuestState::STARTED);
         }
     }
     return result;
@@ -204,10 +222,10 @@ std::vector<std::string> QuestSystem::GetFinishQuest()
     std::vector<std::string> result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        if (m_vecQuestData.at(i).m_eQuestState == eQuestState::FINISH)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::FINISH)
         {
-            result.push_back(m_vecQuestData.at(i).m_id);
-            m_vecQuestData.at(i).m_eQuestState = eQuestState::FINISHED;
+            result.push_back(m_vecQuestData.at(i).GetId());
+            m_vecQuestData.at(i).SetState(eQuestState::FINISHED);
         }
     }
     return result;
@@ -217,13 +235,15 @@ void QuestSystem::SetTalk(const std::string& npc)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        for (std::size_t j = 0; j < m_vecQuestData.at(i).m_vecStartType.size(); ++j)
+        for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
         {
-            if (m_vecQuestData.at(i).m_vecStartType.at(j) == eStartType::TALK)
+            if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::TALK)
             {
-                if (m_vecQuestData.at(i).m_vecStartOption1.at(j) == npc)
+                if (m_vecQuestData.at(i).GetStartOption1().at(j) == npc)
                 {
-                    m_vecQuestData.at(i).m_vecStartFlag.at(j) = true;
+                    std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                    work.at(j) = true;
+                    m_vecQuestData.at(i).SetStartFlag(work);
                 }
             }
         }
@@ -233,15 +253,18 @@ void QuestSystem::SetTalk(const std::string& npc)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
-        if (m_vecQuestData.at(i).m_eQuestState == eQuestState::STARTED || m_vecQuestData.at(i).m_eQuestState == eQuestState::START)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
-            for (std::size_t j = 0; j < m_vecQuestData.at(i).m_vecFinishType.size(); ++j)
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
             {
-                if (m_vecQuestData.at(i).m_vecFinishType.at(j) == eFinishType::TALK)
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::TALK)
                 {
-                    if (m_vecQuestData.at(i).m_vecFinishOption1.at(j) == npc)
+                    if (m_vecQuestData.at(i).GetFinishOption1().at(j) == npc)
                     {
-                        m_vecQuestData.at(i).m_vecFinishFlag.at(j) = true;
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
                     }
                 }
             }
@@ -257,16 +280,18 @@ void QuestSystem::UpdateQuestStatus()
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 全部trueならクエスト開始とする
-        for (std::size_t j = 0; j < m_vecQuestData.at(i).m_vecStartType.size(); ++j)
+        bool allTrue = true;
+        for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
         {
-            size_t cnt = std::count(
-                m_vecQuestData.at(i).m_vecStartFlag.begin(),
-                m_vecQuestData.at(i).m_vecStartFlag.end(),
-                false);
-            if (cnt == 0)
+            if (m_vecQuestData.at(i).GetStartFlag().at(j) == false)
             {
-                m_vecQuestData.at(i).m_eQuestState = eQuestState::START;
+                allTrue = false;
+                break;
             }
+        }
+        if (allTrue)
+        {
+            m_vecQuestData.at(i).SetState(eQuestState::START);
         }
     }
 
@@ -274,18 +299,21 @@ void QuestSystem::UpdateQuestStatus()
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
-        if (m_vecQuestData.at(i).m_eQuestState == eQuestState::STARTED || m_vecQuestData.at(i).m_eQuestState == eQuestState::START)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
-            for (std::size_t j = 0; j < m_vecQuestData.at(i).m_vecFinishType.size(); ++j)
+            bool allTrue = true;
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
             {
-                size_t cnt = std::count(
-                    m_vecQuestData.at(i).m_vecFinishFlag.begin(),
-                    m_vecQuestData.at(i).m_vecFinishFlag.end(),
-                    false);
-                if (cnt == 0)
+                if (m_vecQuestData.at(i).GetFinishFlag().at(j) == false)
                 {
-                    m_vecQuestData.at(i).m_eQuestState = eQuestState::FINISH;
+                    allTrue = false;
+                    break;
                 }
+            }
+            if (allTrue)
+            {
+                m_vecQuestData.at(i).SetState(eQuestState::FINISH);
             }
         }
     }
@@ -295,15 +323,18 @@ void QuestSystem::SetDefeatEnemy(const std::string& enemy)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        if (m_vecQuestData.at(i).m_eQuestState == eQuestState::STARTED || m_vecQuestData.at(i).m_eQuestState == eQuestState::START)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
-            for (std::size_t j = 0; j < m_vecQuestData.at(i).m_vecFinishType.size(); ++j)
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
             {
-                if (m_vecQuestData.at(i).m_vecFinishType.at(j) == eFinishType::DEFEAT_ENEMY)
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::DEFEAT_ENEMY)
                 {
-                    if (m_vecQuestData.at(i).m_vecFinishOption1.at(j) == enemy)
+                    if (m_vecQuestData.at(i).GetFinishOption1().at(j) == enemy)
                     {
-                        m_vecQuestData.at(i).m_vecFinishFlag.at(j) = true;
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
                     }
                 }
             }
@@ -316,9 +347,9 @@ std::vector<std::string> QuestSystem::GetQuestStartEvent(const std::string& id)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        if (m_vecQuestData.at(i).m_id == id)
+        if (m_vecQuestData.at(i).GetId() == id)
         {
-            return m_vecQuestData.at(i).m_vecStartEvent;
+            return m_vecQuestData.at(i).GetStartEvent();
         }
     }
     return std::vector<std::string>();
@@ -328,9 +359,9 @@ std::vector<std::string> QuestSystem::GetQuestFinishEvent(const std::string& id)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        if (m_vecQuestData.at(i).m_id == id)
+        if (m_vecQuestData.at(i).GetId() == id)
         {
-            return m_vecQuestData.at(i).m_vecFinishEvent;
+            return m_vecQuestData.at(i).GetFinishEvent();
         }
     }
     return std::vector<std::string>();

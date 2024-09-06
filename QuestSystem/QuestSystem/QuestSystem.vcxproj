@@ -142,6 +142,7 @@
     <ClInclude Include="QuestSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="QuestData.cpp" />
     <ClCompile Include="QuestSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
