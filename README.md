@@ -1,35 +1,41 @@
 # quest-system
 
-## 開始方法
-* 敵を倒したら開始
-* アイテムを取得したら開始
-* 場所に到達したら開始
-* 誰かの話を聞いたら開始
-* クエストxxが完了していたら開始
+こんな感じのCSVファイルを用意して
+![image](https://github.com/user-attachments/assets/5075b5b2-b8f6-4329-a9c8-62291a923746)
 
-## 完了条件
-* 敵を倒したら完了
-* アイテムを取得したら完了
-* 場所に到達したら完了
-* 誰かの話を聞いたら完了
-* クエストxxが完了していたら完了
+こんな風に使う。
 
-## 関数
-* 登録済みクエストを取得
-* 完了済みクエストを取得
-* 進行中クエストを取得
-* 進行状態を取得
+```
+#pragma comment(lib, "QuestSystem.lib")
 
-## メモ
-* 基本的になんでもstd::stringで管理
-* csvファイルでやる
-* コールバック関数なしでやりたい
-* NPCとの会話を即時完了クエストとみなすことでNPCのセリフを設定できる
+#include <iostream>
+#include "QuestSystem.h"
 
-| クエストID | 開始タイプ                                   | 開始タイプオプション | 開始イベント                                    | 完了タイプ                                   | 完了オプション１                 | 完了オプション２ | 完了イベント                                                    |
-| ---------- | -------------------------------------------- | -------------------- | ----------------------------------------------- | -------------------------------------------- | -------------------------------- | ---------------- | --------------------------------------------------------------- |
-| Q1         | 人と話したら                                 | きんにくん           | <speak><きんにくん>ゾンビを３匹倒してくれ       | 敵を倒したら<br>人と話したら                 | スライム<br>きんにくん           | 3                | <speak><きんにくん>ありがとうございました                       |
-| Q2         | 人と話したら                                 | きんにくん           | <speak><きんにくん>ゾンビとスライムを倒してくれ | 敵を倒したら<br>敵を倒したら<br>人と話したら | スライム<br>ゾンビ<br>きんにくん | 3<br>4           | <speak><きんにくん>ありがとうございました<br><image>kinniku.png |
-| Q3         | 人と話したら<br>クエストが完了していないなら | シュワちゃん<br>Q3   | <speak><シュワちゃん>こんにちは                 | 自動完了                                     |                                  |                  |                                                                 |
-| Q4         | 人と話したら<br>クエストが完了していたら     | シュワちゃん<br>Q3   | <speak><シュワちゃん>なんかようですか           | 自動完了                                     |                                  |                  |                                                                 |
-|            |                                              |                      |                                                 |                                              |                                  |                  |                                                                 |
+int main()
+{
+    QuestSystem qs;
+    bool ret = qs.Init("sample.csv");
+    qs.SetTalk("きんにくん");
+    std::vector<std::string> startedQuest = qs.GetStartQuest();
+    std::cout << startedQuest.at(0) << std::endl; // "Q1"
+
+    std::vector<std::string> startEvent = qs.GetQuestStartEvent("Q1");
+    std::cout << startEvent.at(0) << std::endl; // "<speak><きんにくん>ゾンビを３匹倒してくれ"
+
+    qs.SetDefeatEnemy("スライム");
+    qs.SetDefeatEnemy("スライム");
+    qs.SetDefeatEnemy("スライム");
+    qs.SetTalk("きんにくん");
+
+    std::vector<std::string> finishQuest = qs.GetFinishQuest();
+    std::cout << finishQuest.at(0) << std::endl; // "Q1"
+
+    std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
+    std::cout << finishEvent.at(0) << std::endl; // "<speak><きんにくん>ゾンビを３匹倒してくれ"
+
+    return 0;
+}
+
+```
+
+コールバック関数を使わないでやってみる予定。
