@@ -1,7 +1,8 @@
 # quest-system
 
 こんな感じのCSVファイルを用意して
-![image](https://github.com/user-attachments/assets/5075b5b2-b8f6-4329-a9c8-62291a923746)
+![image](https://github.com/user-attachments/assets/1d9f1ca6-4bbf-4a0c-bb3b-191878336963)
+
 
 こんな風に使う。
 
