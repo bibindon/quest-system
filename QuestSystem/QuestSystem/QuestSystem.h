@@ -4,6 +4,8 @@
 #include <deque>
 #include <unordered_map>
 
+namespace NSQuestSystem
+{
 enum class eStartType
 {
     TALK,
@@ -110,4 +112,5 @@ private:
     std::vector<QuestData> m_vecQuestData;
 
 };
+}
 

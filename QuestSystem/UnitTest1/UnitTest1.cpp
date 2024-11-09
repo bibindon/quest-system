@@ -5,6 +5,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using namespace NSQuestSystem;
+
 namespace UnitTest1
 {
     TEST_CLASS(UnitTest1)

@@ -6,6 +6,8 @@
 
 #pragma comment( lib, "Shlwapi.lib" ) 
 
+using namespace NSQuestSystem;
+
 QuestSystem::QuestSystem()
 {
 }

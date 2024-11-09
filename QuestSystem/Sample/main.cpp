@@ -1,7 +1,9 @@
 #pragma comment(lib, "QuestSystem.lib")
 
 #include <iostream>
-#include "QuestSystem.h"
+#include "..\QuestSystem\QuestSystem.h"
+
+using namespace NSQuestSystem;
 
 int main()
 {

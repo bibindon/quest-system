@@ -1,5 +1,7 @@
 #include "QuestSystem.h"
 
+using namespace NSQuestSystem;
+
 std::string QuestData::GetId()
 {
     return m_id;
