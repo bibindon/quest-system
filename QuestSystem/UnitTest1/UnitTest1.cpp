@@ -35,10 +35,11 @@ namespace UnitTest1
             QuestSystem qs;
             bool ret = qs.Init("sample.csv");
             qs.SetTalk("きんにくん");
-            std::vector<std::string> startedQuest = qs.GetStartQuest();
-            Assert::AreEqual(startedQuest.size(), (size_t)2);
-            Assert::AreEqual(startedQuest.at(0).c_str(), "Q1");
-            Assert::AreEqual(startedQuest.at(1).c_str(), "Q2");
+            std::vector<std::string> vs = qs.GetStartQuest();
+            auto it = std::find(vs.begin(), vs.end(), "Q1");
+            Assert::AreEqual(it != vs.end(), true);
+            auto it2 = std::find(vs.begin(), vs.end(), "Q2");
+            Assert::AreEqual(it2 != vs.end(), true);
         }
         TEST_METHOD(TestMethod5)
         {
@@ -157,6 +158,40 @@ namespace UnitTest1
             qs.SetPos(25.f, 5.f, 0.f);
             startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)0);
+        }
+        TEST_METHOD(TestMethod13)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetTalk("きんにくん");
+            std::vector<std::string> vs = qs.GetStartQuest();
+            qs.SetTalk("シュワちゃん");
+            vs = qs.GetFinishQuest();
+
+            std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q6");
+            Assert::AreEqual(it != vs.end(), true);
+
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)1);
+            Assert::AreEqual(startedQuest.at(0).c_str(), "Q7");
+            qs.SetTalk("太郎");
+            vs= qs.GetFinishQuest();
+            Assert::AreEqual(vs.size(), (size_t)1);
+            Assert::AreEqual(vs.at(0).c_str(), "Q7");
+        }
+        TEST_METHOD(TestMethod14)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetTalk("次郎");
+            std::vector<std::string> vs = qs.GetStartQuest();
+            std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q8");
+            Assert::AreEqual(it != vs.end(), true);
+            qs.SetTalk("きんにくん");
+            qs.SetTalk("シュワちゃん");
+            vs = qs.GetFinishQuest();
+            it = std::find(vs.begin(), vs.end(), "Q8");
+            Assert::AreEqual(it != vs.end(), true);
         }
     };
 }

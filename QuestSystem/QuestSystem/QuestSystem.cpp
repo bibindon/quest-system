@@ -189,6 +189,11 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                     work.push_back(eFinishType::POS);
                     work2.push_back(false);
                 }
+                else if (buffComma == "クエストが完了していたら")
+                {
+                    work.push_back(eFinishType::QUEST_FINISHED);
+                    work2.push_back(false);
+                }
                 questData.SetFinishType(work);
                 questData.SetFinishFlag(work2);
             }
@@ -382,9 +387,113 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
     UpdateQuestStatus();
 }
 
-// TODO この関数を呼ぶたびに結果が変わってしまうのはよくない。
 void QuestSystem::UpdateQuestStatus()
 {
+    // クエスト開始チェック
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 全部trueならクエスト開始とする
+        bool allTrue = true;
+        for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+        {
+            if (m_vecQuestData.at(i).GetStartFlag().at(j) == false)
+            {
+                allTrue = false;
+                break;
+            }
+        }
+        if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            m_vecQuestData.at(i).SetState(eQuestState::START);
+        }
+    }
+
+    // クエスト完了チェック
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            bool allTrue = true;
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishFlag().at(j) == false)
+                {
+                    allTrue = false;
+                    break;
+                }
+            }
+            if (allTrue)
+            {
+                m_vecQuestData.at(i).SetState(eQuestState::FINISH);
+            }
+        }
+    }
+
+    // クエストの開始条件「クエストが完了していたら」の処理
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            std::vector<eStartType> startType = m_vecQuestData.at(i).GetStartType();
+            for (std::size_t j = 0; j < startType.size(); ++j)
+            {
+                if (startType.at(j) == eStartType::QUEST_FINISHED)
+                {
+                    std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
+                    std::string questId = vs.at(j);
+                    for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
+                    {
+                        if (m_vecQuestData.at(k).GetId() == questId)
+                        {
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
+                            {
+                                std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                                work.at(j) = true;
+                                m_vecQuestData.at(i).SetStartFlag(work);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // クエストの完了条件「クエストが完了していたら」の処理
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::START ||
+            m_vecQuestData.at(i).GetState() == eQuestState::STARTED)
+        {
+            std::vector<eFinishType> finishType = m_vecQuestData.at(i).GetFinishType();
+            for (std::size_t j = 0; j < finishType.size(); ++j)
+            {
+                if (finishType.at(j) == eFinishType::QUEST_FINISHED)
+                {
+                    std::vector<std::string> vs = m_vecQuestData.at(i).GetFinishOption1();
+                    std::string questId = vs.at(j);
+                    for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
+                    {
+                        if (m_vecQuestData.at(k).GetId() == questId)
+                        {
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
+                            {
+                                std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                                work.at(j) = true;
+                                m_vecQuestData.at(i).SetFinishFlag(work);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // クエストの開始条件「クエストが完了していたら」、
+    // クエストの完了条件「クエストが完了していたら」のチェックを行ったうえで
+    // 改めて、クエスト開始・完了チェック
+ 
     // クエスト開始チェック
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
