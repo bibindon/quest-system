@@ -8,6 +8,20 @@
 
 using namespace NSQuestSystem;
 
+std::vector<std::string> split(const std::string& s, char delim)
+{
+    std::vector<std::string> result;
+    std::stringstream ss(s);
+    std::string item;
+
+    while (getline(ss, item, delim))
+    {
+        result.push_back(item);
+    }
+
+    return result;
+}
+
 QuestSystem::QuestSystem()
 {
 }
@@ -106,6 +120,10 @@ bool QuestSystem::Init(const std::string& csvFilePath)
             }
             if (col == 0)
             {
+                if (buffComma.empty())
+                {
+                    break;
+                }
                 questData.SetId(buffComma);
             }
             else if (col == 1)
@@ -126,6 +144,11 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                 {
                     work.push_back(eStartType::QUEST_NOT_FINISHED);
                     work2.push_back(true);
+                }
+                else if (buffComma == "位置")
+                {
+                    work.push_back(eStartType::POS);
+                    work2.push_back(false);
                 }
                 questData.SetStartType(work);
                 questData.SetStartFlag(work2);
@@ -160,6 +183,11 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                 {
                     work.push_back(eFinishType::AUTO);
                     work2.push_back(true);
+                }
+                else if (buffComma == "位置")
+                {
+                    work.push_back(eFinishType::POS);
+                    work2.push_back(false);
                 }
                 questData.SetFinishType(work);
                 questData.SetFinishFlag(work2);
@@ -199,7 +227,7 @@ bool QuestSystem::Init(const std::string& csvFilePath)
         // 0,1,2,3,4,5,6,
         // 上記のように最後の列に何もない時がある。
         // このときgetline関数が'6'までしか読めない。
-        if ((col == 7 || col == 8) && (doubleQuoteMode == false))
+        if ((col >= 7) && (doubleQuoteMode == false))
         {
             row++;
             col = 0;
@@ -281,7 +309,77 @@ void QuestSystem::SetTalk(const std::string& npc)
     UpdateQuestStatus();
 }
 
-// TODO この関数を呼ぶたびに結果が分かってしまうのはよくない。
+void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const float z)
+{
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+        {
+            if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
+            {
+                // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
+                std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                std::vector<std::string> vs = split(xyzr, ':');
+                float startX = std::stof(vs.at(0));
+                float startY = std::stof(vs.at(1));
+                float startZ = std::stof(vs.at(2));
+                float startR = std::stof(vs.at(3));
+
+                float dx = startX - x;
+                float dy = startY - y;
+                float dz = startZ - z;
+
+                float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (r <= startR)
+                {
+                    std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                    work.at(j) = true;
+                    m_vecQuestData.at(i).SetStartFlag(work);
+                }
+            }
+        }
+    }
+
+    // 座標に到達したことはクエストの開始条件でもあり、終了条件でもある
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS)
+                {
+                    // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
+                    std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(xyzr, ':');
+                    float startX = std::stof(vs.at(0));
+                    float startY = std::stof(vs.at(1));
+                    float startZ = std::stof(vs.at(2));
+                    float startR = std::stof(vs.at(3));
+
+                    float dx = startX - x;
+                    float dy = startY - y;
+                    float dz = startZ - z;
+
+                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (r <= startR)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
+}
+
+// TODO この関数を呼ぶたびに結果が変わってしまうのはよくない。
 void QuestSystem::UpdateQuestStatus()
 {
     // クエスト開始チェック

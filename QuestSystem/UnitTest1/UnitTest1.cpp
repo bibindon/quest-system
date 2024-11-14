@@ -79,5 +79,65 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
         }
+        TEST_METHOD(TestMethod8)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetPos(0.f, 0.f, 0.f);
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)1);
+            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+            qs.SetPos(30.f, 0.f, 0.f);
+            std::vector<std::string> finishQuest = qs.GetFinishQuest();
+            Assert::AreEqual(finishQuest.size(), (size_t)1);
+            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+        }
+        TEST_METHOD(TestMethod9)
+        {
+            // クエスト開始位置と少しはなれば場所でもクエストが開始するかどうかのテスト
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetPos(5.f, 0.f, 5.f);
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)1);
+            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+            qs.SetPos(25.f, 5.f, 0.f);
+            std::vector<std::string> finishQuest = qs.GetFinishQuest();
+            Assert::AreEqual(finishQuest.size(), (size_t)1);
+            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+        }
+        TEST_METHOD(TestMethod10)
+        {
+            // クエスト開始位置を二度訪れたとき、クエスト開始済みのフラグが解除されないことのテスト
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetPos(5.f, 0.f, 5.f);
+            qs.SetPos(5.f, 0.f, 5.f);
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)1);
+            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+            qs.SetPos(25.f, 5.f, 0.f);
+            qs.SetPos(25.f, 5.f, 0.f);
+            std::vector<std::string> finishQuest = qs.GetFinishQuest();
+            Assert::AreEqual(finishQuest.size(), (size_t)1);
+            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+        }
+        TEST_METHOD(TestMethod11)
+        {
+            // クエスト完了後、再度クエスト開始位置を訪れたときにクエストが開始しないことのテスト
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetPos(5.f, 0.f, 5.f);
+            std::vector<std::string> startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)1);
+            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+            qs.SetPos(25.f, 5.f, 0.f);
+            std::vector<std::string> finishQuest = qs.GetFinishQuest();
+            Assert::AreEqual(finishQuest.size(), (size_t)1);
+            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+            qs.SetPos(5.f, 0.f, 5.f);
+            startedQuest = qs.GetStartQuest();
+            Assert::AreEqual(startedQuest.size(), (size_t)0);
+        }
     };
 }

@@ -9,3 +9,4 @@
 /QuestSystem/UnitTest1/Debug
 *.user
 /QuestSystem/Sample/Debug
+*.csv#

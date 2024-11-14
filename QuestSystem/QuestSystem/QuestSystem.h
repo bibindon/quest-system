@@ -102,6 +102,7 @@ public:
     std::vector<std::string> GetStartQuest();
     std::vector<std::string> GetFinishQuest();
     void SetTalk(const std::string& npc);
+    void SetPos(const float x, const float y, const float z);
     void UpdateQuestStatus();
     void SetDefeatEnemy(const std::string& enemy);
     std::vector<std::string> GetQuestStartEvent(const std::string& id);
