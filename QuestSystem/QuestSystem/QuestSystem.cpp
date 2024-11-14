@@ -398,7 +398,7 @@ void QuestSystem::UpdateQuestStatus()
                 break;
             }
         }
-        if (allTrue)
+        if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
             m_vecQuestData.at(i).SetState(eQuestState::START);
         }
