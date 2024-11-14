@@ -52,6 +52,8 @@ namespace UnitTest1
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
+            std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
+            Assert::AreEqual(finishEvent.at(0).c_str(), "<speak><‚«‚ñ‚É‚­‚ñ>‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½");
         }
         TEST_METHOD(TestMethod6)
         {
