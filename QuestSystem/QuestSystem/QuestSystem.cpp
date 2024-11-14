@@ -313,29 +313,32 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
-            if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
             {
-                // 0.0:1.0:2.0:3.0ÇæÇ¡ÇΩÇÁç¿ïW(0.0, 1.0, 2.0)Ç≈îºåaÇ™3.0ÅAÇÃà”ñ°
-                std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
-                std::vector<std::string> vs = split(xyzr, ':');
-                float startX = std::stof(vs.at(0));
-                float startY = std::stof(vs.at(1));
-                float startZ = std::stof(vs.at(2));
-                float startR = std::stof(vs.at(3));
-
-                float dx = startX - x;
-                float dy = startY - y;
-                float dz = startZ - z;
-
-                float r = std::sqrt(dx * dx + dy * dy + dz * dz);
-
-                if (r <= startR)
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
                 {
-                    std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                    work.at(j) = true;
-                    m_vecQuestData.at(i).SetStartFlag(work);
+                    // 0.0:1.0:2.0:3.0ÇæÇ¡ÇΩÇÁç¿ïW(0.0, 1.0, 2.0)Ç≈îºåaÇ™3.0ÅAÇÃà”ñ°
+                    std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(xyzr, ':');
+                    float startX = std::stof(vs.at(0));
+                    float startY = std::stof(vs.at(1));
+                    float startZ = std::stof(vs.at(2));
+                    float startR = std::stof(vs.at(3));
+
+                    float dx = startX - x;
+                    float dy = startY - y;
+                    float dz = startZ - z;
+
+                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (r <= startR)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
                 }
             }
         }
