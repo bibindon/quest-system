@@ -150,6 +150,11 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                     work.push_back(eStartType::POS);
                     work2.push_back(false);
                 }
+                else if (buffComma == "調べたら")
+                {
+                    work.push_back(eStartType::EXAMINE);
+                    work2.push_back(false);
+                }
                 questData.SetStartType(work);
                 questData.SetStartFlag(work2);
             }
@@ -192,6 +197,11 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                 else if (buffComma == "クエストが完了していたら")
                 {
                     work.push_back(eFinishType::QUEST_FINISHED);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "調べたら")
+                {
+                    work.push_back(eFinishType::EXAMINE);
                     work2.push_back(false);
                 }
                 questData.SetFinishType(work);
@@ -589,5 +599,78 @@ std::vector<std::string> QuestSystem::GetQuestFinishEvent(const std::string& id)
         }
     }
     return std::vector<std::string>();
+}
+
+void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const float z)
+{
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::EXAMINE)
+                {
+                    // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
+                    std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(xyzr, ':');
+                    float startX = std::stof(vs.at(0));
+                    float startY = std::stof(vs.at(1));
+                    float startZ = std::stof(vs.at(2));
+                    float startR = std::stof(vs.at(3));
+
+                    float dx = startX - x;
+                    float dy = startY - y;
+                    float dz = startZ - z;
+
+                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (r <= startR)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    // 座標に到達したことはクエストの開始条件でもあり、終了条件でもある
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::EXAMINE)
+                {
+                    // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
+                    std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(xyzr, ':');
+                    float startX = std::stof(vs.at(0));
+                    float startY = std::stof(vs.at(1));
+                    float startZ = std::stof(vs.at(2));
+                    float startR = std::stof(vs.at(3));
+
+                    float dx = startX - x;
+                    float dy = startY - y;
+                    float dz = startZ - z;
+
+                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (r <= startR)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
 }
 

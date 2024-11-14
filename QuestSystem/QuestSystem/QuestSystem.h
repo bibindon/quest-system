@@ -13,6 +13,7 @@ enum class eStartType
     POS,
     QUEST_FINISHED,
     QUEST_NOT_FINISHED,
+    EXAMINE,
 };
 
 enum class eFinishType
@@ -22,6 +23,7 @@ enum class eFinishType
     POS,
     QUEST_FINISHED,
     AUTO,
+    EXAMINE,
 };
 
 enum class eQuestState
@@ -107,6 +109,7 @@ public:
     void SetDefeatEnemy(const std::string& enemy);
     std::vector<std::string> GetQuestStartEvent(const std::string& id);
     std::vector<std::string> GetQuestFinishEvent(const std::string& id);
+    void SetExamine(const float x, const float y, const float z);
 
 private:
 

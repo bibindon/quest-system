@@ -193,5 +193,31 @@ namespace UnitTest1
             it = std::find(vs.begin(), vs.end(), "Q8");
             Assert::AreEqual(it != vs.end(), true);
         }
+        TEST_METHOD(TestMethod15)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetExamine(0.f, 0.f, 0.f);
+            std::vector<std::string> vs = qs.GetStartQuest();
+            std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q9");
+            Assert::AreEqual(it != vs.end(), true);
+            qs.SetTalk("三郎");
+            vs = qs.GetFinishQuest();
+            it = std::find(vs.begin(), vs.end(), "Q9");
+            Assert::AreEqual(it != vs.end(), true);
+        }
+        TEST_METHOD(TestMethod16)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("sample.csv");
+            qs.SetTalk("四郎");
+            std::vector<std::string> vs = qs.GetStartQuest();
+            std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q10");
+            Assert::AreEqual(it != vs.end(), true);
+            qs.SetExamine(0.f, 0.f, 0.f);
+            vs = qs.GetFinishQuest();
+            it = std::find(vs.begin(), vs.end(), "Q10");
+            Assert::AreEqual(it != vs.end(), true);
+        }
     };
 }
