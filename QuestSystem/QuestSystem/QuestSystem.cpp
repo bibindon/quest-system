@@ -8,7 +8,7 @@
 
 using namespace NSQuestSystem;
 
-std::vector<std::string> split(const std::string& s, char delim)
+static std::vector<std::string> split(const std::string& s, char delim)
 {
     std::vector<std::string> result;
     std::stringstream ss(s);
@@ -26,7 +26,7 @@ QuestSystem::QuestSystem()
 {
 }
 
-void ltrim(std::string& s)
+static void ltrim(std::string& s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
         [](unsigned char ch)
@@ -36,7 +36,7 @@ void ltrim(std::string& s)
     ));
 }
 
-void rtrim(std::string& s)
+static void rtrim(std::string& s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(),
         [](unsigned char ch)
@@ -46,7 +46,7 @@ void rtrim(std::string& s)
     ).base(), s.end());
 }
 
-void trim(std::string& s)
+static void trim(std::string& s)
 {
     rtrim(s);
     ltrim(s);
