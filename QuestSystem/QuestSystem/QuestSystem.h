@@ -111,6 +111,20 @@ public:
     std::vector<std::string> GetQuestFinishEvent(const std::string& id);
     void SetExamine(const float x, const float y, const float z);
 
+    // 開始タイプが「調べたら」であるクエストを取得
+    // 座標を渡して、その座標で開始するクエストを取得
+    // 該当するクエストが複数あっても一つだけ返す
+    // まだ開始していないクエストだけが対象であり、
+    // 開始済みだったり、完了しているクエストは対象とならない。
+    std::string GetQuestIdStartByExamine(const float x, const float y, const float z);
+
+    // 完了タイプが「調べたら」なクエストを取得
+    // 座標を渡して、その座標で完了するクエストを取得
+    // 該当するクエストが複数あっても一つだけ返す
+    // 進行中で、まだ完了していないクエストだけが対象であり、
+    // 開始していなかったり、完了しているクエストは対象とならない。
+    std::string GetQuestIdFinishByExamine(const float x, const float y, const float z);
+
 private:
 
     std::vector<QuestData> m_vecQuestData;

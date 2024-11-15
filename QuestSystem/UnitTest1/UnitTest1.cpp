@@ -219,5 +219,43 @@ namespace UnitTest1
             it = std::find(vs.begin(), vs.end(), "Q10");
             Assert::AreEqual(it != vs.end(), true);
         }
+        TEST_METHOD(TestMethod17)
+        {
+            // 通常ケース
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("sample.csv");
+                std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual(result.c_str(), "Q9");
+            }
+            // 取得できるのはまだ開始していないクエストだけ。
+            // 開始済みだったり、完了済みのクエストは取得できない。
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("sample.csv");
+                qs.SetExamine(0.f, 0.f, 0.f);
+                std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual((int)result.size(), 0);
+            }
+        }
+        TEST_METHOD(TestMethod18)
+        {
+            // 通常ケース
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("sample.csv");
+                qs.SetTalk("四郎");
+                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual(result.c_str(), "Q10");
+            }
+            // 取得できるのは開始済みで完了していないクエストだけ。
+            // 開始していなかったり、完了済みのクエストは取得できない。
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("sample.csv");
+                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual((int)result.size(), 0);
+            }
+        }
     };
 }
