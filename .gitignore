@@ -4,9 +4,23 @@
 
 /.vs
 /QuestSystem/.vs/QuestSystem/v16
-/QuestSystem/Debug
 /QuestSystem/QuestSystem/Debug
 /QuestSystem/UnitTest1/Debug
 *.user
 /QuestSystem/Sample/Debug
 *.csv#
+/QuestSystem/QuestSystem/Release
+/QuestSystem/Release/UnitTest1.pdb
+/QuestSystem/Release/UnitTest1.lib
+/QuestSystem/Release/UnitTest1.exp
+/QuestSystem/Release/UnitTest1.dll
+/QuestSystem/Release/Sample.pdb
+/QuestSystem/Release/Sample.exe
+/QuestSystem/Sample/Release
+/QuestSystem/UnitTest1/Release
+/QuestSystem/Debug/UnitTest1.pdb
+/QuestSystem/Debug/UnitTest1.lib
+/QuestSystem/Debug/UnitTest1.exp
+/QuestSystem/Debug/UnitTest1.dll
+/QuestSystem/Debug/Sample.pdb
+/QuestSystem/Debug/Sample.exe
