@@ -345,27 +345,5 @@ namespace UnitTest1
                 Assert::AreEqual((int)result.size(), 0);
             }
         }
-
-        // テストしたいこと
-        // クエストの開始条件が「他のクエストの完了」、であり
-        TEST_METHOD(TestMethod18)
-        {
-            // 通常ケース
-            {
-                QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
-                qs.SetTalk("四郎");
-                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
-                Assert::AreEqual(result.c_str(), "Q10");
-            }
-            // 取得できるのは開始済みで完了していないクエストだけ。
-            // 開始していなかったり、完了済みのクエストは取得できない。
-            {
-                QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
-                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
-                Assert::AreEqual((int)result.size(), 0);
-            }
-        }
     };
 }

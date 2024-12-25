@@ -451,39 +451,19 @@ void QuestSystem::UpdateQuestStatus()
             {
                 if (startType.at(j) == eStartType::QUEST_FINISHED)
                 {
-                    // クエストが完了しているか？については複数指定可能
-                    // 「Q3:Q4:Q5」だったらQ3とQ4とQ5が完了していたら、という意味
                     std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
-                    std::string questIds = vs.at(j);
-                    std::vector<std::string> questIdList = split(questIds, ':');
-
-                    bool existNotFinish = false;
-                    for (int l = 0; l < (int)questIdList.size(); ++l)
+                    std::string questId = vs.at(j);
+                    for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
-                        // 目的のクエストを探す
-                        for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
+                        if (m_vecQuestData.at(k).GetId() == questId)
                         {
-                            if (m_vecQuestData.at(k).GetId() == questIdList.at(l))
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
                             {
-                                if (m_vecQuestData.at(k).GetState() != eQuestState::FINISH)
-                                {
-                                    existNotFinish = true;
-                                    break;
-                                }
+                                std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                                work.at(j) = true;
+                                m_vecQuestData.at(i).SetStartFlag(work);
                             }
                         }
-
-                        if (existNotFinish)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (existNotFinish == false)
-                    {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
                     }
                 }
             }
@@ -502,35 +482,18 @@ void QuestSystem::UpdateQuestStatus()
                 if (finishType.at(j) == eFinishType::QUEST_FINISHED)
                 {
                     std::vector<std::string> vs = m_vecQuestData.at(i).GetFinishOption1();
-                    std::string questIds = vs.at(j);
-                    std::vector<std::string> questIdList = split(questIds, ':');
-
-                    bool existNotFinish = false;
-                    for (int l = 0; l < (int)questIdList.size(); ++l)
+                    std::string questId = vs.at(j);
+                    for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
-                        for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
+                        if (m_vecQuestData.at(k).GetId() == questId)
                         {
-                            if (m_vecQuestData.at(k).GetId() == questIdList.at(l))
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
                             {
-                                if (m_vecQuestData.at(k).GetState() != eQuestState::FINISH)
-                                {
-                                    existNotFinish = true;
-                                    break;
-                                }
+                                std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                                work.at(j) = true;
+                                m_vecQuestData.at(i).SetFinishFlag(work);
                             }
                         }
-
-                        if (existNotFinish)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (existNotFinish == false)
-                    {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
                     }
                 }
             }
