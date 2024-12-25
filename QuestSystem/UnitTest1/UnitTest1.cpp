@@ -345,5 +345,55 @@ namespace UnitTest1
                 Assert::AreEqual((int)result.size(), 0);
             }
         }
+
+        // テストしたいこと
+        // 「クエストが完了していたら」が複数指定されていた時にクエストが開始できるか
+        TEST_METHOD(TestMethod19)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample19.csv");
+
+            qs.SetTalk("きんにくん");
+            qs.SetTalk("A");
+            qs.SetTalk("B");
+            qs.SetTalk("C");
+            qs.SetTalk("D");
+            qs.SetTalk("E");
+
+            std::vector<std::string> vs;
+
+            vs = qs.GetStartQuest();
+            Assert::AreEqual((size_t)1, vs.size());
+            Assert::AreEqual(std::string("Q7"), vs.at(0));
+        }
+
+        // テストしたいこと
+        // 「クエストが完了していたら」が複数指定されていた時にクエストが完了できるか
+        TEST_METHOD(TestMethod20)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample20.csv");
+
+            qs.SetTalk("きんにくん");
+            qs.SetTalk("A");
+            qs.SetTalk("B");
+            qs.SetTalk("C");
+            qs.SetTalk("D");
+            qs.SetTalk("E");
+            qs.SetTalk("F");
+            qs.SetTalk("G");
+            qs.SetTalk("H");
+            qs.SetTalk("I");
+            qs.SetTalk("J");
+            qs.SetTalk("K");
+
+            std::vector<std::string> vs;
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual((size_t)7, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q7");
+
+            Assert::AreEqual(true, it != vs.end());
+        }
     };
 }
