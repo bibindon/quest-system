@@ -452,17 +452,27 @@ void QuestSystem::UpdateQuestStatus()
                 if (startType.at(j) == eStartType::QUEST_FINISHED)
                 {
                     std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
-                    std::string questId = vs.at(j);
+                    std::string questIds = vs.at(j);
+                    std::vector<std::string> questIdList = split(questIds, ':');
                     for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
-                        if (m_vecQuestData.at(k).GetId() == questId)
+                        bool existNotFinish = false;
+                        for (int l = 0; l < (int)questIdList.size(); ++l)
                         {
-                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
+                            if (m_vecQuestData.at(k).GetId() == questIdList.at(l))
                             {
-                                std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                                work.at(j) = true;
-                                m_vecQuestData.at(i).SetStartFlag(work);
+                                if (m_vecQuestData.at(k).GetState() != eQuestState::FINISH)
+                                {
+                                    existNotFinish = true;
+                                }
                             }
+                        }
+                        
+                        if (existNotFinish == false)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetStartFlag(work);
                         }
                     }
                 }
@@ -482,17 +492,27 @@ void QuestSystem::UpdateQuestStatus()
                 if (finishType.at(j) == eFinishType::QUEST_FINISHED)
                 {
                     std::vector<std::string> vs = m_vecQuestData.at(i).GetFinishOption1();
-                    std::string questId = vs.at(j);
+                    std::string questIds = vs.at(j);
+                    std::vector<std::string> questIdList = split(questIds, ':');
                     for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
-                        if (m_vecQuestData.at(k).GetId() == questId)
+                        bool existNotFinish = false;
+                        for (int l = 0; l < (int)questIdList.size(); ++l)
                         {
-                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
+                            if (m_vecQuestData.at(k).GetId() == questIdList.at(l))
                             {
-                                std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                                work.at(j) = true;
-                                m_vecQuestData.at(i).SetFinishFlag(work);
+                                if (m_vecQuestData.at(k).GetState() != eQuestState::FINISH)
+                                {
+                                    existNotFinish = true;
+                                }
                             }
+                        }
+                        
+                        if (existNotFinish == false)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
                         }
                     }
                 }

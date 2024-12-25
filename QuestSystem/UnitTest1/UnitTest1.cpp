@@ -13,53 +13,73 @@ namespace UnitTest1
     {
     public:
         
-        TEST_METHOD(TestMethod1)
+        // テストしたいこと
+        // コンストラクタで落ちないこと
+        TEST_METHOD(TestMethod01)
         {
             QuestSystem qs;
         }
-        TEST_METHOD(TestMethod2)
+
+        // テストしたいこと
+        // Init関数で落ちないこと
+        TEST_METHOD(TestMethod02)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
-            Assert::AreEqual(ret, true);
+            bool ret = qs.Init("..\\UnitTest1\\sample02.csv");
+            Assert::AreEqual(true, ret);
         }
-        TEST_METHOD(TestMethod3)
+
+        // テストしたいこと
+        // SetTalk関数で落ちないこと
+        TEST_METHOD(TestMethod03)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample03.csv");
             qs.SetTalk("きんにくん");
-            Assert::AreEqual(ret, true);
+            Assert::AreEqual(true, ret);
         }
-        TEST_METHOD(TestMethod4)
+        
+        // テストしたいこと
+        // きんにくんに話しかけたらクエストQ1が開始し、Q2は開始しないこと
+        TEST_METHOD(TestMethod04)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample04.csv");
             qs.SetTalk("きんにくん");
+
             std::vector<std::string> vs = qs.GetStartQuest();
             auto it = std::find(vs.begin(), vs.end(), "Q1");
-            Assert::AreEqual(it != vs.end(), true);
+            Assert::AreEqual(true, it != vs.end());
+
             auto it2 = std::find(vs.begin(), vs.end(), "Q2");
-            Assert::AreEqual(it2 != vs.end(), true);
+            Assert::AreEqual(true, it2 != vs.end());
         }
-        TEST_METHOD(TestMethod5)
+
+        // テストしたいこと
+        TEST_METHOD(TestMethod05)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample05.csv");
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetTalk("きんにくん");
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
-            Assert::AreEqual(finishQuest.size(), (size_t)1);
-            Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
+
+            Assert::AreEqual((size_t)1, finishQuest.size());
+            Assert::AreEqual("Q1", finishQuest.at(0).c_str());
+
             std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
+
             Assert::AreEqual(finishEvent.at(0).c_str(), "<speak><きんにくん>ありがとうございました");
         }
-        TEST_METHOD(TestMethod6)
+
+        // テストしたいこと
+        TEST_METHOD(TestMethod06)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample06.csv");
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
@@ -67,10 +87,12 @@ namespace UnitTest1
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)0);
         }
-        TEST_METHOD(TestMethod7)
+
+        // テストしたいこと
+        TEST_METHOD(TestMethod07)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample07.csv");
             qs.SetTalk("きんにくん");
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             std::cout << startedQuest.at(0) << std::endl; // "Q1"
@@ -82,10 +104,12 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
         }
-        TEST_METHOD(TestMethod8)
+
+        // テストしたいこと
+        TEST_METHOD(TestMethod08)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample08.csv");
             qs.SetPos(0.f, 0.f, 0.f);
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
@@ -95,11 +119,13 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
         }
-        TEST_METHOD(TestMethod9)
+
+        // テストしたいこと
+        TEST_METHOD(TestMethod09)
         {
             // クエスト開始位置と少しはなれば場所でもクエストが開始するかどうかのテスト
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample09.csv");
             qs.SetPos(5.f, 0.f, 5.f);
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
@@ -109,11 +135,13 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod10)
         {
             // クエスト開始位置を二度訪れたとき、クエスト開始済みのフラグが解除されないことのテスト
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample10.csv");
             qs.SetPos(5.f, 0.f, 5.f);
             qs.SetPos(5.f, 0.f, 5.f);
             std::vector<std::string> startedQuest = qs.GetStartQuest();
@@ -125,11 +153,13 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod11)
         {
             // クエスト完了後、再度クエスト開始位置を訪れたときにクエストが開始しないことのテスト
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample11.csv");
             qs.SetPos(5.f, 0.f, 5.f);
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
@@ -142,11 +172,13 @@ namespace UnitTest1
             startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod12)
         {
             // クエスト完了後、再度クエスト完了位置を訪れたときにクエストが完了しないことのテスト
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample12.csv");
             qs.SetPos(5.f, 0.f, 5.f);
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
@@ -159,10 +191,12 @@ namespace UnitTest1
             startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod13)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample13.csv");
             qs.SetTalk("きんにくん");
             std::vector<std::string> vs = qs.GetStartQuest();
             qs.SetTalk("シュワちゃん");
@@ -179,10 +213,12 @@ namespace UnitTest1
             Assert::AreEqual(vs.size(), (size_t)1);
             Assert::AreEqual(vs.at(0).c_str(), "Q7");
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod14)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample14.csv");
             qs.SetTalk("次郎");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q8");
@@ -193,10 +229,12 @@ namespace UnitTest1
             it = std::find(vs.begin(), vs.end(), "Q8");
             Assert::AreEqual(it != vs.end(), true);
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod15)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample15.csv");
             qs.SetExamine(0.f, 0.f, 0.f);
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q9");
@@ -206,10 +244,12 @@ namespace UnitTest1
             it = std::find(vs.begin(), vs.end(), "Q9");
             Assert::AreEqual(it != vs.end(), true);
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod16)
         {
             QuestSystem qs;
-            bool ret = qs.Init("sample.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample16.csv");
             qs.SetTalk("四郎");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q10");
@@ -219,12 +259,14 @@ namespace UnitTest1
             it = std::find(vs.begin(), vs.end(), "Q10");
             Assert::AreEqual(it != vs.end(), true);
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod17)
         {
             // 通常ケース
             {
                 QuestSystem qs;
-                bool ret = qs.Init("sample.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample17.csv");
                 std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q9");
             }
@@ -232,18 +274,20 @@ namespace UnitTest1
             // 開始済みだったり、完了済みのクエストは取得できない。
             {
                 QuestSystem qs;
-                bool ret = qs.Init("sample.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample17.csv");
                 qs.SetExamine(0.f, 0.f, 0.f);
                 std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual((int)result.size(), 0);
             }
         }
+
+        // テストしたいこと
         TEST_METHOD(TestMethod18)
         {
             // 通常ケース
             {
                 QuestSystem qs;
-                bool ret = qs.Init("sample.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
                 qs.SetTalk("四郎");
                 std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q10");
@@ -252,7 +296,7 @@ namespace UnitTest1
             // 開始していなかったり、完了済みのクエストは取得できない。
             {
                 QuestSystem qs;
-                bool ret = qs.Init("sample.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
                 std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual((int)result.size(), 0);
             }
