@@ -134,85 +134,104 @@ namespace UnitTest1
 
             std::vector<std::string> startedQuest = qs.GetStartQuest();
 
-            Assert::AreEqual((size_t)1, startedQuest.size());
+            Assert::AreEqual(1, (int)startedQuest.size());
             Assert::AreEqual("Q5", startedQuest.at(0).c_str());
 
             qs.SetPos(30.f, 0.f, 0.f);
 
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
 
-            Assert::AreEqual((size_t)1, finishQuest.size());
+            Assert::AreEqual(1, (int)finishQuest.size());
             Assert::AreEqual("Q5", finishQuest.at(0).c_str());
         }
 
         // テストしたいこと
+        // クエスト開始位置と少し離れていても3メートル以内だったらクエストが開始するか
         TEST_METHOD(TestMethod09)
         {
-            // クエスト開始位置と少しはなれば場所でもクエストが開始するかどうかのテスト
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample09.csv");
+
             qs.SetPos(5.f, 0.f, 5.f);
+
             std::vector<std::string> startedQuest = qs.GetStartQuest();
-            Assert::AreEqual(startedQuest.size(), (size_t)1);
-            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+            Assert::AreEqual(std::size_t(1), startedQuest.size());
+            Assert::AreEqual(std::string("Q5"), startedQuest.at(0));
+
             qs.SetPos(25.f, 5.f, 0.f);
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
-            Assert::AreEqual(finishQuest.size(), (size_t)1);
-            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+            Assert::AreEqual(std::size_t(1), finishQuest.size());
+            Assert::AreEqual(std::string("Q5"), finishQuest.at(0));
         }
 
         // テストしたいこと
+        // クエスト開始位置を二度訪れたとき、クエスト開始済みのフラグが解除されないことのテスト
         TEST_METHOD(TestMethod10)
         {
-            // クエスト開始位置を二度訪れたとき、クエスト開始済みのフラグが解除されないことのテスト
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample10.csv");
+
             qs.SetPos(5.f, 0.f, 5.f);
             qs.SetPos(5.f, 0.f, 5.f);
+
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
             Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+
             qs.SetPos(25.f, 5.f, 0.f);
             qs.SetPos(25.f, 5.f, 0.f);
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
         }
 
         // テストしたいこと
+        // クエスト完了後、再度クエスト開始位置を訪れたときにクエストが開始しないこと
         TEST_METHOD(TestMethod11)
         {
-            // クエスト完了後、再度クエスト開始位置を訪れたときにクエストが開始しないことのテスト
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample11.csv");
             qs.SetPos(5.f, 0.f, 5.f);
+
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
             Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+
             qs.SetPos(25.f, 5.f, 0.f);
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+
             qs.SetPos(5.f, 0.f, 5.f);
+
             startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
 
         // テストしたいこと
+        // クエスト完了後、再度クエスト完了位置を訪れたときにクエストが完了しないこと
         TEST_METHOD(TestMethod12)
         {
-            // クエスト完了後、再度クエスト完了位置を訪れたときにクエストが完了しないことのテスト
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample12.csv");
+
             qs.SetPos(5.f, 0.f, 5.f);
+
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
             Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+
             qs.SetPos(25.f, 5.f, 0.f);
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
             Assert::AreEqual(finishQuest.size(), (size_t)1);
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+
             qs.SetPos(25.f, 5.f, 0.f);
+
             startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
@@ -307,6 +326,28 @@ namespace UnitTest1
         }
 
         // テストしたいこと
+        TEST_METHOD(TestMethod18)
+        {
+            // 通常ケース
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
+                qs.SetTalk("四郎");
+                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual(result.c_str(), "Q10");
+            }
+            // 取得できるのは開始済みで完了していないクエストだけ。
+            // 開始していなかったり、完了済みのクエストは取得できない。
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
+                std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
+                Assert::AreEqual((int)result.size(), 0);
+            }
+        }
+
+        // テストしたいこと
+        // クエストの開始条件が「他のクエストの完了」、であり
         TEST_METHOD(TestMethod18)
         {
             // 通常ケース
