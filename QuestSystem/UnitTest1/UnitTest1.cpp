@@ -56,68 +56,93 @@ namespace UnitTest1
         }
 
         // テストしたいこと
+        // きんにくんに話しかけ、スライムを３回倒し、再度きんにくんに話しかけたら
+        // クエストQ1が完了すること
         TEST_METHOD(TestMethod05)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample05.csv");
+
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetTalk("きんにくん");
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
 
-            Assert::AreEqual((size_t)1, finishQuest.size());
-            Assert::AreEqual("Q1", finishQuest.at(0).c_str());
+            Assert::AreEqual((size_t)1,
+                             finishQuest.size());
+
+            Assert::AreEqual("Q1",
+                             finishQuest.at(0).c_str());
 
             std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
 
-            Assert::AreEqual(finishEvent.at(0).c_str(), "<speak><きんにくん>ありがとうございました");
+            Assert::AreEqual("<speak><きんにくん>ありがとうございました",
+                             finishEvent.at(0).c_str());
         }
 
         // テストしたいこと
+        // きんにくんに話しかけ、スライムを２回しか倒さず、再度きんにくんに話しかけても
+        // クエストQ1が完了しないこと
         TEST_METHOD(TestMethod06)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample06.csv");
+
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
             qs.SetDefeatEnemy("スライム");
             qs.SetTalk("きんにくん");
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
-            Assert::AreEqual(finishQuest.size(), (size_t)0);
+
+            Assert::AreEqual((size_t)0,
+                             finishQuest.size());
         }
 
         // テストしたいこと
+        // 座標移動により、クエストが開始すること
         TEST_METHOD(TestMethod07)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample07.csv");
-            qs.SetTalk("きんにくん");
-            std::vector<std::string> startedQuest = qs.GetStartQuest();
-            std::cout << startedQuest.at(0) << std::endl; // "Q1"
-            qs.SetDefeatEnemy("スライム");
-            qs.SetDefeatEnemy("スライム");
-            qs.SetDefeatEnemy("スライム");
-            qs.SetTalk("きんにくん");
-            std::vector<std::string> finishQuest = qs.GetFinishQuest();
-            Assert::AreEqual(finishQuest.size(), (size_t)1);
-            Assert::AreEqual(finishQuest.at(0).c_str(), "Q1");
+
+            std::vector<std::string> startedQuest;
+            startedQuest = qs.GetStartQuest();
+
+            Assert::AreEqual(0, (int)startedQuest.size());
+
+            qs.SetPos(0.f, 0.f, 0.f);
+
+            startedQuest = qs.GetStartQuest();
+
+            Assert::AreEqual(1, (int)startedQuest.size());
+            Assert::AreEqual("Q5", startedQuest.at(0).c_str());
         }
 
         // テストしたいこと
+        // 座標移動により、クエストが開始し、
+        // 座標移動により、クエストが完了すること
         TEST_METHOD(TestMethod08)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample08.csv");
+
             qs.SetPos(0.f, 0.f, 0.f);
+
             std::vector<std::string> startedQuest = qs.GetStartQuest();
-            Assert::AreEqual(startedQuest.size(), (size_t)1);
-            Assert::AreEqual(startedQuest.at(0).c_str(), "Q5");
+
+            Assert::AreEqual((size_t)1, startedQuest.size());
+            Assert::AreEqual("Q5", startedQuest.at(0).c_str());
+
             qs.SetPos(30.f, 0.f, 0.f);
+
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
-            Assert::AreEqual(finishQuest.size(), (size_t)1);
-            Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
+
+            Assert::AreEqual((size_t)1, finishQuest.size());
+            Assert::AreEqual("Q5", finishQuest.at(0).c_str());
         }
 
         // テストしたいこと
