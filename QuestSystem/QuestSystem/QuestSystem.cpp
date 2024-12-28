@@ -470,6 +470,35 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
+    // クエストの開始条件「クエストが完了していないなら」の処理
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            std::vector<eStartType> startType = m_vecQuestData.at(i).GetStartType();
+            for (std::size_t j = 0; j < startType.size(); ++j)
+            {
+                if (startType.at(j) == eStartType::QUEST_NOT_FINISHED)
+                {
+                    std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
+                    std::string questId = vs.at(j);
+                    for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
+                    {
+                        if (m_vecQuestData.at(k).GetId() == questId)
+                        {
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::NOT_START)
+                            {
+                                std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                                work.at(j) = true;
+                                m_vecQuestData.at(i).SetStartFlag(work);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // クエストの完了条件「クエストが完了していたら」の処理
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
