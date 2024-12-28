@@ -837,6 +837,6 @@ void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
                                return x.GetId() == id;
                            });
 
-    it->SetState(eQuestState::FINISH);
+    it->SetState(eQuestState::FINISHED);
 }
 
