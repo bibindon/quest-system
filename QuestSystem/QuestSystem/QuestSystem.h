@@ -14,6 +14,7 @@ enum class eStartType
     QUEST_FINISHED,
     QUEST_NOT_FINISHED,
     EXAMINE,
+    QUEST_FINISH_OR, // クエストが一つでも完了していたら
 };
 
 enum class eFinishType

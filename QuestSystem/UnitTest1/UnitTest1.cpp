@@ -395,5 +395,24 @@ namespace UnitTest1
 
             Assert::AreEqual(true, it != vs.end());
         }
+
+        // テストしたいこと
+        // 「一つでもクエストが完了していたら」が動作すること
+        TEST_METHOD(TestMethod21)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample21.csv");
+
+            qs.SetTalk("B");
+            qs.SetTalk("C");
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual((size_t)1, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q7");
+
+            Assert::AreEqual(true, it != vs.end());
+        }
     };
 }
