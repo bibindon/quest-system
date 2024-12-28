@@ -457,7 +457,8 @@ void QuestSystem::UpdateQuestStatus()
                     {
                         if (m_vecQuestData.at(k).GetId() == questId)
                         {
-                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH)
+                            if (m_vecQuestData.at(k).GetState() == eQuestState::FINISH ||
+                                m_vecQuestData.at(k).GetState() == eQuestState::FINISHED)
                             {
                                 std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
                                 work.at(j) = true;
