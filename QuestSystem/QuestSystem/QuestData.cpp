@@ -2,7 +2,7 @@
 
 using namespace NSQuestSystem;
 
-std::string QuestData::GetId()
+std::string QuestData::GetId() const
 {
     return m_id;
 }

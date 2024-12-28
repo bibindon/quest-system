@@ -829,3 +829,14 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
     return result;
 }
 
+void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
+{
+    auto it = std::find_if(m_vecQuestData.begin(), m_vecQuestData.end(),
+                           [&](const QuestData& x)
+                           {
+                               return x.GetId() == id;
+                           });
+
+    it->SetState(eQuestState::FINISH);
+}
+

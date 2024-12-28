@@ -40,7 +40,7 @@ class QuestData
 {
 public:
 
-    std::string GetId();
+    std::string GetId() const;
     void SetId(const std::string& id);
 
     std::vector<eStartType> GetStartType();
@@ -125,6 +125,8 @@ public:
     // 進行中で、まだ完了していないクエストだけが対象であり、
     // 開始していなかったり、完了しているクエストは対象とならない。
     std::string GetQuestIdFinishByExamine(const float x, const float y, const float z);
+
+    void SetQuestFinish(const std::string& id);
 
 private:
 
