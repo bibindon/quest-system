@@ -101,7 +101,7 @@ class QuestSystem
 public:
 
     QuestSystem();
-    bool Init(const std::string& csvFilePath);
+    bool Init(const std::string& csvFilePath, const bool encrypt = false);
     std::vector<std::string> GetStartQuest();
     std::vector<std::string> GetFinishQuest();
     void SetTalk(const std::string& npc);

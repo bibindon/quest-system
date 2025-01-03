@@ -74,15 +74,20 @@ Q4,"人と話したら
 Q3",<speak><シュワちゃん>なんかようですか,自動完了,,,
 
 */
-bool QuestSystem::Init(const std::string& csvFilePath)
+bool QuestSystem::Init(const std::string& csvFilePath, const bool encrypt)
 {
     int result = PathFileExists(csvFilePath.c_str());
     if (result == 0)
     {
-        return false;
+        throw std::exception();
     }
 
     std::ifstream ifs(csvFilePath);
+
+    std::stringstream ss;
+    ss << ifs.rdbuf(); // ファイル内容をstringstreamに読み込む
+    ifs.close(); // ファイルを閉じる
+
     std::string buff;
     std::string buffComma;
     QuestData questData;
@@ -91,7 +96,7 @@ bool QuestSystem::Init(const std::string& csvFilePath)
     bool doubleQuote = false;
     bool doubleQuoteMode = false;
 
-    while (std::getline(ifs, buff))
+    while (std::getline(ss, buff))
     {
         // 先頭行は無視
         if (row == 0)
@@ -227,7 +232,7 @@ bool QuestSystem::Init(const std::string& csvFilePath)
                 std::unordered_map<int, int> work2 = questData.GetCurrentFinishOpt2();
                 int work3 = 0;
                 std::stringstream(buffComma) >> work3;
-                work2[work.size()-1] = work3;
+                work2[(int)work.size()-1] = work3;
                 questData.SetCurrentFinishOpt2(work2);
             }
             else if (col == 7)
@@ -636,9 +641,9 @@ void QuestSystem::SetDefeatEnemy(const std::string& enemy)
                     if (m_vecQuestData.at(i).GetFinishOption1().at(j) == enemy)
                     {
                         std::unordered_map<int, int> work2 = m_vecQuestData.at(i).GetCurrentFinishOpt2();
-                        work2[j]--;
+                        work2[(int)j]--;
                         m_vecQuestData.at(i).SetCurrentFinishOpt2(work2);
-                        if (work2[j] <= 0)
+                        if (work2[(int)j] <= 0)
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                             work.at(j) = true;
