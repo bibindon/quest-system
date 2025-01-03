@@ -414,5 +414,24 @@ namespace UnitTest1
 
             Assert::AreEqual(true, it != vs.end());
         }
+
+        // テストしたいこと
+        // 暗号化されたファイルを開けること
+        TEST_METHOD(TestMethod22)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample22.enc", true);
+
+            qs.SetTalk("B");
+            qs.SetTalk("C");
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual((size_t)1, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q7");
+
+            Assert::AreEqual(true, it != vs.end());
+        }
     };
 }

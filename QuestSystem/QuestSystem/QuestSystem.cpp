@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "Shlwapi.h"
+#include "CaesarCipher.h"
 
 #pragma comment( lib, "Shlwapi.lib" ) 
 
@@ -82,11 +83,19 @@ bool QuestSystem::Init(const std::string& csvFilePath, const bool encrypt)
         throw std::exception();
     }
 
-    std::ifstream ifs(csvFilePath);
-
     std::stringstream ss;
-    ss << ifs.rdbuf(); // ファイル内容をstringstreamに読み込む
-    ifs.close(); // ファイルを閉じる
+
+    if (encrypt == false)
+    {
+        std::ifstream ifs(csvFilePath);
+        ss << ifs.rdbuf();
+        ifs.close();
+    }
+    else
+    {
+        std::string work = CaesarCipher::DecryptFromFile(csvFilePath);
+        ss.str(work);
+    }
 
     std::string buff;
     std::string buffComma;
