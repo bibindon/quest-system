@@ -106,7 +106,7 @@ public:
               const std::string& savefile,
               const bool encrypt);
 
-    bool Save(const std::string& savefile, const bool encrypt);
+    void Save(const std::string& savefile, const bool encrypt);
 
     std::vector<std::string> GetStartQuest();
     std::vector<std::string> GetFinishQuest();

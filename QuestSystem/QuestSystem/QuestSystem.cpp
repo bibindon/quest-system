@@ -330,6 +330,67 @@ bool QuestSystem::Init(const std::string& csvFilePath,
     return true;
 }
 
+void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool encrypt)
+{
+    std::vector<std::vector<std::string>> vvs;
+    std::vector<std::string> vs;
+    vs.push_back("クエストID");
+    vs.push_back("状況");
+    vs.clear();
+
+    for (size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        std::string work;
+        work = m_vecQuestData.at(i).GetId();
+        vs.push_back(work);
+
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            vs.push_back("NOT_START");
+        }
+        else if (m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            vs.push_back("START");
+        }
+        else if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED)
+        {
+            vs.push_back("STARTED");
+        }
+        else if (m_vecQuestData.at(i).GetState() == eQuestState::FINISH)
+        {
+            vs.push_back("FINISH");
+        }
+        else if (m_vecQuestData.at(i).GetState() == eQuestState::FINISHED)
+        {
+            vs.push_back("FINISHED");
+        }
+        vvs.push_back(vs);
+        vs.clear();
+    }
+
+    if (encrypt == false)
+    {
+        csv::Write(filename, vvs);
+    }
+    else
+    {
+        std::stringstream ss;
+        for (std::size_t i = 0; i < vvs.size(); ++i)
+        {
+            for (std::size_t j = 0; j < vvs.at(i).size(); ++j)
+            {
+                ss << vvs.at(i).at(j);
+                if (j != vvs.at(i).size() - 1)
+                {
+                    ss << ",";
+                }
+            }
+            ss << "\n";
+        }
+        CaesarCipher::EncryptToFile(ss.str(), filename);
+    }
+}
+
 std::vector<std::string> QuestSystem::GetStartQuest()
 {
     std::vector<std::string> result;
