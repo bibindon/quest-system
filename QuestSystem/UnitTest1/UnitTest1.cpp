@@ -25,7 +25,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod02)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample02.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample02.csv", "", false);
             Assert::AreEqual(true, ret);
         }
 
@@ -34,7 +34,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod03)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample03.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample03.csv", "", false);
             qs.SetTalk("きんにくん");
             Assert::AreEqual(true, ret);
         }
@@ -44,7 +44,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod04)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample04.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample04.csv", "", false);
             qs.SetTalk("きんにくん");
 
             std::vector<std::string> vs = qs.GetStartQuest();
@@ -61,7 +61,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod05)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample05.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample05.csv", "", false);
 
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
@@ -89,7 +89,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod06)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample06.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample06.csv", "", false);
 
             qs.SetTalk("きんにくん");
             qs.SetDefeatEnemy("スライム");
@@ -107,7 +107,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod07)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample07.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample07.csv", "", false);
 
             std::vector<std::string> startedQuest;
             startedQuest = qs.GetStartQuest();
@@ -128,7 +128,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod08)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample08.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample08.csv", "", false);
 
             qs.SetPos(0.f, 0.f, 0.f);
 
@@ -150,7 +150,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod09)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample09.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample09.csv", "", false);
 
             qs.SetPos(5.f, 0.f, 5.f);
 
@@ -170,7 +170,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod10)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample10.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample10.csv", "", false);
 
             qs.SetPos(5.f, 0.f, 5.f);
             qs.SetPos(5.f, 0.f, 5.f);
@@ -192,7 +192,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod11)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample11.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample11.csv", "", false);
             qs.SetPos(5.f, 0.f, 5.f);
 
             std::vector<std::string> startedQuest = qs.GetStartQuest();
@@ -216,7 +216,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod12)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample12.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample12.csv", "", false);
 
             qs.SetPos(5.f, 0.f, 5.f);
 
@@ -240,7 +240,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod13)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample13.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample13.csv", "", false);
             qs.SetTalk("きんにくん");
             std::vector<std::string> vs = qs.GetStartQuest();
             qs.SetTalk("シュワちゃん");
@@ -262,7 +262,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod14)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample14.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample14.csv", "", false);
             qs.SetTalk("次郎");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q8");
@@ -278,7 +278,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod15)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample15.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample15.csv", "", false);
             qs.SetExamine(0.f, 0.f, 0.f);
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q9");
@@ -293,7 +293,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod16)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample16.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample16.csv", "", false);
             qs.SetTalk("四郎");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q10");
@@ -310,7 +310,7 @@ namespace UnitTest1
             // 通常ケース
             {
                 QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample17.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample17.csv", "", false);
                 std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q9");
             }
@@ -318,7 +318,7 @@ namespace UnitTest1
             // 開始済みだったり、完了済みのクエストは取得できない。
             {
                 QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample17.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample17.csv", "", false);
                 qs.SetExamine(0.f, 0.f, 0.f);
                 std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual((int)result.size(), 0);
@@ -331,7 +331,7 @@ namespace UnitTest1
             // 通常ケース
             {
                 QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv", "", false);
                 qs.SetTalk("四郎");
                 std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q10");
@@ -340,7 +340,7 @@ namespace UnitTest1
             // 開始していなかったり、完了済みのクエストは取得できない。
             {
                 QuestSystem qs;
-                bool ret = qs.Init("..\\UnitTest1\\sample18.csv");
+                bool ret = qs.Init("..\\UnitTest1\\sample18.csv", "", false);
                 std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual((int)result.size(), 0);
             }
@@ -351,7 +351,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod19)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample19.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample19.csv", "", false);
 
             qs.SetTalk("きんにくん");
             qs.SetTalk("A");
@@ -372,7 +372,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod20)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample20.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample20.csv", "", false);
 
             qs.SetTalk("きんにくん");
             qs.SetTalk("A");
@@ -401,7 +401,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod21)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample21.csv");
+            bool ret = qs.Init("..\\UnitTest1\\sample21.csv", "", false);
 
             qs.SetTalk("B");
             qs.SetTalk("C");
@@ -420,10 +420,29 @@ namespace UnitTest1
         TEST_METHOD(TestMethod22)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample22.enc", true);
+            bool ret = qs.Init("..\\UnitTest1\\sample22.enc", "", true);
 
             qs.SetTalk("B");
             qs.SetTalk("C");
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual((size_t)1, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q7");
+
+            Assert::AreEqual(true, it != vs.end());
+        }
+
+        // テストしたいこと
+        // 保存されたクエストデータを読み、途中からスタートできること。
+        TEST_METHOD(TestMethod23)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample23.csv", "..\\UnitTest1\\sampleSave23.csv", false);
+
+            qs.SetTalk("D");
+            qs.SetTalk("E");
 
             std::vector<std::string> vs;
             vs = qs.GetStartQuest();

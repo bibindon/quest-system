@@ -8,7 +8,7 @@ using namespace NSQuestSystem;
 int main()
 {
     QuestSystem qs;
-    bool ret = qs.Init("sample.csv");
+    bool ret = qs.Init("sample.csv", "", false);
     qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
     std::vector<std::string> startedQuest = qs.GetStartQuest();
     std::cout << startedQuest.at(0) << std::endl; // "Q1"

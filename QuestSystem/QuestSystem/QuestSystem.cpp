@@ -4,6 +4,7 @@
 #include <sstream>
 #include "Shlwapi.h"
 #include "CaesarCipher.h"
+#include "HeaderOnlyCsv.hpp"
 
 #pragma comment( lib, "Shlwapi.lib" ) 
 
@@ -75,7 +76,9 @@ Q4,"人と話したら
 Q3",<speak><シュワちゃん>なんかようですか,自動完了,,,
 
 */
-bool QuestSystem::Init(const std::string& csvFilePath, const bool encrypt)
+bool QuestSystem::Init(const std::string& csvFilePath,
+                       const std::string& savefile,
+                       const bool encrypt)
 {
     int result = PathFileExists(csvFilePath.c_str());
     if (result == 0)
@@ -241,7 +244,7 @@ bool QuestSystem::Init(const std::string& csvFilePath, const bool encrypt)
                 std::unordered_map<int, int> work2 = questData.GetCurrentFinishOpt2();
                 int work3 = 0;
                 std::stringstream(buffComma) >> work3;
-                work2[(int)work.size()-1] = work3;
+                work2[(int)work.size() - 1] = work3;
                 questData.SetCurrentFinishOpt2(work2);
             }
             else if (col == 7)
@@ -267,6 +270,60 @@ bool QuestSystem::Init(const std::string& csvFilePath, const bool encrypt)
             col = 0;
             m_vecQuestData.push_back(questData);
             questData = QuestData();
+        }
+    }
+
+    if (savefile.empty())
+    {
+        return true;
+    }
+
+    // セーブデータを読む
+    {
+        std::vector<std::vector<std::string>> vvs;
+        if (encrypt == false)
+        {
+            vvs = csv::Read(savefile);
+        }
+        else
+        {
+            std::string work = CaesarCipher::DecryptFromFile(savefile);
+            csv::ReadFromString(work);
+        }
+
+        for (size_t i = 1; i < vvs.size(); ++i)
+        {
+            auto it = std::find_if(m_vecQuestData.begin(), m_vecQuestData.end(),
+                                   [&](const QuestData& x)
+                                   {
+                                       return x.GetId() == vvs.at(i).at(0);
+                                   });
+
+            if (it == m_vecQuestData.end())
+            {
+                throw std::exception();
+            }
+
+            if (vvs.at(i).at(1) == "NOT_START")
+            {
+                it->SetState(eQuestState::NOT_START);
+            }
+            else if (vvs.at(i).at(1) == "START")
+            {
+                it->SetState(eQuestState::START);
+            }
+            else if (vvs.at(i).at(1) == "STARTED")
+            {
+                it->SetState(eQuestState::STARTED);
+            }
+            else if (vvs.at(i).at(1) == "FINISH")
+            {
+                it->SetState(eQuestState::FINISH);
+            }
+            else if (vvs.at(i).at(1) == "FINISHED")
+            {
+                it->SetState(eQuestState::FINISHED);
+            }
         }
     }
 

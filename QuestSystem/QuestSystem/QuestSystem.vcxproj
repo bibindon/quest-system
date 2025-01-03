@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CaesarCipher.h" />
+    <ClInclude Include="HeaderOnlyCsv.hpp" />
     <ClInclude Include="QuestSystem.h" />
   </ItemGroup>
   <ItemGroup>
