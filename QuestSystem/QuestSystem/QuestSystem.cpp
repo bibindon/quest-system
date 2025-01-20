@@ -177,6 +177,26 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eStartType::QUEST_FINISH_OR);
                     work2.push_back(false);
                 }
+                else if (buffComma == "インベントリにXがY個あったら")
+                {
+                    work.push_back(eStartType::INVENTORY);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "倉庫にXがY個あったら")
+                {
+                    work.push_back(eStartType::STOREHOUSE);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "インベントリに強化値XのYがZ個あったら")
+                {
+                    work.push_back(eStartType::INVENTORY_LEVEL);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "倉庫に強化値XのYがZ個あったら")
+                {
+                    work.push_back(eStartType::STOREHOUSE_LEVEL);
+                    work2.push_back(false);
+                }
                 questData.SetStartType(work);
                 questData.SetStartFlag(work2);
             }
@@ -224,6 +244,26 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                 else if (buffComma == "調べたら")
                 {
                     work.push_back(eFinishType::EXAMINE);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "インベントリにXがY個あったら")
+                {
+                    work.push_back(eFinishType::INVENTORY);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "倉庫にXがY個あったら")
+                {
+                    work.push_back(eFinishType::STOREHOUSE);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "インベントリに強化値XのYがZ個あったら")
+                {
+                    work.push_back(eFinishType::INVENTORY_LEVEL);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "倉庫に強化値XのYがZ個あったら")
+                {
+                    work.push_back(eFinishType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
                 questData.SetFinishType(work);
@@ -869,6 +909,256 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
                     float r = std::sqrt(dx * dx + dy * dy + dz * dz);
 
                     if (r <= startR)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
+}
+
+void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>& list)
+{
+    m_inventory = list;
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY)
+                {
+                    // トマト:5だったらトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    std::string itemName = vs.at(0);
+                    int num = std::stoi(vs.at(1));
+
+                    int work = 0;
+                    for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+                else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY_LEVEL)
+                {
+                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    int level = std::stoi(vs.at(0));
+                    std::string itemName = vs.at(1);
+                    int num = std::stoi(vs.at(2));
+
+                    int work = 0;
+                    for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName && it->m_level == level)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY)
+                {
+                    // トマト:5だったらトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    std::string itemName = vs.at(0);
+                    int num = std::stoi(vs.at(1));
+
+                    int work = 0;
+                    for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+                else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY_LEVEL)
+                {
+                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    int level = std::stoi(vs.at(0));
+                    std::string itemName = vs.at(1);
+                    int num = std::stoi(vs.at(2));
+
+                    int work = 0;
+                    for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName && it->m_level == level)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
+}
+
+void NSQuestSystem::QuestSystem::SetStorehouseContent(const std::vector<ItemInfo>& list)
+{
+    m_storehouse = list;
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE)
+                {
+                    // トマト:5だったらトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    std::string itemName = vs.at(0);
+                    int num = std::stoi(vs.at(1));
+
+                    int work = 0;
+                    for (auto it = m_storehouse.begin(); it != m_storehouse.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+                else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE_LEVEL)
+                {
+                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    int level = std::stoi(vs.at(0));
+                    std::string itemName = vs.at(1);
+                    int num = std::stoi(vs.at(2));
+
+                    int work = 0;
+                    for (auto it = m_storehouse.begin(); it != m_storehouse.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName && it->m_level == level)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE)
+                {
+                    // トマト:5だったらトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    std::string itemName = vs.at(0);
+                    int num = std::stoi(vs.at(1));
+
+                    int work = 0;
+                    for (auto it = m_storehouse.begin(); it != m_storehouse.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+                else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE_LEVEL)
+                {
+                    // トマト:5だったらトマトが5個以上あったらの意味
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::string> vs = split(opt, ':');
+                    int level = std::stoi(vs.at(0));
+                    std::string itemName = vs.at(1);
+                    int num = std::stoi(vs.at(2));
+
+                    int work = 0;
+                    for (auto it = m_storehouse.begin(); it != m_storehouse.end(); ++it)
+                    {
+                        if (it->m_itemName == itemName && it->m_level == level)
+                        {
+                            ++work;
+                        }
+                    }
+
+                    if (work >= num)
                     {
                         std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                         work.at(j) = true;

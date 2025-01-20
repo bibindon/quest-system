@@ -15,6 +15,10 @@ enum class eStartType
     QUEST_NOT_FINISHED,
     EXAMINE,
     QUEST_FINISH_OR, // クエストが一つでも完了していたら
+    INVENTORY,
+    STOREHOUSE,
+    INVENTORY_LEVEL, // 強化値もチェックする
+    STOREHOUSE_LEVEL, // 強化値もチェックする
 };
 
 enum class eFinishType
@@ -25,6 +29,10 @@ enum class eFinishType
     QUEST_FINISHED,
     AUTO,
     EXAMINE,
+    INVENTORY,
+    STOREHOUSE,
+    INVENTORY_LEVEL, // 強化値もチェックする
+    STOREHOUSE_LEVEL, // 強化値もチェックする
 };
 
 enum class eQuestState
@@ -34,6 +42,12 @@ enum class eQuestState
     STARTED, // 一度でもSTARTを伝えたらSTARTEDに切り替える？
     FINISH,
     FINISHED, // 一度でもFINISHを伝えたらFINISHEDに切り替える？
+};
+
+struct ItemInfo
+{
+    std::string m_itemName;
+    int m_level = -1;
 };
 
 class QuestData
@@ -118,6 +132,12 @@ public:
     std::vector<std::string> GetQuestFinishEvent(const std::string& id);
     void SetExamine(const float x, const float y, const float z);
 
+    // インベントリの内容を登録
+    void SetInventoryContent(const std::vector<ItemInfo>& list);
+
+    // 倉庫の内容を登録
+    void SetStorehouseContent(const std::vector<ItemInfo>& list);
+
     // 開始タイプが「調べたら」であるクエストを取得
     // 座標を渡して、その座標で開始するクエストを取得
     // 該当するクエストが複数あっても一つだけ返す
@@ -138,6 +158,8 @@ private:
 
     std::vector<QuestData> m_vecQuestData;
 
+    std::vector<ItemInfo> m_inventory;
+    std::vector<ItemInfo> m_storehouse;
 };
 }
 

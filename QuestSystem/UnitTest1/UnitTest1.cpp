@@ -452,5 +452,799 @@ namespace UnitTest1
 
             Assert::AreEqual(true, it != vs.end());
         }
+
+        // テストしたいこと
+        // インベントリのアイテムの個数によってクエストがスタートしたり終了したりすること
+        TEST_METHOD(TestMethod24)
+        {
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                auto it = std::find(vs2.begin(), vs2.end(), "Q1");
+                Assert::AreEqual(true, it != vs2.end());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                // クエスト開始時に、すでに完了できる状態だったときは
+                // もう一度SetInventoryContentを呼ばないと完了できないこととする。
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                //
+                qs.SetInventoryContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+        }
+
+        // テストしたいこと
+        // 倉庫のアイテムの個数によってクエストがスタートしたり終了したりすること
+        TEST_METHOD(TestMethod25)
+        {
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                auto it = std::find(vs2.begin(), vs2.end(), "Q1");
+                Assert::AreEqual(true, it != vs2.end());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                // クエスト開始時に、すでに完了できる状態だったときは
+                // もう一度SetStorehouseContentを呼ばないと完了できないこととする。
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                //
+                qs.SetStorehouseContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+        }
+
+        // テストしたいこと
+        // インベントリのアイテムの個数によってクエストがスタートしたり終了したりすること
+        // その際に、強化値も影響すること
+        TEST_METHOD(TestMethod26)
+        {
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                auto it = std::find(vs2.begin(), vs2.end(), "Q1");
+                Assert::AreEqual(true, it != vs2.end());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetInventoryContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                // クエスト開始時に、すでに完了できる状態だったときは
+                // もう一度SetInventoryContentを呼ばないと完了できないこととする。
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                //
+                qs.SetInventoryContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+        }
+
+        // テストしたいこと
+        // 倉庫のアイテムの個数によってクエストがスタートしたり終了したりすること
+        // その際に、強化値も影響すること
+        TEST_METHOD(TestMethod27)
+        {
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                auto it = std::find(vs2.begin(), vs2.end(), "Q1");
+                Assert::AreEqual(true, it != vs2.end());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+            {
+                QuestSystem qs;
+                bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
+                std::vector<ItemInfo> vs;
+                ItemInfo itemInfo;
+                itemInfo.m_itemName = "トマト";
+                itemInfo.m_level = 3;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                itemInfo.m_itemName = "バナナ";
+                itemInfo.m_level = 4;
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+                vs.push_back(itemInfo);
+
+                qs.SetStorehouseContent(vs);
+
+                std::vector<std::string> vs2;
+                vs2 = qs.GetStartQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+
+                // クエスト開始時に、すでに完了できる状態だったときは
+                // もう一度SetStorehouseContentを呼ばないと完了できないこととする。
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)0, vs2.size());
+
+                //
+                qs.SetStorehouseContent(vs);
+
+                vs2 = qs.GetFinishQuest();
+                Assert::AreEqual((size_t)1, vs2.size());
+            }
+        }
     };
 }
