@@ -589,6 +589,7 @@ void QuestSystem::UpdateQuestStatus()
                 break;
             }
         }
+
         if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
             m_vecQuestData.at(i).SetState(eQuestState::START);
@@ -611,6 +612,7 @@ void QuestSystem::UpdateQuestStatus()
                     break;
                 }
             }
+
             if (allTrue)
             {
                 m_vecQuestData.at(i).SetState(eQuestState::FINISH);
@@ -705,6 +707,7 @@ void QuestSystem::UpdateQuestStatus()
                                 }
                             }
                         }
+
                         if (m_vecQuestData.at(i).GetStartFlag().at(j))
                         {
                             break;
@@ -764,6 +767,7 @@ void QuestSystem::UpdateQuestStatus()
                 break;
             }
         }
+
         if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
             m_vecQuestData.at(i).SetState(eQuestState::START);
@@ -786,6 +790,7 @@ void QuestSystem::UpdateQuestStatus()
                     break;
                 }
             }
+
             if (allTrue)
             {
                 m_vecQuestData.at(i).SetState(eQuestState::FINISH);
