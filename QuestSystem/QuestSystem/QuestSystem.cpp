@@ -197,6 +197,10 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eStartType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
+                else
+                {
+                    throw std::exception(buffComma.c_str());
+                }
                 questData.SetStartType(work);
                 questData.SetStartFlag(work2);
             }
@@ -265,6 +269,10 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                 {
                     work.push_back(eFinishType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
+                }
+                else
+                {
+                    throw std::exception(buffComma.c_str());
                 }
                 questData.SetFinishType(work);
                 questData.SetFinishFlag(work2);
