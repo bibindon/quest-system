@@ -154,14 +154,6 @@ public:
 
     void SetQuestFinish(const std::string& id);
 
-    // 「開始済みクエスト」があったら「開始クエスト」に変更する。
-    // 進行不能を回避するためのもの。
-    // 例えば、クエスト開始時に敵を配置し、その敵を倒したらクエスト完了、としたとき
-    // クエストを開始してからセーブして、ゲームを再起動すると
-    // 敵の配置が行われないままゲームがスタートしクエストが完了できなくなる。
-    // これを回避するため、「開始済みクエスト」を「開始クエスト」に変更する。
-    void ChangeStartedQuestToStartQuest();
-
 private:
 
     std::vector<QuestData> m_vecQuestData;

@@ -1275,14 +1275,3 @@ void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
     it->SetState(eQuestState::FINISHED);
 }
 
-void NSQuestSystem::QuestSystem::ChangeStartedQuestToStartQuest()
-{
-    for (auto it = m_vecQuestData.begin(); it != m_vecQuestData.end(); ++it)
-    {
-        if (it->GetState() == eQuestState::STARTED)
-        {
-            it->SetState(eQuestState::START);
-        }
-    }
-}
-
