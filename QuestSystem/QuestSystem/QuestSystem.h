@@ -136,7 +136,7 @@ public:
     void SetInventoryContent(const std::vector<ItemInfo>& list);
 
     // 倉庫の内容を登録
-    void SetStorehouseContent(const std::vector<ItemInfo>& list);
+    void SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list);
 
     // 開始タイプが「調べたら」であるクエストを取得
     // 座標を渡して、その座標で開始するクエストを取得
@@ -159,7 +159,9 @@ private:
     std::vector<QuestData> m_vecQuestData;
 
     std::vector<ItemInfo> m_inventory;
-    std::vector<ItemInfo> m_storehouse;
+    
+    // 倉庫はゲーム内に複数存在する
+    std::unordered_map<int, std::vector<ItemInfo>> m_storehouseMap;
 };
 }
 
