@@ -18,7 +18,8 @@ public:
         int result = PathFileExists(filepath.c_str());
         if (result == 0)
         {
-            return csvData;
+            std::string work = filepath + "‚ğŠJ‚­‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B";
+            throw std::exception(work.c_str());
         }
 
         std::ifstream ifs(filepath);
