@@ -1246,5 +1246,26 @@ namespace UnitTest1
                 Assert::AreEqual((size_t)1, vs2.size());
             }
         }
+
+        // テストしたいこと
+        // 完了したクエストが、再スタートしないこと
+        TEST_METHOD(TestMethod28)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample28.csv", "..\\UnitTest1\\sample28Save.csv", false);
+
+            qs.SetPos(-285.f, 16.f, 539.f);
+            qs.SetPos(-285.f, 16.f, 539.f);
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual((size_t)0, vs.size());
+
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual((size_t)0, vs.size());
+        }
+
     };
 }
