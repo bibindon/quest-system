@@ -439,7 +439,7 @@ namespace UnitTest1
         TEST_METHOD(TestMethod23)
         {
             QuestSystem qs;
-            bool ret = qs.Init("..\\UnitTest1\\sample23.csv", "..\\UnitTest1\\sampleSave23.csv", false);
+            bool ret = qs.Init("..\\UnitTest1\\sample23.csv", "..\\UnitTest1\\sample23Save.csv", false);
 
             qs.SetTalk("D");
             qs.SetTalk("E");
