@@ -1351,5 +1351,49 @@ namespace UnitTest1
                 Assert::IsTrue(it != vs.end());
             }
         }
+
+        // テストしたいこと
+        // 位置が範囲外だったらクエストが開始すること
+        TEST_METHOD(TestMethod33)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample30.csv", "", false);
+            qs.SetPos(1.f, 2.f, 3.f);
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            // 範囲内だったらクエストが開始しない
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetPos(50.f, 2.f, 3.f);
+            vs = qs.GetStartQuest();
+
+            // 範囲外だったらクエストが開始する
+            Assert::AreNotEqual<size_t>(0, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q1");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 位置が範囲外だったらクエストが完了すること
+        TEST_METHOD(TestMethod34)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample30.csv", "", false);
+            qs.SetPos(120.f, 200.f, 320.f);
+            std::vector<std::string> vs;
+            vs = qs.GetFinishQuest();
+
+            // 範囲内だったらクエストが完了しない
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetPos(10.f, 20.f, 30.f);
+            vs = qs.GetFinishQuest();
+
+            // 範囲外だったらクエストが完了する
+            Assert::AreNotEqual<size_t>(0, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q1");
+            Assert::IsTrue(it != vs.end());
+        }
     };
 }

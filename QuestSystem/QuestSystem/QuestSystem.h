@@ -21,6 +21,7 @@ enum class eStartType
     STOREHOUSE_LEVEL, // 強化値もチェックする
     BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
     BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
+    POS_OUT, // 位置が指定範囲の外なら
 };
 
 enum class eFinishType
@@ -37,6 +38,7 @@ enum class eFinishType
     STOREHOUSE_LEVEL, // 強化値もチェックする
     BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
     BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
+    POS_OUT, // 位置が指定範囲の外なら
 };
 
 enum class eQuestState

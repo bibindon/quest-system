@@ -207,6 +207,11 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eStartType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
+                else if (buffComma == "位置が範囲外")
+                {
+                    work.push_back(eStartType::POS_OUT);
+                    work2.push_back(false);
+                }
                 else
                 {
                     throw std::exception(buffComma.c_str());
@@ -288,6 +293,11 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                 else if (buffComma == "脳の体力がX以下だったら")
                 {
                     work.push_back(eFinishType::BRAIN_STAMINA_LESS);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "位置が範囲外")
+                {
+                    work.push_back(eFinishType::POS_OUT);
                     work2.push_back(false);
                 }
                 else
@@ -537,7 +547,8 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
         {
             for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
             {
-                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS ||
+                    m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
                     std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
@@ -553,11 +564,23 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
 
                     float r = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-                    if (r <= startR)
+                    if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
+                        if (r <= startR)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetStartFlag(work);
+                        }
+                    }
+                    else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
+                    {
+                        if (r >= startR)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetStartFlag(work);
+                        }
                     }
                 }
             }
@@ -573,7 +596,8 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
         {
             for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
             {
-                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS)
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS ||
+                    m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
                     std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
@@ -589,16 +613,29 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
 
                     float r = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-                    if (r <= startR)
+                    if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        if (r <= startR)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
+                    }
+                    else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
+                    {
+                        if (r >= startR)
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
                     }
                 }
             }
         }
     }
+
     UpdateQuestStatus();
 }
 
