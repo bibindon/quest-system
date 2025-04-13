@@ -1267,5 +1267,89 @@ namespace UnitTest1
             Assert::AreEqual((size_t)0, vs.size());
         }
 
+        // テストしたいこと
+        // 体の体力が指定値より少なければクエストが開始すること
+        TEST_METHOD(TestMethod29)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample29.csv", "", false);
+
+            qs.SetBodyStamina(95);
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+            Assert::AreEqual("Q1", vs.at(0).c_str());
+        }
+
+        // テストしたいこと
+        // 脳の体力が指定値より少なければクエストが開始すること
+        TEST_METHOD(TestMethod30)
+        {
+            QuestSystem qs;
+            bool ret = qs.Init("..\\UnitTest1\\sample29.csv", "", false);
+
+            qs.SetBrainStamina(75);
+
+            std::vector<std::string> vs;
+            vs = qs.GetStartQuest();
+
+            Assert::AreNotEqual<size_t>(0, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q2");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 体の体力が指定値より少なければクエストが完了すること
+        TEST_METHOD(TestMethod31)
+        {
+            QuestSystem qs;
+            {
+                bool ret = qs.Init("..\\UnitTest1\\sample29.csv", "", false);
+                qs.SetBodyStamina(55);
+                std::vector<std::string> vs;
+                vs = qs.GetStartQuest();
+                Assert::AreNotEqual<size_t>(0, vs.size());
+                auto it = std::find(vs.begin(), vs.end(), "Q3");
+                Assert::IsTrue(it != vs.end());
+            }
+
+            qs.SetBodyStamina(45);
+
+            {
+                std::vector<std::string> vs;
+                vs = qs.GetFinishQuest();
+                Assert::AreNotEqual<size_t>(0, vs.size());
+                auto it = std::find(vs.begin(), vs.end(), "Q3");
+                Assert::IsTrue(it != vs.end());
+            }
+        }
+
+        // テストしたいこと
+        // 脳の体力が指定値より少なければクエストが完了すること
+        TEST_METHOD(TestMethod32)
+        {
+            QuestSystem qs;
+            {
+                bool ret = qs.Init("..\\UnitTest1\\sample29.csv", "", false);
+                qs.SetBodyStamina(35);
+                std::vector<std::string> vs;
+                vs = qs.GetStartQuest();
+                Assert::AreNotEqual<size_t>(0, vs.size());
+                auto it = std::find(vs.begin(), vs.end(), "Q4");
+                Assert::IsTrue(it != vs.end());
+            }
+
+            qs.SetBrainStamina(25);
+
+            {
+                std::vector<std::string> vs;
+                vs = qs.GetFinishQuest();
+                Assert::AreNotEqual<size_t>(0, vs.size());
+                auto it = std::find(vs.begin(), vs.end(), "Q4");
+                Assert::IsTrue(it != vs.end());
+            }
+        }
     };
 }

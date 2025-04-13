@@ -197,6 +197,16 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eStartType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
+                else if (buffComma == "‘Ì‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                {
+                    work.push_back(eStartType::BODY_STAMINA_LESS);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "”]‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                {
+                    work.push_back(eStartType::BRAIN_STAMINA_LESS);
+                    work2.push_back(false);
+                }
                 else
                 {
                     throw std::exception(buffComma.c_str());
@@ -268,6 +278,16 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                 else if (buffComma == "‘qŒÉA‚É‹­‰»’lX‚ÌY‚ªZŒÂ‚ ‚Á‚½‚ç")
                 {
                     work.push_back(eFinishType::STOREHOUSE_LEVEL);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "‘Ì‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                {
+                    work.push_back(eFinishType::BODY_STAMINA_LESS);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "”]‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                {
+                    work.push_back(eFinishType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
                 else
@@ -1205,6 +1225,104 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                     }
 
                     if (work >= num)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
+}
+
+void NSQuestSystem::QuestSystem::SetBodyStamina(const int stamina)
+{
+    m_bodyStamina = stamina;
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::BODY_STAMINA_LESS)
+                {
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    int stamina = std::stoi(opt);
+                    if (m_bodyStamina < stamina)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::BODY_STAMINA_LESS)
+                {
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    int stamina = std::stoi(opt);
+                    if (m_bodyStamina < stamina)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+    UpdateQuestStatus();
+}
+
+void NSQuestSystem::QuestSystem::SetBrainStamina(const int stamina)
+{
+    m_brainStamina = stamina;
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::BRAIN_STAMINA_LESS)
+                {
+                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    int stamina = std::stoi(opt);
+                    if (m_brainStamina < stamina)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetStartFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::BRAIN_STAMINA_LESS)
+                {
+                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    int stamina = std::stoi(opt);
+                    if (m_brainStamina < stamina)
                     {
                         std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                         work.at(j) = true;

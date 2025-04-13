@@ -19,6 +19,8 @@ enum class eStartType
     STOREHOUSE,
     INVENTORY_LEVEL, // 強化値もチェックする
     STOREHOUSE_LEVEL, // 強化値もチェックする
+    BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
+    BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
 };
 
 enum class eFinishType
@@ -33,6 +35,8 @@ enum class eFinishType
     STOREHOUSE,
     INVENTORY_LEVEL, // 強化値もチェックする
     STOREHOUSE_LEVEL, // 強化値もチェックする
+    BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
+    BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
 };
 
 enum class eQuestState
@@ -138,6 +142,10 @@ public:
     // 倉庫の内容を登録
     void SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list);
 
+    void SetBodyStamina(const int stamina);
+
+    void SetBrainStamina(const int stamina);
+
     // 開始タイプが「調べたら」であるクエストを取得
     // 座標を渡して、その座標で開始するクエストを取得
     // 該当するクエストが複数あっても一つだけ返す
@@ -162,6 +170,9 @@ private:
     
     // 倉庫はゲーム内に複数存在する
     std::unordered_map<int, std::vector<ItemInfo>> m_storehouseMap;
+
+    int m_bodyStamina = 0;
+    int m_brainStamina = 0;
 };
 }
 
