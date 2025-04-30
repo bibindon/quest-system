@@ -718,6 +718,8 @@ void QuestSystem::UpdateQuestStatus()
         if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
             m_vecQuestData.at(i).SetState(eQuestState::START);
+            m_vecQuestData.at(i).SetStartDateTime(m_currentYear, m_currentMonth, m_currentDay,
+                                                  m_currentHour, m_currentMinute, m_currentSecond);
         }
     }
 
@@ -896,6 +898,8 @@ void QuestSystem::UpdateQuestStatus()
         if (allTrue && m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
             m_vecQuestData.at(i).SetState(eQuestState::START);
+            m_vecQuestData.at(i).SetStartDateTime(m_currentYear, m_currentMonth, m_currentDay,
+                                                  m_currentHour, m_currentMinute, m_currentSecond);
         }
     }
 

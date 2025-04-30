@@ -1353,7 +1353,7 @@ namespace UnitTest1
         }
 
         // テストしたいこと
-        // 位置が範囲外だったらクエストが開始すること
+        // 位置が範囲外だったらクエストが開始すること1
         TEST_METHOD(TestMethod33)
         {
             QuestSystem qs;
@@ -1375,7 +1375,7 @@ namespace UnitTest1
         }
 
         // テストしたいこと
-        // 位置が範囲外だったらクエストが完了すること
+        // 位置が範囲外だったらクエストが完了すること2
         TEST_METHOD(TestMethod34)
         {
             QuestSystem qs;
@@ -1392,6 +1392,124 @@ namespace UnitTest1
 
             // 範囲外だったらクエストが完了する
             Assert::AreNotEqual<size_t>(0, vs.size());
+            auto it = std::find(vs.begin(), vs.end(), "Q1");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 時間経過でテストが完了すること
+        TEST_METHOD(TestMethod35)
+        {
+            QuestSystem qs;
+            std::vector<std::string> vs;
+
+            // 1か月と2日と3時間4分5秒経過したら完了するクエスト
+            bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
+            qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
+            qs.SetPos(100.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetCurrentDateTime(1, 3, 5, 7, 9, 7);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetCurrentDateTime(1, 3, 5, 7, 9, 11);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            auto it = std::find(vs.begin(), vs.end(), "Q1");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 昼だったらテストが完了すること
+        TEST_METHOD(TestMethod36)
+        {
+            QuestSystem qs;
+            std::vector<std::string> vs;
+
+            // 1か月と2日と3時間4分5秒経過したら完了するクエスト
+            bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
+            qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
+            qs.SetPos(200.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetCurrentDateTime(1, 2, 3, 5, 59, 59);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetCurrentDateTime(1, 3, 5, 6, 0, 0);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            auto it = std::find(vs.begin(), vs.end(), "Q2");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 夜だったらテストが完了すること
+        TEST_METHOD(TestMethod37)
+        {
+            QuestSystem qs;
+            std::vector<std::string> vs;
+
+            // 1か月と2日と3時間4分5秒経過したら完了するクエスト
+            bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
+            qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
+            qs.SetPos(300.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            qs.SetCurrentDateTime(1, 3, 5, 17, 59, 59);
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetCurrentDateTime(1, 2, 3, 18, 0, 0);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            auto it = std::find(vs.begin(), vs.end(), "Q3");
+            Assert::IsTrue(it != vs.end());
+        }
+
+        // テストしたいこと
+        // 時間経過でテストが完了すること2(23時59分59秒から開始)
+        TEST_METHOD(TestMethod38)
+        {
+            QuestSystem qs;
+            std::vector<std::string> vs;
+
+            // 1か月と2日と3時間4分5秒経過したら完了するクエスト
+            // 1年2月3日23時59分59秒の1か月と2日と3時間4分5秒後は
+            // 1年3月6日0時4分4秒
+            bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
+            qs.SetCurrentDateTime(1, 2, 3, 23, 59, 59);
+            qs.SetPos(100.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetCurrentDateTime(1, 3, 6, 3, 4, 3);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(0, vs.size());
+
+            qs.SetCurrentDateTime(1, 3, 6, 3, 4, 4);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
             auto it = std::find(vs.begin(), vs.end(), "Q1");
             Assert::IsTrue(it != vs.end());
         }
