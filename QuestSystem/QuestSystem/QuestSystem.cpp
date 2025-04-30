@@ -444,6 +444,7 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
     vs.push_back("クエストID");
     vs.push_back("状況");
     vs.push_back("クエスト開始時刻");
+    vvs.push_back(vs);
     vs.clear();
 
     for (size_t i = 0; i < m_vecQuestData.size(); ++i)
