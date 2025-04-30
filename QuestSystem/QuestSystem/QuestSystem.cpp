@@ -300,6 +300,21 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eFinishType::POS_OUT);
                     work2.push_back(false);
                 }
+                else if (buffComma == "時間が経過したら")
+                {
+                    work.push_back(eFinishType::TIME_PAST);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "夜だったら")
+                {
+                    work.push_back(eFinishType::AT_NIGHT);
+                    work2.push_back(false);
+                }
+                else if (buffComma == "昼だったら")
+                {
+                    work.push_back(eFinishType::AT_DAYTIME);
+                    work2.push_back(false);
+                }
                 else
                 {
                     throw std::exception(buffComma.c_str());
@@ -658,7 +673,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
 
                     float r = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-                    if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
+                    if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS)
                     {
                         if (r <= startR)
                         {
@@ -667,7 +682,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                             m_vecQuestData.at(i).SetFinishFlag(work);
                         }
                     }
-                    else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
+                    else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                     {
                         if (r >= startR)
                         {
@@ -1517,6 +1532,213 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
     m_currentMinute = minute;
     m_currentSecond = second;
 
+    // 時間経過で完了するクエストがあるか
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::TIME_PAST)
+                {
+                    // 0:0:1:2:3:4だったら1日と2時間と3分と4秒経過したら完了、の意味
+                    // 1月1日0時0分0秒に開始したクエストは1月2日2時3分4秒以降に完了となる。
+                    // 12月31日23時59分59秒に開始したクエストは1月2日2時3分3秒以降に完了となる。
+                    // 1月25日に1か月と10日後に完了するクエストを開始したら、完了するのは3月7日（2月は28日しかないことに注意））
+                    // やっかい。
+
+                    // クエストの完了時刻を求める
+                    int finishYear = 0;
+                    int finishMonth = 0;
+                    int finishDay = 0;
+                    int finishHour = 0;
+                    int finishMinute = 0;
+                    int finishSecond = 0;
+                    {
+                        int startYear = 0;
+                        int startMonth = 0;
+                        int startDay = 0;
+                        int startHour = 0;
+                        int startMinute = 0;
+                        int startSecond = 0;
+
+                        m_vecQuestData.at(i).GetStartDateTime(&startYear, &startMonth, &startDay,
+                                                              &startHour, &startMinute, &startSecond);
+
+                        std::string datetime = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                        std::vector<std::string> work = split(datetime, ':');
+
+                        int timeLimitYear = std::stoi(work.at(0));
+                        int timeLimitMonth = std::stoi(work.at(1));
+                        int timeLimitDay = std::stoi(work.at(2));
+                        int timeLimitHour = std::stoi(work.at(3));
+                        int timeLimitMinute = std::stoi(work.at(4));
+                        int timeLimitSecond = std::stoi(work.at(5));
+
+
+                        finishYear = startYear + timeLimitYear;
+                        finishMonth = startMonth + timeLimitMonth;
+                        finishDay = startDay + timeLimitDay;
+                        finishHour = startHour + timeLimitHour;
+                        finishMinute = startMinute + timeLimitMinute;
+                        finishSecond = startSecond + timeLimitSecond;
+
+                        if (finishSecond >= 60)
+                        {
+                            finishSecond -= 60;
+                            finishMinute++;
+                        }
+
+                        if (finishMinute >= 60)
+                        {
+                            finishMinute -= 60;
+                            finishHour++;
+                        }
+
+                        if (finishHour >= 24)
+                        {
+                            finishHour -= 24;
+                            finishDay++;
+                        }
+
+                        // 0月というのはない、はず・・・
+                        int dayCount[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                        if (finishDay >= dayCount[finishMonth])
+                        {
+                            finishDay -= dayCount[finishMonth];
+                            finishMonth++;
+                        }
+
+                        if (finishMonth >= 13)
+                        {
+                            finishMonth -= 12;
+                            finishYear++;
+                        }
+                    }
+
+                    // 完了時刻を過ぎているか？
+                    bool bFinish = false;
+                    {
+                        if (finishYear < m_currentYear)
+                        {
+                            bFinish = true;
+                        }
+                        else if (finishYear > m_currentYear)
+                        {
+                            bFinish = false;
+                        }
+                        else if (finishYear == m_currentYear)
+                        {
+                            if (finishMonth < m_currentMonth)
+                            {
+                                bFinish = true;
+                            }
+                            else if (finishMonth > m_currentMonth)
+                            {
+                                bFinish = false;
+                            }
+                            else if (finishMonth == m_currentMonth)
+                            {
+                                if (finishDay < m_currentDay)
+                                {
+                                    bFinish = true;
+                                }
+                                else if (finishDay > m_currentDay)
+                                {
+                                    bFinish = false;
+                                }
+                                else if (finishDay == m_currentDay)
+                                {
+                                    if (finishHour < m_currentHour)
+                                    {
+                                        bFinish = true;
+                                    }
+                                    else if (finishHour > m_currentHour)
+                                    {
+                                        bFinish = false;
+                                    }
+                                    else if (finishHour == m_currentHour)
+                                    {
+                                        if (finishMinute < m_currentMinute)
+                                        {
+                                            bFinish = true;
+                                        }
+                                        else if (finishMinute > m_currentMinute)
+                                        {
+                                            bFinish = false;
+                                        }
+                                        else if (finishMinute == m_currentMinute)
+                                        {
+                                            if (finishSecond < m_currentSecond)
+                                            {
+                                                bFinish = true;
+                                            }
+                                            else if (finishSecond > m_currentSecond)
+                                            {
+                                                bFinish = false;
+                                            }
+                                            else if (finishSecond == m_currentSecond)
+                                            {
+                                                bFinish = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (bFinish)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
+    // 夜だったら/朝だったら完了のクエスト
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                // 6 ~ 18 昼
+                // 18 ~ 6 夜
+                if (18 <= m_currentHour || m_currentHour < 6)
+                {
+                    if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::AT_NIGHT)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+                else if (6 <= m_currentHour && m_currentHour < 18)
+                {
+                    if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::AT_DAYTIME)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                }
+            }
+        }
+    }
+
     UpdateQuestStatus();
+}
+
+std::string NSQuestSystem::QuestSystem::GetHint()
+{
+    return std::string();
 }
 

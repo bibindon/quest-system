@@ -40,8 +40,9 @@ enum class eFinishType
     BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
     POS_OUT, // 位置が指定範囲の外なら
     TIME_PAST, // 時間が経過したら
-    NIGHT_COME, // 夜になったら
-    MORNING_COME, // 朝になったら
+    AT_NIGHT, // 夜だったら（すでに夜だったら、即完了してしまう。「夜になったら」をやりたいならTIME_PASTと組み合わせて使えばよい）
+              // （具体的には18時から6時）
+    AT_DAYTIME, // 昼だったら（具体的には6時から18時）
 };
 
 enum class eQuestState
@@ -178,6 +179,11 @@ public:
 
     void SetCurrentDateTime(const int year, const int month, const int day,
                             const int hour, const int minute, const int second);
+
+    // クエストのヒントが得られる。
+    // 進行中のクエストを終了する方法が取得できる。
+    // ひとまずそれだけ。
+    std::string GetHint();
 
 private:
 
