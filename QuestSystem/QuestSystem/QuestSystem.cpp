@@ -402,6 +402,20 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             {
                 it->SetState(eQuestState::FINISHED);
             }
+
+            {
+                std::string work = vvs.at(i).at(2);
+                auto vs = split(work, ':');
+
+                int startYear = std::stoi(vs.at(0));
+                int startMonth = std::stoi(vs.at(1));
+                int startDay = std::stoi(vs.at(2));
+                int startHour = std::stoi(vs.at(3));
+                int startMinute = std::stoi(vs.at(4));
+                int startSecond = std::stoi(vs.at(5));
+
+                it->SetStartDateTime(startYear, startMonth, startDay, startHour, startMinute, startSecond);
+            }
         }
     }
 
@@ -414,6 +428,7 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
     std::vector<std::string> vs;
     vs.push_back("クエストID");
     vs.push_back("状況");
+    vs.push_back("クエスト開始時刻");
     vs.clear();
 
     for (size_t i = 0; i < m_vecQuestData.size(); ++i)
@@ -442,6 +457,35 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
         {
             vs.push_back("FINISHED");
         }
+
+        {
+            int startYear = 0;
+            int startMonth = 0;
+            int startDay = 0;
+            int startHour = 0;
+            int startMinute = 0;
+            int startSecond = 0;
+
+            m_vecQuestData.at(i).GetStartDateTime(&startYear, &startMonth, &startDay, &startHour, &startMinute, &startSecond);
+
+            std::string year = std::to_string(startYear);
+            std::string month = std::to_string(startMonth);
+            std::string day = std::to_string(startDay);
+            std::string hour = std::to_string(startHour);
+            std::string minute = std::to_string(startMinute);
+            std::string second = std::to_string(startSecond);
+
+            std::string work;
+            work = year + ":";
+            work += month + ":";
+            work += day + ":";
+            work += hour + ":";
+            work += minute + ":";
+            work += second;
+
+            vs.push_back(work);
+        }
+
         vvs.push_back(vs);
         vs.clear();
     }
@@ -536,6 +580,7 @@ void QuestSystem::SetTalk(const std::string& npc)
             }
         }
     }
+
     UpdateQuestStatus();
 }
 
@@ -1461,5 +1506,17 @@ void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
                            });
 
     it->SetState(eQuestState::FINISHED);
+}
+
+void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int month, const int day, const int hour, const int minute, const int second)
+{
+    m_currentYear = year;
+    m_currentMonth = month;
+    m_currentDay = day;
+    m_currentHour = hour;
+    m_currentMinute = minute;
+    m_currentSecond = second;
+
+    UpdateQuestStatus();
 }
 

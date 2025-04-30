@@ -39,6 +39,9 @@ enum class eFinishType
     BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
     BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
     POS_OUT, // 位置が指定範囲の外なら
+    TIME_PAST, // 時間が経過したら
+    NIGHT_COME, // 夜になったら
+    MORNING_COME, // 朝になったら
 };
 
 enum class eQuestState
@@ -96,6 +99,9 @@ public:
     std::unordered_map<int, int> GetCurrentFinishOpt2();
     void SetCurrentFinishOpt2(const std::unordered_map<int, int>&);
 
+    void SetStartDateTime(const int year, const int month, const int day, const int hour, const int minute, const int second);
+    void GetStartDateTime(int* year, int* month, int* day, int* hour, int* minute, int* second);
+
 private:
 
     std::string m_id;
@@ -114,6 +120,12 @@ private:
     eQuestState m_eQuestState = eQuestState::NOT_START;
     std::unordered_map<int, int> m_currentFinishOption2;
 
+    int m_startYear = 0;
+    int m_startMonth = 0;
+    int m_startDay = 0;
+    int m_startHour = 0;
+    int m_startMinute = 0;
+    int m_startSecond = 0;
 };
 
 class QuestSystem
@@ -164,6 +176,9 @@ public:
 
     void SetQuestFinish(const std::string& id);
 
+    void SetCurrentDateTime(const int year, const int month, const int day,
+                            const int hour, const int minute, const int second);
+
 private:
 
     std::vector<QuestData> m_vecQuestData;
@@ -175,6 +190,14 @@ private:
 
     int m_bodyStamina = 0;
     int m_brainStamina = 0;
+
+    int m_currentYear = 0;
+    int m_currentMonth = 0;
+    int m_currentDay = 0;
+    int m_currentHour = 0;
+    int m_currentMinute = 0;
+    int m_currentSecond = 0;
+
 };
 }
 

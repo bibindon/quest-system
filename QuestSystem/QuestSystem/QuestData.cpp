@@ -122,3 +122,23 @@ void QuestData::SetCurrentFinishOpt2(const std::unordered_map<int, int>& current
     m_currentFinishOption2 = currentFinishOption2;
 }
 
+void NSQuestSystem::QuestData::SetStartDateTime(const int year, const int month, const int day, const int hour, const int minute, const int second)
+{
+    m_startYear = year;
+    m_startMonth = month;
+    m_startDay = day;
+    m_startHour = hour;
+    m_startMinute = minute;
+    m_startSecond = second;
+}
+
+void NSQuestSystem::QuestData::GetStartDateTime(int* year, int* month, int* day, int* hour, int* minute, int* second)
+{
+    *year = m_startYear;
+    *month = m_startMonth;
+    *day = m_startDay;
+    *hour = m_startHour;
+    *minute = m_startMinute;
+    *second = m_startSecond;
+}
+
