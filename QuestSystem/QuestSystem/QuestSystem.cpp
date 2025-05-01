@@ -633,6 +633,12 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                             work.at(j) = true;
                             m_vecQuestData.at(i).SetStartFlag(work);
                         }
+                        else
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                            work.at(j) = false;
+                            m_vecQuestData.at(i).SetStartFlag(work);
+                        }
                     }
                     else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
                     {
@@ -640,6 +646,12 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
                             work.at(j) = true;
+                            m_vecQuestData.at(i).SetStartFlag(work);
+                        }
+                        else
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
+                            work.at(j) = false;
                             m_vecQuestData.at(i).SetStartFlag(work);
                         }
                     }
@@ -682,6 +694,12 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                             work.at(j) = true;
                             m_vecQuestData.at(i).SetFinishFlag(work);
                         }
+                        else
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = false;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
                     }
                     else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                     {
@@ -689,6 +707,12 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                             work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
+                        else
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = false;
                             m_vecQuestData.at(i).SetFinishFlag(work);
                         }
                     }
