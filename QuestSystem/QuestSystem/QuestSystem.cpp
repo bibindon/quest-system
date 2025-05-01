@@ -1725,6 +1725,12 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
                         work.at(j) = true;
                         m_vecQuestData.at(i).SetFinishFlag(work);
                     }
+                    else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::AT_DAYTIME)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = false;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
                 }
                 else if (6 <= m_currentHour && m_currentHour < 18)
                 {
@@ -1732,6 +1738,12 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
                     {
                         std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                         work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
+                    }
+                    else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::AT_NIGHT)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = false;
                         m_vecQuestData.at(i).SetFinishFlag(work);
                     }
                 }
