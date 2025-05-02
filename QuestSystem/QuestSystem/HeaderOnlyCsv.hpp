@@ -22,6 +22,8 @@ public:
             throw std::exception(work.c_str());
         }
 
+        // 「"」記号で囲まれているとセル内改行ができることに注意
+        // 「"」記号で囲まれているとセル内で「,」が使用できることに注意
         std::ifstream ifs(filepath);
         if (ifs.is_open() == false)
         {
@@ -35,14 +37,14 @@ public:
         std::istreambuf_iterator<char> itBegin(ifs);
         std::istreambuf_iterator<char> itEnd;
 
-        for (; itBegin != itEnd; ++itBegin)
+        for (; itBegin != itEnd; itBegin++)
         {
             if (*itBegin != ',' && *itBegin != '\n')
             {
                 buffComma += *itBegin;
                 if (*itBegin == '"')
                 {
-                    if (doubleQuoteMode == false)
+                    if (!doubleQuoteMode)
                     {
                         doubleQuoteMode = true;
                     }
@@ -54,12 +56,19 @@ public:
             }
             else if (*itBegin == ',')
             {
-                work.push_back(buffComma);
-                buffComma.clear();
+                if (!doubleQuoteMode)
+                {
+                    work.push_back(buffComma);
+                    buffComma.clear();
+                }
+                else
+                {
+                    buffComma += *itBegin;
+                }
             }
             else if (*itBegin == '\n')
             {
-                if (doubleQuoteMode == false)
+                if (!doubleQuoteMode)
                 {
                     work.push_back(buffComma);
                     buffComma.clear();
@@ -94,7 +103,7 @@ public:
                 buffComma += *itBegin;
                 if (*itBegin == '"')
                 {
-                    if (doubleQuoteMode == false)
+                    if (!doubleQuoteMode)
                     {
                         doubleQuoteMode = true;
                     }
@@ -106,12 +115,19 @@ public:
             }
             else if (*itBegin == ',')
             {
-                work.push_back(buffComma);
-                buffComma.clear();
+                if (!doubleQuoteMode)
+                {
+                    work.push_back(buffComma);
+                    buffComma.clear();
+                }
+                else
+                {
+                    buffComma += *itBegin;
+                }
             }
             else if (*itBegin == '\n')
             {
-                if (doubleQuoteMode == false)
+                if (!doubleQuoteMode)
                 {
                     work.push_back(buffComma);
                     buffComma.clear();
@@ -136,6 +152,7 @@ public:
             std::string work = filepath + "を開くことができませんでした。";
             throw std::exception(work.c_str());
         }
+
         for (std::size_t i = 0; i < csvData.size(); ++i)
         {
             for (std::size_t j = 0; j < csvData.at(i).size(); ++j)
