@@ -144,7 +144,7 @@ public:
     std::vector<std::string> GetStartQuest();
     std::vector<std::string> GetFinishQuest();
     void SetTalk(const std::string& npc);
-    void SetPos(const float x, const float y, const float z);
+    void SetPos(const float x, const float y, const float z, const bool update = true);
     void UpdateQuestStatus();
     void SetDefeatEnemy(const std::string& enemy);
     std::vector<std::string> GetQuestStartEvent(const std::string& id);
@@ -152,10 +152,10 @@ public:
     void SetExamine(const float x, const float y, const float z);
 
     // インベントリの内容を登録
-    void SetInventoryContent(const std::vector<ItemInfo>& list);
+    void SetInventoryContent(const std::vector<ItemInfo>& list, const bool update = true);
 
     // 倉庫の内容を登録
-    void SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list);
+    void SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list, const bool update = true);
 
     void SetBodyStamina(const int stamina);
 
@@ -178,7 +178,8 @@ public:
     void SetQuestFinish(const std::string& id);
 
     void SetCurrentDateTime(const int year, const int month, const int day,
-                            const int hour, const int minute, const int second);
+                            const int hour, const int minute, const int second,
+                            const bool update = true);
 
     // クエストのヒントが得られる。
     // 進行中のクエストを終了する方法が取得できる。

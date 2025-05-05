@@ -600,7 +600,8 @@ void QuestSystem::SetTalk(const std::string& npc)
     UpdateQuestStatus();
 }
 
-void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const float z)
+void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const float z,
+                                        const bool update)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
@@ -721,7 +722,10 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
         }
     }
 
-    UpdateQuestStatus();
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
 }
 
 void QuestSystem::UpdateQuestStatus()
@@ -1080,7 +1084,7 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
     UpdateQuestStatus();
 }
 
-void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>& list)
+void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>& list, const bool update)
 {
     m_inventory = list;
 
@@ -1202,10 +1206,14 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
             }
         }
     }
-    UpdateQuestStatus();
+
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
 }
 
-void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list)
+void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list, const bool update)
 {
     m_storehouseMap[storehouseId] = list;
 
@@ -1360,7 +1368,11 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
             }
         }
     }
-    UpdateQuestStatus();
+
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
 }
 
 void NSQuestSystem::QuestSystem::SetBodyStamina(const int stamina)
@@ -1552,7 +1564,7 @@ void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
     it->SetState(eQuestState::FINISHED);
 }
 
-void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int month, const int day, const int hour, const int minute, const int second)
+void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int month, const int day, const int hour, const int minute, const int second, const bool update)
 {
     m_currentYear = year;
     m_currentMonth = month;
@@ -1775,7 +1787,10 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
         }
     }
 
-    UpdateQuestStatus();
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
 }
 
 std::string NSQuestSystem::QuestSystem::GetHint()
