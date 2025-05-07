@@ -43,6 +43,7 @@ enum class eFinishType
     AT_NIGHT, // 夜だったら（すでに夜だったら、即完了してしまう。「夜になったら」をやりたいならTIME_PASTと組み合わせて使えばよい）
               // （具体的には18時から6時）
     AT_DAYTIME, // 昼だったら（具体的には6時から18時）
+    NPC_ALIVE, // NPCが生存していたら
 };
 
 enum class eQuestState
@@ -181,10 +182,8 @@ public:
                             const int hour, const int minute, const int second,
                             const bool update = true);
 
-    // クエストのヒントが得られる。
-    // 進行中のクエストを終了する方法が取得できる。
-    // ひとまずそれだけ。
-    std::string GetHint();
+    // NPCが生きているか。主に死亡したときに使う。
+    void SetNpcIsAlive(const std::string& npcKey, const bool bAlive, const bool update);
 
 private:
 
@@ -204,6 +203,8 @@ private:
     int m_currentHour = 0;
     int m_currentMinute = 0;
     int m_currentSecond = 0;
+
+    std::unordered_map<std::string, bool> m_NpcAlive;
 
 };
 }

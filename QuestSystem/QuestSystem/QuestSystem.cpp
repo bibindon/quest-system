@@ -315,6 +315,11 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                     work.push_back(eFinishType::AT_DAYTIME);
                     work2.push_back(false);
                 }
+                else if (buffComma == "NPCのXが生存")
+                {
+                    work.push_back(eFinishType::NPC_ALIVE);
+                    work2.push_back(false);
+                }
                 else
                 {
                     throw std::exception(buffComma.c_str());
@@ -728,6 +733,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
     }
 }
 
+// 重いので頻繁に呼んではいけない。
 void QuestSystem::UpdateQuestStatus()
 {
     // クエスト開始チェック
@@ -1793,8 +1799,47 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
     }
 }
 
-std::string NSQuestSystem::QuestSystem::GetHint()
+void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::string& npcKey, const bool bAlive, const bool update)
 {
-    return std::string();
+    m_NpcAlive[npcKey] = bAlive;
+
+    // NPCが生存していたら完了のクエスト
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::NPC_ALIVE)
+                {
+                    std::string npcKey_ = m_vecQuestData.at(i).GetFinishOption1().at(j);
+
+                    if (m_NpcAlive.find(npcKey_) != m_NpcAlive.end())
+                    {
+                        if (m_NpcAlive[npcKey_])
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = true;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
+                        else
+                        {
+                            std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                            work.at(j) = false;
+                            m_vecQuestData.at(i).SetFinishFlag(work);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
 }
+
 
