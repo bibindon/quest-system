@@ -548,6 +548,20 @@ std::vector<std::string> QuestSystem::GetStartQuest()
     return result;
 }
 
+std::vector<std::string> NSQuestSystem::QuestSystem::GetStartedQuest()
+{
+    std::vector<std::string> result;
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED)
+        {
+            result.push_back(m_vecQuestData.at(i).GetId());
+        }
+    }
+
+    return result;
+}
+
 std::vector<std::string> QuestSystem::GetFinishQuest()
 {
     std::vector<std::string> result;

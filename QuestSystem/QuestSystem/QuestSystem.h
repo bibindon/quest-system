@@ -142,7 +142,12 @@ public:
 
     void Save(const std::string& savefile, const bool encrypt);
 
+    //-------------------------------------------------
+    // この関数を実行すると、クエストの状態が「START」だったクエストは「STARTED」になる
+    //-------------------------------------------------
     std::vector<std::string> GetStartQuest();
+
+    std::vector<std::string> GetStartedQuest();
     std::vector<std::string> GetFinishQuest();
     void SetTalk(const std::string& npc);
     void SetPos(const float x, const float y, const float z, const bool update = true);
