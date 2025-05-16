@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include <deque>
@@ -14,14 +14,14 @@ enum class eStartType
     QUEST_FINISHED,
     QUEST_NOT_FINISHED,
     EXAMINE,
-    QUEST_FINISH_OR, // �N�G�X�g����ł��������Ă�����
+    QUEST_FINISH_OR, // クエストが一つでも完了していたら
     INVENTORY,
     STOREHOUSE,
-    INVENTORY_LEVEL, // �����l���`�F�b�N����
-    STOREHOUSE_LEVEL, // �����l���`�F�b�N����
-    BODY_STAMINA_LESS, // �̗̂̑͂��w�肵���l��菭�Ȃ�������
-    BRAIN_STAMINA_LESS, // �]�̗̑͂��w�肵���l��菭�Ȃ�������
-    POS_OUT, // �ʒu���w��͈͂̊O�Ȃ�
+    INVENTORY_LEVEL, // 強化値もチェックする
+    STOREHOUSE_LEVEL, // 強化値もチェックする
+    BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
+    BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
+    POS_OUT, // 位置が指定範囲の外なら
 };
 
 enum class eFinishType
@@ -34,25 +34,25 @@ enum class eFinishType
     EXAMINE,
     INVENTORY,
     STOREHOUSE,
-    INVENTORY_LEVEL, // �����l���`�F�b�N����
-    STOREHOUSE_LEVEL, // �����l���`�F�b�N����
-    BODY_STAMINA_LESS, // �̗̂̑͂��w�肵���l��菭�Ȃ�������
-    BRAIN_STAMINA_LESS, // �]�̗̑͂��w�肵���l��菭�Ȃ�������
-    POS_OUT, // �ʒu���w��͈͂̊O�Ȃ�
-    TIME_PAST, // ���Ԃ��o�߂�����
-    AT_NIGHT, // �邾������i���łɖ邾������A���������Ă��܂��B�u��ɂȂ�����v����肽���Ȃ�TIME_PAST�Ƒg�ݍ��킹�Ďg���΂悢�j
-              // �i��̓I�ɂ�18������6���j
-    AT_DAYTIME, // ����������i��̓I�ɂ�6������18���j
-    NPC_ALIVE, // NPC���������Ă�����
+    INVENTORY_LEVEL, // 強化値もチェックする
+    STOREHOUSE_LEVEL, // 強化値もチェックする
+    BODY_STAMINA_LESS, // 体の体力が指定した値より少なかったら
+    BRAIN_STAMINA_LESS, // 脳の体力が指定した値より少なかったら
+    POS_OUT, // 位置が指定範囲の外なら
+    TIME_PAST, // 時間が経過したら
+    AT_NIGHT, // 夜だったら（すでに夜だったら、即完了してしまう。「夜になったら」をやりたいならTIME_PASTと組み合わせて使えばよい）
+              // （具体的には18時から6時）
+    AT_DAYTIME, // 昼だったら（具体的には6時から18時）
+    NPC_ALIVE, // NPCが生存していたら
 };
 
 enum class eQuestState
 {
     NOT_START,
     START,
-    STARTED, // ��x�ł�START��`������STARTED�ɐ؂�ւ���H
+    STARTED, // 一度でもSTARTを伝えたらSTARTEDに切り替える？
     FINISH,
-    FINISHED, // ��x�ł�FINISH��`������FINISHED�ɐ؂�ւ���H
+    FINISHED, // 一度でもFINISHを伝えたらFINISHEDに切り替える？
 };
 
 struct ItemInfo
@@ -143,7 +143,7 @@ public:
     void Save(const std::string& savefile, const bool encrypt);
 
     //-------------------------------------------------
-    // ���̊֐������s����ƁA�N�G�X�g�̏�Ԃ��uSTART�v�������N�G�X�g�́uSTARTED�v�ɂȂ�
+    // この関数を実行すると、クエストの状態が「START」だったクエストは「STARTED」になる
     //-------------------------------------------------
     std::vector<std::string> GetStartQuest();
 
@@ -157,28 +157,28 @@ public:
     std::vector<std::string> GetQuestFinishEvent(const std::string& id);
     void SetExamine(const float x, const float y, const float z);
 
-    // �C���x���g���̓��e��o�^
+    // インベントリの内容を登録
     void SetInventoryContent(const std::vector<ItemInfo>& list, const bool update = true);
 
-    // �q�ɂ̓��e��o�^
+    // 倉庫の内容を登録
     void SetStorehouseContent(const int storehouseId, const std::vector<ItemInfo>& list, const bool update = true);
 
     void SetBodyStamina(const int stamina);
 
     void SetBrainStamina(const int stamina);
 
-    // �J�n�^�C�v���u���ׂ���v�ł���N�G�X�g���擾
-    // ���W��n���āA���̍��W�ŊJ�n����N�G�X�g���擾
-    // �Y������N�G�X�g�����������Ă�������Ԃ�
-    // �܂��J�n���Ă��Ȃ��N�G�X�g�������Ώۂł���A
-    // �J�n�ς݂�������A�������Ă���N�G�X�g�͑ΏۂƂȂ�Ȃ��B
+    // 開始タイプが「調べたら」であるクエストを取得
+    // 座標を渡して、その座標で開始するクエストを取得
+    // 該当するクエストが複数あっても一つだけ返す
+    // まだ開始していないクエストだけが対象であり、
+    // 開始済みだったり、完了しているクエストは対象とならない。
     std::string GetQuestIdStartByExamine(const float x, const float y, const float z);
 
-    // �����^�C�v���u���ׂ���v�ȃN�G�X�g���擾
-    // ���W��n���āA���̍��W�Ŋ�������N�G�X�g���擾
-    // �Y������N�G�X�g�����������Ă�������Ԃ�
-    // �i�s���ŁA�܂��������Ă��Ȃ��N�G�X�g�������Ώۂł���A
-    // �J�n���Ă��Ȃ�������A�������Ă���N�G�X�g�͑ΏۂƂȂ�Ȃ��B
+    // 完了タイプが「調べたら」なクエストを取得
+    // 座標を渡して、その座標で完了するクエストを取得
+    // 該当するクエストが複数あっても一つだけ返す
+    // 進行中で、まだ完了していないクエストだけが対象であり、
+    // 開始していなかったり、完了しているクエストは対象とならない。
     std::string GetQuestIdFinishByExamine(const float x, const float y, const float z);
 
     void SetQuestFinish(const std::string& id);
@@ -187,7 +187,7 @@ public:
                             const int hour, const int minute, const int second,
                             const bool update = true);
 
-    // NPC�������Ă��邩�B��Ɏ��S�����Ƃ��Ɏg���B
+    // NPCが生きているか。主に死亡したときに使う。
     void SetNpcIsAlive(const std::string& npcKey, const bool bAlive, const bool update);
 
 private:
@@ -196,7 +196,7 @@ private:
 
     std::vector<ItemInfo> m_inventory;
     
-    // �q�ɂ̓Q�[�����ɕ������݂���
+    // 倉庫はゲーム内に複数存在する
     std::unordered_map<int, std::vector<ItemInfo>> m_storehouseMap;
 
     int m_bodyStamina = 0;

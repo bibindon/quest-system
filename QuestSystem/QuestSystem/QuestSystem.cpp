@@ -1,4 +1,4 @@
-#include "QuestSystem.h"
+ï»¿#include "QuestSystem.h"
 #include <windows.h>
 #include <fstream>
 #include <sstream>
@@ -56,24 +56,24 @@ static void trim(std::string& s)
 
 /*
 
-ƒNƒGƒXƒgID,ŠJnƒ^ƒCƒv,ŠJnƒ^ƒCƒvƒIƒvƒVƒ‡ƒ“,ŠJnƒCƒxƒ“ƒg,Š®—¹ƒ^ƒCƒv,Š®—¹ƒIƒvƒVƒ‡ƒ“‚P,Š®—¹ƒIƒvƒVƒ‡ƒ“‚Q,Š®—¹ƒCƒxƒ“ƒg
-Q1,l‚Æ˜b‚µ‚½‚ç,‚«‚ñ‚É‚­‚ñ,<speak><‚«‚ñ‚É‚­‚ñ>ƒ]ƒ“ƒr‚ğ‚R•C“|‚µ‚Ä‚­‚ê,"“G‚ğ“|‚µ‚½‚ç
-l‚Æ˜b‚µ‚½‚ç","ƒXƒ‰ƒCƒ€
-‚«‚ñ‚É‚­‚ñ",3,"<speak><‚«‚ñ‚É‚­‚ñ>‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½
+ã‚¯ã‚¨ã‚¹ãƒˆID,é–‹å§‹ã‚¿ã‚¤ãƒ—,é–‹å§‹ã‚¿ã‚¤ãƒ—ã‚ªãƒ—ã‚·ãƒ§ãƒ³,é–‹å§‹ã‚¤ãƒ™ãƒ³ãƒˆ,å®Œäº†ã‚¿ã‚¤ãƒ—,å®Œäº†ã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‘,å®Œäº†ã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼’,å®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆ
+Q1,äººã¨è©±ã—ãŸã‚‰,ãã‚“ã«ãã‚“,<speak><ãã‚“ã«ãã‚“>ã‚¾ãƒ³ãƒ“ã‚’ï¼“åŒ¹å€’ã—ã¦ãã‚Œ,"æ•µã‚’å€’ã—ãŸã‚‰
+äººã¨è©±ã—ãŸã‚‰","ã‚¹ãƒ©ã‚¤ãƒ 
+ãã‚“ã«ãã‚“",3,"<speak><ãã‚“ã«ãã‚“>ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸ
 <image>kinniku.png"
-Q2,l‚Æ˜b‚µ‚½‚ç,‚«‚ñ‚É‚­‚ñ,<speak><‚«‚ñ‚É‚­‚ñ>ƒ]ƒ“ƒr‚ÆƒXƒ‰ƒCƒ€‚ğ“|‚µ‚Ä‚­‚ê,"“G‚ğ“|‚µ‚½‚ç
-“G‚ğ“|‚µ‚½‚ç
-l‚Æ˜b‚µ‚½‚ç","ƒXƒ‰ƒCƒ€
-ƒ]ƒ“ƒr
-‚«‚ñ‚É‚­‚ñ","3
-4","<speak><‚«‚ñ‚É‚­‚ñ>‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½
+Q2,äººã¨è©±ã—ãŸã‚‰,ãã‚“ã«ãã‚“,<speak><ãã‚“ã«ãã‚“>ã‚¾ãƒ³ãƒ“ã¨ã‚¹ãƒ©ã‚¤ãƒ ã‚’å€’ã—ã¦ãã‚Œ,"æ•µã‚’å€’ã—ãŸã‚‰
+æ•µã‚’å€’ã—ãŸã‚‰
+äººã¨è©±ã—ãŸã‚‰","ã‚¹ãƒ©ã‚¤ãƒ 
+ã‚¾ãƒ³ãƒ“
+ãã‚“ã«ãã‚“","3
+4","<speak><ãã‚“ã«ãã‚“>ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸ
 <image>kinniku.png"
-Q3,"l‚Æ˜b‚µ‚½‚ç
-ƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚ç","ƒVƒ…ƒ‚¿‚á‚ñ
-Q3",<speak><ƒVƒ…ƒ‚¿‚á‚ñ>‚±‚ñ‚É‚¿‚Í,©“®Š®—¹,,,
-Q4,"l‚Æ˜b‚µ‚½‚ç
-ƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚ç","ƒVƒ…ƒ‚¿‚á‚ñ
-Q3",<speak><ƒVƒ…ƒ‚¿‚á‚ñ>‚È‚ñ‚©‚æ‚¤‚Å‚·‚©,©“®Š®—¹,,,
+Q3,"äººã¨è©±ã—ãŸã‚‰
+ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãªã„ãªã‚‰","ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“
+Q3",<speak><ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“>ã“ã‚“ã«ã¡ã¯,è‡ªå‹•å®Œäº†,,,
+Q4,"äººã¨è©±ã—ãŸã‚‰
+ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰","ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“
+Q3",<speak><ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“>ãªã‚“ã‹ã‚ˆã†ã§ã™ã‹,è‡ªå‹•å®Œäº†,,,
 
 */
 bool QuestSystem::Init(const std::string& csvFilePath,
@@ -110,7 +110,7 @@ bool QuestSystem::Init(const std::string& csvFilePath,
 
     while (std::getline(ss, buff))
     {
-        // æ“ªs‚Í–³‹
+        // å…ˆé ­è¡Œã¯ç„¡è¦–
         if (row == 0)
         {
             row = 1;
@@ -147,67 +147,67 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             {
                 std::vector<eStartType> work = questData.GetStartType();
                 std::deque<bool> work2 = questData.GetStartFlag();
-                if (buffComma == "l‚Æ˜b‚µ‚½‚ç")
+                if (buffComma == "äººã¨è©±ã—ãŸã‚‰")
                 {
                     work.push_back(eStartType::TALK);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚ç")
+                else if (buffComma == "ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰")
                 {
                     work.push_back(eStartType::QUEST_FINISHED);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚ç")
+                else if (buffComma == "ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãªã„ãªã‚‰")
                 {
                     work.push_back(eStartType::QUEST_NOT_FINISHED);
                     work2.push_back(true);
                 }
-                else if (buffComma == "ˆÊ’u")
+                else if (buffComma == "ä½ç½®")
                 {
                     work.push_back(eStartType::POS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "’²‚×‚½‚ç")
+                else if (buffComma == "èª¿ã¹ãŸã‚‰")
                 {
                     work.push_back(eStartType::EXAMINE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ˆê‚Â‚Å‚àƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚ç")
+                else if (buffComma == "ä¸€ã¤ã§ã‚‚ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰")
                 {
                     work.push_back(eStartType::QUEST_FINISH_OR);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒCƒ“ƒxƒ“ƒgƒŠ‚ÉX‚ªYŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã«XãŒYå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::INVENTORY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘qŒÉA‚ÉX‚ªYŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "å€‰åº«Aã«XãŒYå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::STOREHOUSE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒCƒ“ƒxƒ“ƒgƒŠ‚É‹­‰»’lX‚ÌY‚ªZŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã«å¼·åŒ–å€¤Xã®YãŒZå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::INVENTORY_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘qŒÉA‚É‹­‰»’lX‚ÌY‚ªZŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "å€‰åº«Aã«å¼·åŒ–å€¤Xã®YãŒZå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘Ì‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                else if (buffComma == "ä½“ã®ä½“åŠ›ãŒXä»¥ä¸‹ã ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::BODY_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "”]‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                else if (buffComma == "è„³ã®ä½“åŠ›ãŒXä»¥ä¸‹ã ã£ãŸã‚‰")
                 {
                     work.push_back(eStartType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ˆÊ’u‚ª”ÍˆÍŠO")
+                else if (buffComma == "ä½ç½®ãŒç¯„å›²å¤–")
                 {
                     work.push_back(eStartType::POS_OUT);
                     work2.push_back(false);
@@ -235,87 +235,87 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             {
                 std::vector<eFinishType> work = questData.GetFinishType();
                 std::deque<bool> work2 = questData.GetFinishFlag();
-                if (buffComma == "“G‚ğ“|‚µ‚½‚ç")
+                if (buffComma == "æ•µã‚’å€’ã—ãŸã‚‰")
                 {
                     work.push_back(eFinishType::DEFEAT_ENEMY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "l‚Æ˜b‚µ‚½‚ç")
+                else if (buffComma == "äººã¨è©±ã—ãŸã‚‰")
                 {
                     work.push_back(eFinishType::TALK);
                     work2.push_back(false);
                 }
-                else if (buffComma == "©“®Š®—¹")
+                else if (buffComma == "è‡ªå‹•å®Œäº†")
                 {
                     work.push_back(eFinishType::AUTO);
                     work2.push_back(true);
                 }
-                else if (buffComma == "ˆÊ’u")
+                else if (buffComma == "ä½ç½®")
                 {
                     work.push_back(eFinishType::POS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚ç")
+                else if (buffComma == "ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰")
                 {
                     work.push_back(eFinishType::QUEST_FINISHED);
                     work2.push_back(false);
                 }
-                else if (buffComma == "’²‚×‚½‚ç")
+                else if (buffComma == "èª¿ã¹ãŸã‚‰")
                 {
                     work.push_back(eFinishType::EXAMINE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒCƒ“ƒxƒ“ƒgƒŠ‚ÉX‚ªYŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã«XãŒYå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::INVENTORY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘qŒÉA‚ÉX‚ªYŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "å€‰åº«Aã«XãŒYå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::STOREHOUSE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ƒCƒ“ƒxƒ“ƒgƒŠ‚É‹­‰»’lX‚ÌY‚ªZŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã«å¼·åŒ–å€¤Xã®YãŒZå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::INVENTORY_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘qŒÉA‚É‹­‰»’lX‚ÌY‚ªZŒÂ‚ ‚Á‚½‚ç")
+                else if (buffComma == "å€‰åº«Aã«å¼·åŒ–å€¤Xã®YãŒZå€‹ã‚ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "‘Ì‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                else if (buffComma == "ä½“ã®ä½“åŠ›ãŒXä»¥ä¸‹ã ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::BODY_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "”]‚Ì‘Ì—Í‚ªXˆÈ‰º‚¾‚Á‚½‚ç")
+                else if (buffComma == "è„³ã®ä½“åŠ›ãŒXä»¥ä¸‹ã ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ˆÊ’u‚ª”ÍˆÍŠO")
+                else if (buffComma == "ä½ç½®ãŒç¯„å›²å¤–")
                 {
                     work.push_back(eFinishType::POS_OUT);
                     work2.push_back(false);
                 }
-                else if (buffComma == "ŠÔ‚ªŒo‰ß‚µ‚½‚ç")
+                else if (buffComma == "æ™‚é–“ãŒçµŒéã—ãŸã‚‰")
                 {
                     work.push_back(eFinishType::TIME_PAST);
                     work2.push_back(false);
                 }
-                else if (buffComma == "–é‚¾‚Á‚½‚ç")
+                else if (buffComma == "å¤œã ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::AT_NIGHT);
                     work2.push_back(false);
                 }
-                else if (buffComma == "’‹‚¾‚Á‚½‚ç")
+                else if (buffComma == "æ˜¼ã ã£ãŸã‚‰")
                 {
                     work.push_back(eFinishType::AT_DAYTIME);
                     work2.push_back(false);
                 }
-                else if (buffComma == "NPC‚ÌX‚ª¶‘¶")
+                else if (buffComma == "NPCã®XãŒç”Ÿå­˜")
                 {
                     work.push_back(eFinishType::NPC_ALIVE);
                     work2.push_back(false);
@@ -358,10 +358,10 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             }
         }
         // 0,1,2,3,4,5,6,7
-        // ’Êí‚ÌƒNƒGƒXƒgƒf[ƒ^‚Íã‹L‚Ì‚æ‚¤‚Èƒf[ƒ^‚Å‚ ‚é‚ª
+        // é€šå¸¸ã®ã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã¯ä¸Šè¨˜ã®ã‚ˆã†ãªãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚‹ãŒ
         // 0,1,2,3,4,5,6,
-        // ã‹L‚Ì‚æ‚¤‚ÉÅŒã‚Ì—ñ‚É‰½‚à‚È‚¢‚ª‚ ‚éB
-        // ‚±‚Ì‚Æ‚«getlineŠÖ”‚ª'6'‚Ü‚Å‚µ‚©“Ç‚ß‚È‚¢B
+        // ä¸Šè¨˜ã®ã‚ˆã†ã«æœ€å¾Œã®åˆ—ã«ä½•ã‚‚ãªã„æ™‚ãŒã‚ã‚‹ã€‚
+        // ã“ã®ã¨ãgetlineé–¢æ•°ãŒ'6'ã¾ã§ã—ã‹èª­ã‚ãªã„ã€‚
         if ((col >= 7) && (doubleQuoteMode == false))
         {
             row++;
@@ -376,7 +376,7 @@ bool QuestSystem::Init(const std::string& csvFilePath,
         return true;
     }
 
-    // ƒZ[ƒuƒf[ƒ^‚ğ“Ç‚Ş
+    // ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€
     {
         std::vector<std::vector<std::string>> vvs;
         if (encrypt == false)
@@ -446,9 +446,9 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
 {
     std::vector<std::vector<std::string>> vvs;
     std::vector<std::string> vs;
-    vs.push_back("ƒNƒGƒXƒgID");
-    vs.push_back("ó‹µ");
-    vs.push_back("ƒNƒGƒXƒgŠJn");
+    vs.push_back("ã‚¯ã‚¨ã‚¹ãƒˆID");
+    vs.push_back("çŠ¶æ³");
+    vs.push_back("ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ™‚åˆ»");
     vvs.push_back(vs);
     vs.clear();
 
@@ -594,10 +594,10 @@ void QuestSystem::SetTalk(const std::string& npc)
         }
     }
 
-    // ˜b‚µ‚©‚¯‚é‚±‚Æ‚ÍƒNƒGƒXƒg‚ÌŠJnğŒ‚Å‚à‚ ‚èAI—¹ğŒ‚Å‚à‚ ‚é
+    // è©±ã—ã‹ã‘ã‚‹ã“ã¨ã¯ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã§ã‚‚ã‚ã‚Šã€çµ‚äº†æ¡ä»¶ã§ã‚‚ã‚ã‚‹
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -631,7 +631,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS ||
                     m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -680,10 +680,10 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
         }
     }
 
-    // À•W‚É“’B‚µ‚½‚±‚Æ‚ÍƒNƒGƒXƒg‚ÌŠJnğŒ‚Å‚à‚ ‚èAI—¹ğŒ‚Å‚à‚ ‚é
+    // åº§æ¨™ã«åˆ°é”ã—ãŸã“ã¨ã¯ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã§ã‚‚ã‚ã‚Šã€çµ‚äº†æ¡ä»¶ã§ã‚‚ã‚ã‚‹
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -692,7 +692,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS ||
                     m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -747,13 +747,13 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
     }
 }
 
-// d‚¢‚Ì‚Å•p”É‚ÉŒÄ‚ñ‚Å‚Í‚¢‚¯‚È‚¢B
+// é‡ã„ã®ã§é »ç¹ã«å‘¼ã‚“ã§ã¯ã„ã‘ãªã„ã€‚
 void QuestSystem::UpdateQuestStatus()
 {
-    // ƒNƒGƒXƒgŠJnƒ`ƒFƒbƒN
+    // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ãƒã‚§ãƒƒã‚¯
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ‘S•”true‚È‚çƒNƒGƒXƒgŠJn‚Æ‚·‚é
+        // å…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ã¨ã™ã‚‹
         bool allTrue = true;
         for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
         {
@@ -772,10 +772,10 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒgŠ®—¹ƒ`ƒFƒbƒN
+    // ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ãƒã‚§ãƒƒã‚¯
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -796,7 +796,7 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚Ìˆ—
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã®å‡¦ç†
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -826,7 +826,7 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚çv‚Ìˆ—
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãªã„ãªã‚‰ã€ã®å‡¦ç†
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -855,7 +855,7 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuˆê‚Â‚Å‚àƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚Ìˆ—
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œä¸€ã¤ã§ã‚‚ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã®å‡¦ç†
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -894,7 +894,7 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒg‚ÌŠ®—¹ğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚Ìˆ—
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã®å‡¦ç†
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::START ||
@@ -924,16 +924,16 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çvA
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚çvA
-    // ƒNƒGƒXƒg‚ÌŠJnğŒuˆê‚Â‚Å‚àƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çvA
-    // ƒNƒGƒXƒg‚ÌŠ®—¹ğŒuƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚Ìƒ`ƒFƒbƒN‚ğs‚Á‚½‚¤‚¦‚Å
-    // ‰ü‚ß‚ÄAƒNƒGƒXƒgŠJnEŠ®—¹ƒ`ƒFƒbƒN
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã€
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãªã„ãªã‚‰ã€ã€
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã€Œä¸€ã¤ã§ã‚‚ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã€
+    // ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†æ¡ä»¶ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã£ãŸã†ãˆã§
+    // æ”¹ã‚ã¦ã€ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ãƒ»å®Œäº†ãƒã‚§ãƒƒã‚¯
  
-    // ƒNƒGƒXƒgŠJnƒ`ƒFƒbƒN
+    // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ãƒã‚§ãƒƒã‚¯
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ‘S•”true‚È‚çƒNƒGƒXƒgŠJn‚Æ‚·‚é
+        // å…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ã¨ã™ã‚‹
         bool allTrue = true;
         for (std::size_t j = 0; j < m_vecQuestData.at(i).GetStartType().size(); ++j)
         {
@@ -952,10 +952,10 @@ void QuestSystem::UpdateQuestStatus()
         }
     }
 
-    // ƒNƒGƒXƒgŠ®—¹ƒ`ƒFƒbƒN
+    // ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ãƒã‚§ãƒƒã‚¯
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -1041,7 +1041,7 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::EXAMINE)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -1066,10 +1066,10 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
         }
     }
 
-    // À•W‚É“’B‚µ‚½‚±‚Æ‚ÍƒNƒGƒXƒg‚ÌŠJnğŒ‚Å‚à‚ ‚èAI—¹ğŒ‚Å‚à‚ ‚é
+    // åº§æ¨™ã«åˆ°é”ã—ãŸã“ã¨ã¯ã‚¯ã‚¨ã‚¹ãƒˆã®é–‹å§‹æ¡ä»¶ã§ã‚‚ã‚ã‚Šã€çµ‚äº†æ¡ä»¶ã§ã‚‚ã‚ã‚‹
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -1077,7 +1077,7 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::EXAMINE)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -1116,7 +1116,7 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY)
                 {
-                    // ƒgƒ}ƒg:5‚¾‚Á‚½‚çƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
                     std::string itemName = vs.at(0);
@@ -1140,7 +1140,7 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY_LEVEL)
                 {
-                    // 3:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‹­‰»’l3‚Ìƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // 3:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å¼·åŒ–å€¤3ã®ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
@@ -1176,7 +1176,7 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY)
                 {
-                    // ƒgƒ}ƒg:5‚¾‚Á‚½‚çƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
                     std::string itemName = vs.at(0);
@@ -1200,7 +1200,7 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY_LEVEL)
                 {
-                    // 3:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‹­‰»’l3‚Ìƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // 3:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å¼·åŒ–å€¤3ã®ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
@@ -1245,7 +1245,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE)
                 {
-                    // 1:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‘qŒÉ1‚Éƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // 1:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å€‰åº«1ã«ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
 
@@ -1277,7 +1277,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE_LEVEL)
                 {
-                    // 3:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‹­‰»’l3‚Ìƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // 3:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å¼·åŒ–å€¤3ã®ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
 
@@ -1321,8 +1321,8 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE)
                 {
-                    // 1:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‘qŒÉ1‚Éƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
-                    // i‘qŒÉ‚ÍƒQ[ƒ€“à‚É•¡”‘¶İ‚·‚éj
+                    // 1:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å€‰åº«1ã«ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
+                    // ï¼ˆå€‰åº«ã¯ã‚²ãƒ¼ãƒ å†…ã«è¤‡æ•°å­˜åœ¨ã™ã‚‹ï¼‰
                     std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
 
@@ -1354,7 +1354,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE_LEVEL)
                 {
-                    // 1:2:ƒgƒ}ƒg:5‚¾‚Á‚½‚ç‘qŒÉ1‚É‹­‰»’l{‚Q‚Ìƒgƒ}ƒg‚ª5ŒÂˆÈã‚ ‚Á‚½‚ç‚ÌˆÓ–¡
+                    // 1:2:ãƒˆãƒãƒˆ:5ã ã£ãŸã‚‰å€‰åº«1ã«å¼·åŒ–å€¤ï¼‹ï¼’ã®ãƒˆãƒãƒˆãŒ5å€‹ä»¥ä¸Šã‚ã£ãŸã‚‰ã®æ„å‘³
                     std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(opt, ':');
 
@@ -1506,7 +1506,7 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdStartByExamine(const float x,
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::EXAMINE)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -1539,7 +1539,7 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
     std::string result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -1547,7 +1547,7 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::EXAMINE)
                 {
-                    // 0.0:1.0:2.0:3.0‚¾‚Á‚½‚çÀ•W(0.0, 1.0, 2.0)‚Å”¼Œa‚ª3.0A‚ÌˆÓ–¡
+                    // 0.0:1.0:2.0:3.0ã ã£ãŸã‚‰åº§æ¨™(0.0, 1.0, 2.0)ã§åŠå¾„ãŒ3.0ã€ã®æ„å‘³
                     std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::string> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
@@ -1593,10 +1593,10 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
     m_currentMinute = minute;
     m_currentSecond = second;
 
-    // ŠÔŒo‰ß‚ÅŠ®—¹‚·‚éƒNƒGƒXƒg‚ª‚ ‚é‚©
+    // æ™‚é–“çµŒéã§å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆãŒã‚ã‚‹ã‹
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
@@ -1604,13 +1604,13 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::TIME_PAST)
                 {
-                    // 0:0:1:2:3:4‚¾‚Á‚½‚ç1“ú‚Æ2ŠÔ‚Æ3•ª‚Æ4•bŒo‰ß‚µ‚½‚çŠ®—¹A‚ÌˆÓ–¡
-                    // 1Œ1“ú00•ª0•b‚ÉŠJn‚µ‚½ƒNƒGƒXƒg‚Í1Œ2“ú23•ª4•bˆÈ~‚ÉŠ®—¹‚Æ‚È‚éB
-                    // 12Œ31“ú2359•ª59•b‚ÉŠJn‚µ‚½ƒNƒGƒXƒg‚Í1Œ2“ú23•ª3•bˆÈ~‚ÉŠ®—¹‚Æ‚È‚éB
-                    // 1Œ25“ú‚É1‚©Œ‚Æ10“úŒã‚ÉŠ®—¹‚·‚éƒNƒGƒXƒg‚ğŠJn‚µ‚½‚çAŠ®—¹‚·‚é‚Ì‚Í3Œ7“úi2Œ‚Í28“ú‚µ‚©‚È‚¢‚±‚Æ‚É’ˆÓjj
-                    // ‚â‚Á‚©‚¢B
+                    // 0:0:1:2:3:4ã ã£ãŸã‚‰1æ—¥ã¨2æ™‚é–“ã¨3åˆ†ã¨4ç§’çµŒéã—ãŸã‚‰å®Œäº†ã€ã®æ„å‘³
+                    // 1æœˆ1æ—¥0æ™‚0åˆ†0ç§’ã«é–‹å§‹ã—ãŸã‚¯ã‚¨ã‚¹ãƒˆã¯1æœˆ2æ—¥2æ™‚3åˆ†4ç§’ä»¥é™ã«å®Œäº†ã¨ãªã‚‹ã€‚
+                    // 12æœˆ31æ—¥23æ™‚59åˆ†59ç§’ã«é–‹å§‹ã—ãŸã‚¯ã‚¨ã‚¹ãƒˆã¯1æœˆ2æ—¥2æ™‚3åˆ†3ç§’ä»¥é™ã«å®Œäº†ã¨ãªã‚‹ã€‚
+                    // 1æœˆ25æ—¥ã«1ã‹æœˆã¨10æ—¥å¾Œã«å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆã‚’é–‹å§‹ã—ãŸã‚‰ã€å®Œäº†ã™ã‚‹ã®ã¯3æœˆ7æ—¥ï¼ˆ2æœˆã¯28æ—¥ã—ã‹ãªã„ã“ã¨ã«æ³¨æ„ï¼‰ï¼‰
+                    // ã‚„ã£ã‹ã„ã€‚
 
-                    // ƒNƒGƒXƒg‚ÌŠ®—¹‚ğ‹‚ß‚é
+                    // ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†æ™‚åˆ»ã‚’æ±‚ã‚ã‚‹
                     int finishYear = 0;
                     int finishMonth = 0;
                     int finishDay = 0;
@@ -1664,7 +1664,7 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
                             finishDay++;
                         }
 
-                        // 0Œ‚Æ‚¢‚¤‚Ì‚Í‚È‚¢A‚Í‚¸EEE
+                        // 0æœˆã¨ã„ã†ã®ã¯ãªã„ã€ã¯ãšãƒ»ãƒ»ãƒ»
                         int dayCount[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
                         if (finishDay >= dayCount[finishMonth])
                         {
@@ -1679,7 +1679,7 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
                         }
                     }
 
-                    // Š®—¹‚ğ‰ß‚¬‚Ä‚¢‚é‚©H
+                    // å®Œäº†æ™‚åˆ»ã‚’éãã¦ã„ã‚‹ã‹ï¼Ÿ
                     bool bFinish = false;
                     {
                         if (finishYear < m_currentYear)
@@ -1762,17 +1762,17 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
         }
     }
 
-    // –é‚¾‚Á‚½‚ç/’©‚¾‚Á‚½‚çŠ®—¹‚ÌƒNƒGƒXƒg
+    // å¤œã ã£ãŸã‚‰/æœã ã£ãŸã‚‰å®Œäº†ã®ã‚¯ã‚¨ã‚¹ãƒˆ
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
             for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
             {
-                // 6 ~ 18 ’‹
-                // 18 ~ 6 –é
+                // 6 ~ 18 æ˜¼
+                // 18 ~ 6 å¤œ
                 if (18 <= m_currentHour || m_currentHour < 6)
                 {
                     if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::AT_NIGHT)
@@ -1817,10 +1817,10 @@ void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::string& npcKey, const 
 {
     m_NpcAlive[npcKey] = bAlive;
 
-    // NPC‚ª¶‘¶‚µ‚Ä‚¢‚½‚çŠ®—¹‚ÌƒNƒGƒXƒg
+    // NPCãŒç”Ÿå­˜ã—ã¦ã„ãŸã‚‰å®Œäº†ã®ã‚¯ã‚¨ã‚¹ãƒˆ
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        // ŠJnÏ‚İ‚ÌƒNƒGƒXƒg‚ÌŠ®—¹ƒtƒ‰ƒO‚ª‘S•”true‚È‚çƒNƒGƒXƒgŠ®—¹‚Æ‚·‚é
+        // é–‹å§‹æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ãƒ•ãƒ©ã‚°ãŒå…¨éƒ¨trueãªã‚‰ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ã¨ã™ã‚‹
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
             m_vecQuestData.at(i).GetState() == eQuestState::START)
         {

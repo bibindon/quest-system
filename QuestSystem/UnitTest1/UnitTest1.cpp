@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CppUnitTest.h"
 #include "../QuestSystem/QuestSystem.h"
 #include <iostream>
@@ -13,15 +13,15 @@ namespace UnitTest1
     {
     public:
         
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å—‚¿‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§è½ã¡ãªã„ã“ã¨
         TEST_METHOD(TestMethod01)
         {
             QuestSystem qs;
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // InitŠÖ”‚Å—‚¿‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // Inité–¢æ•°ã§è½ã¡ãªã„ã“ã¨
         TEST_METHOD(TestMethod02)
         {
             QuestSystem qs;
@@ -29,23 +29,23 @@ namespace UnitTest1
             Assert::AreEqual(true, ret);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // SetTalkŠÖ”‚Å—‚¿‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // SetTalké–¢æ•°ã§è½ã¡ãªã„ã“ã¨
         TEST_METHOD(TestMethod03)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample03.csv", "", false);
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
             Assert::AreEqual(true, ret);
         }
         
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‚«‚ñ‚É‚­‚ñ‚É˜b‚µ‚©‚¯‚½‚çƒNƒGƒXƒgQ1‚ªŠJn‚µAQ2‚ÍŠJn‚µ‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ãã‚“ã«ãã‚“ã«è©±ã—ã‹ã‘ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆQ1ãŒé–‹å§‹ã—ã€Q2ã¯é–‹å§‹ã—ãªã„ã“ã¨
         TEST_METHOD(TestMethod04)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample04.csv", "", false);
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
 
             std::vector<std::string> vs = qs.GetStartQuest();
             auto it = std::find(vs.begin(), vs.end(), "Q1");
@@ -55,19 +55,19 @@ namespace UnitTest1
             Assert::AreEqual(true, it2 != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‚«‚ñ‚É‚­‚ñ‚É˜b‚µ‚©‚¯AƒXƒ‰ƒCƒ€‚ğ‚R‰ñ“|‚µAÄ“x‚«‚ñ‚É‚­‚ñ‚É˜b‚µ‚©‚¯‚½‚ç
-        // ƒNƒGƒXƒgQ1‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ãã‚“ã«ãã‚“ã«è©±ã—ã‹ã‘ã€ã‚¹ãƒ©ã‚¤ãƒ ã‚’ï¼“å›å€’ã—ã€å†åº¦ãã‚“ã«ãã‚“ã«è©±ã—ã‹ã‘ãŸã‚‰
+        // ã‚¯ã‚¨ã‚¹ãƒˆQ1ãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod05)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample05.csv", "", false);
 
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
-            qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-            qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-            qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
+            qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+            qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+            qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
 
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
 
@@ -79,22 +79,22 @@ namespace UnitTest1
 
             std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
 
-            Assert::AreEqual("<speak><‚«‚ñ‚É‚­‚ñ>‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½",
+            Assert::AreEqual("<speak><ãã‚“ã«ãã‚“>ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸ",
                              finishEvent.at(0).c_str());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‚«‚ñ‚É‚­‚ñ‚É˜b‚µ‚©‚¯AƒXƒ‰ƒCƒ€‚ğ‚Q‰ñ‚µ‚©“|‚³‚¸AÄ“x‚«‚ñ‚É‚­‚ñ‚É˜b‚µ‚©‚¯‚Ä‚à
-        // ƒNƒGƒXƒgQ1‚ªŠ®—¹‚µ‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ãã‚“ã«ãã‚“ã«è©±ã—ã‹ã‘ã€ã‚¹ãƒ©ã‚¤ãƒ ã‚’ï¼’å›ã—ã‹å€’ã•ãšã€å†åº¦ãã‚“ã«ãã‚“ã«è©±ã—ã‹ã‘ã¦ã‚‚
+        // ã‚¯ã‚¨ã‚¹ãƒˆQ1ãŒå®Œäº†ã—ãªã„ã“ã¨
         TEST_METHOD(TestMethod06)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample06.csv", "", false);
 
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
-            qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-            qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
+            qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+            qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
 
             std::vector<std::string> finishQuest = qs.GetFinishQuest();
 
@@ -102,8 +102,8 @@ namespace UnitTest1
                              finishQuest.size());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // À•WˆÚ“®‚É‚æ‚èAƒNƒGƒXƒg‚ªŠJn‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // åº§æ¨™ç§»å‹•ã«ã‚ˆã‚Šã€ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod07)
         {
             QuestSystem qs;
@@ -122,9 +122,9 @@ namespace UnitTest1
             Assert::AreEqual("Q5", startedQuest.at(0).c_str());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // À•WˆÚ“®‚É‚æ‚èAƒNƒGƒXƒg‚ªŠJn‚µA
-        // À•WˆÚ“®‚É‚æ‚èAƒNƒGƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // åº§æ¨™ç§»å‹•ã«ã‚ˆã‚Šã€ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã—ã€
+        // åº§æ¨™ç§»å‹•ã«ã‚ˆã‚Šã€ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod08)
         {
             QuestSystem qs;
@@ -145,8 +145,8 @@ namespace UnitTest1
             Assert::AreEqual("Q5", finishQuest.at(0).c_str());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒNƒGƒXƒgŠJnˆÊ’u‚Æ­‚µ—£‚ê‚Ä‚¢‚Ä‚à3ƒ[ƒgƒ‹ˆÈ“à‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠJn‚·‚é‚©
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ä½ç½®ã¨å°‘ã—é›¢ã‚Œã¦ã„ã¦ã‚‚3ãƒ¡ãƒ¼ãƒˆãƒ«ä»¥å†…ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹ã‹
         TEST_METHOD(TestMethod09)
         {
             QuestSystem qs;
@@ -165,8 +165,8 @@ namespace UnitTest1
             Assert::AreEqual(std::string("Q5"), finishQuest.at(0));
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒNƒGƒXƒgŠJnˆÊ’u‚ğ“ñ“x–K‚ê‚½‚Æ‚«AƒNƒGƒXƒgŠJnÏ‚İ‚Ìƒtƒ‰ƒO‚ª‰ğœ‚³‚ê‚È‚¢‚±‚Æ‚ÌƒeƒXƒg
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ä½ç½®ã‚’äºŒåº¦è¨ªã‚ŒãŸã¨ãã€ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ¸ˆã¿ã®ãƒ•ãƒ©ã‚°ãŒè§£é™¤ã•ã‚Œãªã„ã“ã¨ã®ãƒ†ã‚¹ãƒˆ
         TEST_METHOD(TestMethod10)
         {
             QuestSystem qs;
@@ -187,8 +187,8 @@ namespace UnitTest1
             Assert::AreEqual(finishQuest.at(0).c_str(), "Q5");
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒNƒGƒXƒgŠ®—¹ŒãAÄ“xƒNƒGƒXƒgŠJnˆÊ’u‚ğ–K‚ê‚½‚Æ‚«‚ÉƒNƒGƒXƒg‚ªŠJn‚µ‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†å¾Œã€å†åº¦ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹ä½ç½®ã‚’è¨ªã‚ŒãŸã¨ãã«ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã—ãªã„ã“ã¨
         TEST_METHOD(TestMethod11)
         {
             QuestSystem qs;
@@ -211,8 +211,8 @@ namespace UnitTest1
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒNƒGƒXƒgŠ®—¹ŒãAÄ“xƒNƒGƒXƒgŠ®—¹ˆÊ’u‚ğ–K‚ê‚½‚Æ‚«‚ÉƒNƒGƒXƒg‚ªŠ®—¹‚µ‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†å¾Œã€å†åº¦ã‚¯ã‚¨ã‚¹ãƒˆå®Œäº†ä½ç½®ã‚’è¨ªã‚ŒãŸã¨ãã«ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ãªã„ã“ã¨
         TEST_METHOD(TestMethod12)
         {
             QuestSystem qs;
@@ -236,14 +236,14 @@ namespace UnitTest1
             Assert::AreEqual(startedQuest.size(), (size_t)0);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod13)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample13.csv", "", false);
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
             std::vector<std::string> vs = qs.GetStartQuest();
-            qs.SetTalk("ƒVƒ…ƒ‚¿‚á‚ñ");
+            qs.SetTalk("ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“");
             vs = qs.GetFinishQuest();
 
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q6");
@@ -252,29 +252,29 @@ namespace UnitTest1
             std::vector<std::string> startedQuest = qs.GetStartQuest();
             Assert::AreEqual(startedQuest.size(), (size_t)1);
             Assert::AreEqual(startedQuest.at(0).c_str(), "Q7");
-            qs.SetTalk("‘¾˜Y");
+            qs.SetTalk("å¤ªéƒ");
             vs= qs.GetFinishQuest();
             Assert::AreEqual(vs.size(), (size_t)1);
             Assert::AreEqual(vs.at(0).c_str(), "Q7");
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod14)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample14.csv", "", false);
-            qs.SetTalk("Ÿ˜Y");
+            qs.SetTalk("æ¬¡éƒ");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q8");
             Assert::AreEqual(it != vs.end(), true);
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
-            qs.SetTalk("ƒVƒ…ƒ‚¿‚á‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
+            qs.SetTalk("ã‚·ãƒ¥ãƒ¯ã¡ã‚ƒã‚“");
             vs = qs.GetFinishQuest();
             it = std::find(vs.begin(), vs.end(), "Q8");
             Assert::AreEqual(it != vs.end(), true);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod15)
         {
             QuestSystem qs;
@@ -283,18 +283,18 @@ namespace UnitTest1
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q9");
             Assert::AreEqual(it != vs.end(), true);
-            qs.SetTalk("O˜Y");
+            qs.SetTalk("ä¸‰éƒ");
             vs = qs.GetFinishQuest();
             it = std::find(vs.begin(), vs.end(), "Q9");
             Assert::AreEqual(it != vs.end(), true);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod16)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample16.csv", "", false);
-            qs.SetTalk("l˜Y");
+            qs.SetTalk("å››éƒ");
             std::vector<std::string> vs = qs.GetStartQuest();
             std::vector<std::string>::iterator it = std::find(vs.begin(), vs.end(), "Q10");
             Assert::AreEqual(it != vs.end(), true);
@@ -304,18 +304,18 @@ namespace UnitTest1
             Assert::AreEqual(it != vs.end(), true);
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod17)
         {
-            // ’ÊíƒP[ƒX
+            // é€šå¸¸ã‚±ãƒ¼ã‚¹
             {
                 QuestSystem qs;
                 bool ret = qs.Init("..\\UnitTest1\\sample17.csv", "", false);
                 std::string result = qs.GetQuestIdStartByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q9");
             }
-            // æ“¾‚Å‚«‚é‚Ì‚Í‚Ü‚¾ŠJn‚µ‚Ä‚¢‚È‚¢ƒNƒGƒXƒg‚¾‚¯B
-            // ŠJnÏ‚İ‚¾‚Á‚½‚èAŠ®—¹Ï‚İ‚ÌƒNƒGƒXƒg‚Íæ“¾‚Å‚«‚È‚¢B
+            // å–å¾—ã§ãã‚‹ã®ã¯ã¾ã é–‹å§‹ã—ã¦ã„ãªã„ã‚¯ã‚¨ã‚¹ãƒˆã ã‘ã€‚
+            // é–‹å§‹æ¸ˆã¿ã ã£ãŸã‚Šã€å®Œäº†æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã¯å–å¾—ã§ããªã„ã€‚
             {
                 QuestSystem qs;
                 bool ret = qs.Init("..\\UnitTest1\\sample17.csv", "", false);
@@ -325,19 +325,19 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
         TEST_METHOD(TestMethod18)
         {
-            // ’ÊíƒP[ƒX
+            // é€šå¸¸ã‚±ãƒ¼ã‚¹
             {
                 QuestSystem qs;
                 bool ret = qs.Init("..\\UnitTest1\\sample18.csv", "", false);
-                qs.SetTalk("l˜Y");
+                qs.SetTalk("å››éƒ");
                 std::string result = qs.GetQuestIdFinishByExamine(0.f, 0.f, 0.f);
                 Assert::AreEqual(result.c_str(), "Q10");
             }
-            // æ“¾‚Å‚«‚é‚Ì‚ÍŠJnÏ‚İ‚ÅŠ®—¹‚µ‚Ä‚¢‚È‚¢ƒNƒGƒXƒg‚¾‚¯B
-            // ŠJn‚µ‚Ä‚¢‚È‚©‚Á‚½‚èAŠ®—¹Ï‚İ‚ÌƒNƒGƒXƒg‚Íæ“¾‚Å‚«‚È‚¢B
+            // å–å¾—ã§ãã‚‹ã®ã¯é–‹å§‹æ¸ˆã¿ã§å®Œäº†ã—ã¦ã„ãªã„ã‚¯ã‚¨ã‚¹ãƒˆã ã‘ã€‚
+            // é–‹å§‹ã—ã¦ã„ãªã‹ã£ãŸã‚Šã€å®Œäº†æ¸ˆã¿ã®ã‚¯ã‚¨ã‚¹ãƒˆã¯å–å¾—ã§ããªã„ã€‚
             {
                 QuestSystem qs;
                 bool ret = qs.Init("..\\UnitTest1\\sample18.csv", "", false);
@@ -346,14 +346,14 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // uƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚ª•¡”w’è‚³‚ê‚Ä‚¢‚½‚ÉƒNƒGƒXƒg‚ªŠJn‚Å‚«‚é‚©
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ãŒè¤‡æ•°æŒ‡å®šã•ã‚Œã¦ã„ãŸæ™‚ã«ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã§ãã‚‹ã‹
         TEST_METHOD(TestMethod19)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample19.csv", "", false);
 
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
             qs.SetTalk("A");
             qs.SetTalk("B");
             qs.SetTalk("C");
@@ -367,14 +367,14 @@ namespace UnitTest1
             Assert::AreEqual(std::string("Q7"), vs.at(0));
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // uƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚ª•¡”w’è‚³‚ê‚Ä‚¢‚½‚ÉƒNƒGƒXƒg‚ªŠ®—¹‚Å‚«‚é‚©
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã€Œã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ãŒè¤‡æ•°æŒ‡å®šã•ã‚Œã¦ã„ãŸæ™‚ã«ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã§ãã‚‹ã‹
         TEST_METHOD(TestMethod20)
         {
             QuestSystem qs;
             bool ret = qs.Init("..\\UnitTest1\\sample20.csv", "", false);
 
-            qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+            qs.SetTalk("ãã‚“ã«ãã‚“");
             qs.SetTalk("A");
             qs.SetTalk("B");
             qs.SetTalk("C");
@@ -396,8 +396,8 @@ namespace UnitTest1
             Assert::AreEqual(true, it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // uˆê‚Â‚Å‚àƒNƒGƒXƒg‚ªŠ®—¹‚µ‚Ä‚¢‚½‚çv‚ª“®ì‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã€Œä¸€ã¤ã§ã‚‚ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ã¦ã„ãŸã‚‰ã€ãŒå‹•ä½œã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod21)
         {
             QuestSystem qs;
@@ -415,8 +415,8 @@ namespace UnitTest1
             Assert::AreEqual(true, it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ˆÃ†‰»‚³‚ê‚½ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // æš—å·åŒ–ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã‚‹ã“ã¨
         TEST_METHOD(TestMethod22)
         {
             QuestSystem qs;
@@ -434,8 +434,8 @@ namespace UnitTest1
             Assert::AreEqual(true, it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // •Û‘¶‚³‚ê‚½ƒNƒGƒXƒgƒf[ƒ^‚ğ“Ç‚İA“r’†‚©‚çƒXƒ^[ƒg‚Å‚«‚é‚±‚ÆB
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ä¿å­˜ã•ã‚ŒãŸã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿ã€é€”ä¸­ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã§ãã‚‹ã“ã¨ã€‚
         TEST_METHOD(TestMethod23)
         {
             QuestSystem qs;
@@ -453,8 +453,8 @@ namespace UnitTest1
             Assert::AreEqual(true, it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌƒAƒCƒeƒ€‚ÌŒÂ”‚É‚æ‚Á‚ÄƒNƒGƒXƒg‚ªƒXƒ^[ƒg‚µ‚½‚èI—¹‚µ‚½‚è‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã®ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°ã«ã‚ˆã£ã¦ã‚¯ã‚¨ã‚¹ãƒˆãŒã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‚Šçµ‚äº†ã—ãŸã‚Šã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod24)
         {
             {
@@ -473,7 +473,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
 
                 qs.SetInventoryContent(vs);
@@ -488,7 +488,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -506,7 +506,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -528,7 +528,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -547,7 +547,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -571,7 +571,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -587,7 +587,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -607,7 +607,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample24.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -617,7 +617,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -633,8 +633,8 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                // ƒNƒGƒXƒgŠJn‚ÉA‚·‚Å‚ÉŠ®—¹‚Å‚«‚éó‘Ô‚¾‚Á‚½‚Æ‚«‚Í
-                // ‚à‚¤ˆê“xSetInventoryContent‚ğŒÄ‚Î‚È‚¢‚ÆŠ®—¹‚Å‚«‚È‚¢‚±‚Æ‚Æ‚·‚éB
+                // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ™‚ã«ã€ã™ã§ã«å®Œäº†ã§ãã‚‹çŠ¶æ…‹ã ã£ãŸã¨ãã¯
+                // ã‚‚ã†ä¸€åº¦SetInventoryContentã‚’å‘¼ã°ãªã„ã¨å®Œäº†ã§ããªã„ã“ã¨ã¨ã™ã‚‹ã€‚
                 vs2 = qs.GetFinishQuest();
                 Assert::AreEqual((size_t)0, vs2.size());
 
@@ -646,8 +646,8 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‘qŒÉ‚ÌƒAƒCƒeƒ€‚ÌŒÂ”‚É‚æ‚Á‚ÄƒNƒGƒXƒg‚ªƒXƒ^[ƒg‚µ‚½‚èI—¹‚µ‚½‚è‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // å€‰åº«ã®ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°ã«ã‚ˆã£ã¦ã‚¯ã‚¨ã‚¹ãƒˆãŒã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‚Šçµ‚äº†ã—ãŸã‚Šã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod25)
         {
             {
@@ -666,7 +666,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
 
                 qs.SetStorehouseContent(1, vs);
@@ -681,7 +681,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -699,7 +699,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -721,7 +721,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -740,7 +740,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -764,7 +764,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -780,7 +780,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -800,7 +800,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample25.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -810,7 +810,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -826,8 +826,8 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                // ƒNƒGƒXƒgŠJn‚ÉA‚·‚Å‚ÉŠ®—¹‚Å‚«‚éó‘Ô‚¾‚Á‚½‚Æ‚«‚Í
-                // ‚à‚¤ˆê“xSetStorehouseContent‚ğŒÄ‚Î‚È‚¢‚ÆŠ®—¹‚Å‚«‚È‚¢‚±‚Æ‚Æ‚·‚éB
+                // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ™‚ã«ã€ã™ã§ã«å®Œäº†ã§ãã‚‹çŠ¶æ…‹ã ã£ãŸã¨ãã¯
+                // ã‚‚ã†ä¸€åº¦SetStorehouseContentã‚’å‘¼ã°ãªã„ã¨å®Œäº†ã§ããªã„ã“ã¨ã¨ã™ã‚‹ã€‚
                 vs2 = qs.GetFinishQuest();
                 Assert::AreEqual((size_t)0, vs2.size());
 
@@ -839,9 +839,9 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌƒAƒCƒeƒ€‚ÌŒÂ”‚É‚æ‚Á‚ÄƒNƒGƒXƒg‚ªƒXƒ^[ƒg‚µ‚½‚èI—¹‚µ‚½‚è‚·‚é‚±‚Æ
-        // ‚»‚ÌÛ‚ÉA‹­‰»’l‚à‰e‹¿‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã®ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°ã«ã‚ˆã£ã¦ã‚¯ã‚¨ã‚¹ãƒˆãŒã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‚Šçµ‚äº†ã—ãŸã‚Šã™ã‚‹ã“ã¨
+        // ãã®éš›ã«ã€å¼·åŒ–å€¤ã‚‚å½±éŸ¿ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod26)
         {
             {
@@ -860,7 +860,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
 
                 qs.SetInventoryContent(vs);
@@ -875,7 +875,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -894,7 +894,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -917,7 +917,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -939,7 +939,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -964,7 +964,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -981,7 +981,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1002,7 +1002,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample26.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1013,7 +1013,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1030,8 +1030,8 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                // ƒNƒGƒXƒgŠJn‚ÉA‚·‚Å‚ÉŠ®—¹‚Å‚«‚éó‘Ô‚¾‚Á‚½‚Æ‚«‚Í
-                // ‚à‚¤ˆê“xSetInventoryContent‚ğŒÄ‚Î‚È‚¢‚ÆŠ®—¹‚Å‚«‚È‚¢‚±‚Æ‚Æ‚·‚éB
+                // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ™‚ã«ã€ã™ã§ã«å®Œäº†ã§ãã‚‹çŠ¶æ…‹ã ã£ãŸã¨ãã¯
+                // ã‚‚ã†ä¸€åº¦SetInventoryContentã‚’å‘¼ã°ãªã„ã¨å®Œäº†ã§ããªã„ã“ã¨ã¨ã™ã‚‹ã€‚
                 vs2 = qs.GetFinishQuest();
                 Assert::AreEqual((size_t)0, vs2.size());
 
@@ -1043,9 +1043,9 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‘qŒÉ‚ÌƒAƒCƒeƒ€‚ÌŒÂ”‚É‚æ‚Á‚ÄƒNƒGƒXƒg‚ªƒXƒ^[ƒg‚µ‚½‚èI—¹‚µ‚½‚è‚·‚é‚±‚Æ
-        // ‚»‚ÌÛ‚ÉA‹­‰»’l‚à‰e‹¿‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // å€‰åº«ã®ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°ã«ã‚ˆã£ã¦ã‚¯ã‚¨ã‚¹ãƒˆãŒã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‚Šçµ‚äº†ã—ãŸã‚Šã™ã‚‹ã“ã¨
+        // ãã®éš›ã«ã€å¼·åŒ–å€¤ã‚‚å½±éŸ¿ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod27)
         {
             {
@@ -1064,7 +1064,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
 
                 qs.SetStorehouseContent(1, vs);
@@ -1079,7 +1079,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1098,7 +1098,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1121,7 +1121,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1143,7 +1143,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1168,7 +1168,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1185,7 +1185,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1206,7 +1206,7 @@ namespace UnitTest1
                 bool ret = qs.Init("..\\UnitTest1\\sample27.csv", "", false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = "ƒgƒ}ƒg";
+                itemInfo.m_itemName = "ãƒˆãƒãƒˆ";
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1217,7 +1217,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = "ƒoƒiƒi";
+                itemInfo.m_itemName = "ãƒãƒŠãƒŠ";
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1234,8 +1234,8 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                // ƒNƒGƒXƒgŠJn‚ÉA‚·‚Å‚ÉŠ®—¹‚Å‚«‚éó‘Ô‚¾‚Á‚½‚Æ‚«‚Í
-                // ‚à‚¤ˆê“xSetStorehouseContent‚ğŒÄ‚Î‚È‚¢‚ÆŠ®—¹‚Å‚«‚È‚¢‚±‚Æ‚Æ‚·‚éB
+                // ã‚¯ã‚¨ã‚¹ãƒˆé–‹å§‹æ™‚ã«ã€ã™ã§ã«å®Œäº†ã§ãã‚‹çŠ¶æ…‹ã ã£ãŸã¨ãã¯
+                // ã‚‚ã†ä¸€åº¦SetStorehouseContentã‚’å‘¼ã°ãªã„ã¨å®Œäº†ã§ããªã„ã“ã¨ã¨ã™ã‚‹ã€‚
                 vs2 = qs.GetFinishQuest();
                 Assert::AreEqual((size_t)0, vs2.size());
 
@@ -1247,8 +1247,8 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // Š®—¹‚µ‚½ƒNƒGƒXƒg‚ªAÄƒXƒ^[ƒg‚µ‚È‚¢‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // å®Œäº†ã—ãŸã‚¯ã‚¨ã‚¹ãƒˆãŒã€å†ã‚¹ã‚¿ãƒ¼ãƒˆã—ãªã„ã“ã¨
         TEST_METHOD(TestMethod28)
         {
             QuestSystem qs;
@@ -1267,8 +1267,8 @@ namespace UnitTest1
             Assert::AreEqual((size_t)0, vs.size());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‘Ì‚Ì‘Ì—Í‚ªw’è’l‚æ‚è­‚È‚¯‚ê‚ÎƒNƒGƒXƒg‚ªŠJn‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ä½“ã®ä½“åŠ›ãŒæŒ‡å®šå€¤ã‚ˆã‚Šå°‘ãªã‘ã‚Œã°ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod29)
         {
             QuestSystem qs;
@@ -1283,8 +1283,8 @@ namespace UnitTest1
             Assert::AreEqual("Q1", vs.at(0).c_str());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ”]‚Ì‘Ì—Í‚ªw’è’l‚æ‚è­‚È‚¯‚ê‚ÎƒNƒGƒXƒg‚ªŠJn‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // è„³ã®ä½“åŠ›ãŒæŒ‡å®šå€¤ã‚ˆã‚Šå°‘ãªã‘ã‚Œã°ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod30)
         {
             QuestSystem qs;
@@ -1300,8 +1300,8 @@ namespace UnitTest1
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ‘Ì‚Ì‘Ì—Í‚ªw’è’l‚æ‚è­‚È‚¯‚ê‚ÎƒNƒGƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ä½“ã®ä½“åŠ›ãŒæŒ‡å®šå€¤ã‚ˆã‚Šå°‘ãªã‘ã‚Œã°ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod31)
         {
             QuestSystem qs;
@@ -1326,8 +1326,8 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ”]‚Ì‘Ì—Í‚ªw’è’l‚æ‚è­‚È‚¯‚ê‚ÎƒNƒGƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // è„³ã®ä½“åŠ›ãŒæŒ‡å®šå€¤ã‚ˆã‚Šå°‘ãªã‘ã‚Œã°ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod32)
         {
             QuestSystem qs;
@@ -1352,8 +1352,8 @@ namespace UnitTest1
             }
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ˆÊ’u‚ª”ÍˆÍŠO‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠJn‚·‚é‚±‚Æ1
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ä½ç½®ãŒç¯„å›²å¤–ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹ã“ã¨1
         TEST_METHOD(TestMethod33)
         {
             QuestSystem qs;
@@ -1362,20 +1362,20 @@ namespace UnitTest1
             std::vector<std::string> vs;
             vs = qs.GetStartQuest();
 
-            // ”ÍˆÍ“à‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠJn‚µ‚È‚¢
+            // ç¯„å›²å†…ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã—ãªã„
             Assert::AreEqual<size_t>(0, vs.size());
 
             qs.SetPos(50.f, 2.f, 3.f);
             vs = qs.GetStartQuest();
 
-            // ”ÍˆÍŠO‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠJn‚·‚é
+            // ç¯„å›²å¤–ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒé–‹å§‹ã™ã‚‹
             Assert::AreNotEqual<size_t>(0, vs.size());
             auto it = std::find(vs.begin(), vs.end(), "Q1");
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ˆÊ’u‚ª”ÍˆÍŠO‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ2
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // ä½ç½®ãŒç¯„å›²å¤–ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨2
         TEST_METHOD(TestMethod34)
         {
             QuestSystem qs;
@@ -1384,26 +1384,26 @@ namespace UnitTest1
             std::vector<std::string> vs;
             vs = qs.GetFinishQuest();
 
-            // ”ÍˆÍ“à‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠ®—¹‚µ‚È‚¢
+            // ç¯„å›²å†…ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã—ãªã„
             Assert::AreEqual<size_t>(0, vs.size());
 
             qs.SetPos(10.f, 20.f, 30.f);
             vs = qs.GetFinishQuest();
 
-            // ”ÍˆÍŠO‚¾‚Á‚½‚çƒNƒGƒXƒg‚ªŠ®—¹‚·‚é
+            // ç¯„å›²å¤–ã ã£ãŸã‚‰ã‚¯ã‚¨ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹
             Assert::AreNotEqual<size_t>(0, vs.size());
             auto it = std::find(vs.begin(), vs.end(), "Q1");
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ŠÔŒo‰ß‚ÅƒeƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // æ™‚é–“çµŒéã§ãƒ†ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod35)
         {
             QuestSystem qs;
             std::vector<std::string> vs;
 
-            // 1‚©Œ‚Æ2“ú‚Æ3ŠÔ4•ª5•bŒo‰ß‚µ‚½‚çŠ®—¹‚·‚éƒNƒGƒXƒg
+            // 1ã‹æœˆã¨2æ—¥ã¨3æ™‚é–“4åˆ†5ç§’çµŒéã—ãŸã‚‰å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆ
             bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
             qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
             qs.SetPos(100.f, 0.f, 0.f);
@@ -1425,14 +1425,14 @@ namespace UnitTest1
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ’‹‚¾‚Á‚½‚çƒeƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // æ˜¼ã ã£ãŸã‚‰ãƒ†ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod36)
         {
             QuestSystem qs;
             std::vector<std::string> vs;
 
-            // 1‚©Œ‚Æ2“ú‚Æ3ŠÔ4•ª5•bŒo‰ß‚µ‚½‚çŠ®—¹‚·‚éƒNƒGƒXƒg
+            // 1ã‹æœˆã¨2æ—¥ã¨3æ™‚é–“4åˆ†5ç§’çµŒéã—ãŸã‚‰å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆ
             bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
             qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
             qs.SetPos(200.f, 0.f, 0.f);
@@ -1454,14 +1454,14 @@ namespace UnitTest1
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // –é‚¾‚Á‚½‚çƒeƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // å¤œã ã£ãŸã‚‰ãƒ†ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨
         TEST_METHOD(TestMethod37)
         {
             QuestSystem qs;
             std::vector<std::string> vs;
 
-            // 1‚©Œ‚Æ2“ú‚Æ3ŠÔ4•ª5•bŒo‰ß‚µ‚½‚çŠ®—¹‚·‚éƒNƒGƒXƒg
+            // 1ã‹æœˆã¨2æ—¥ã¨3æ™‚é–“4åˆ†5ç§’çµŒéã—ãŸã‚‰å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆ
             bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
             qs.SetCurrentDateTime(1, 2, 3, 4, 5, 6);
             qs.SetPos(300.f, 0.f, 0.f);
@@ -1483,16 +1483,16 @@ namespace UnitTest1
             Assert::IsTrue(it != vs.end());
         }
 
-        // ƒeƒXƒg‚µ‚½‚¢‚±‚Æ
-        // ŠÔŒo‰ß‚ÅƒeƒXƒg‚ªŠ®—¹‚·‚é‚±‚Æ2(2359•ª59•b‚©‚çŠJn)
+        // ãƒ†ã‚¹ãƒˆã—ãŸã„ã“ã¨
+        // æ™‚é–“çµŒéã§ãƒ†ã‚¹ãƒˆãŒå®Œäº†ã™ã‚‹ã“ã¨2(23æ™‚59åˆ†59ç§’ã‹ã‚‰é–‹å§‹)
         TEST_METHOD(TestMethod38)
         {
             QuestSystem qs;
             std::vector<std::string> vs;
 
-            // 1‚©Œ‚Æ2“ú‚Æ3ŠÔ4•ª5•bŒo‰ß‚µ‚½‚çŠ®—¹‚·‚éƒNƒGƒXƒg
-            // 1”N2Œ3“ú2359•ª59•b‚Ì1‚©Œ‚Æ2“ú‚Æ3ŠÔ4•ª5•bŒã‚Í
-            // 1”N3Œ6“ú04•ª4•b
+            // 1ã‹æœˆã¨2æ—¥ã¨3æ™‚é–“4åˆ†5ç§’çµŒéã—ãŸã‚‰å®Œäº†ã™ã‚‹ã‚¯ã‚¨ã‚¹ãƒˆ
+            // 1å¹´2æœˆ3æ—¥23æ™‚59åˆ†59ç§’ã®1ã‹æœˆã¨2æ—¥ã¨3æ™‚é–“4åˆ†5ç§’å¾Œã¯
+            // 1å¹´3æœˆ6æ—¥0æ™‚4åˆ†4ç§’
             bool ret = qs.Init("..\\UnitTest1\\sample35.csv", "", false);
             qs.SetCurrentDateTime(1, 2, 3, 23, 59, 59);
             qs.SetPos(100.f, 0.f, 0.f);

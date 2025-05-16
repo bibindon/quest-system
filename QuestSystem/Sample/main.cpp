@@ -1,4 +1,4 @@
-#pragma comment(lib, "QuestSystem.lib")
+ï»¿#pragma comment(lib, "QuestSystem.lib")
 
 #include <iostream>
 #include "..\QuestSystem\QuestSystem.h"
@@ -9,23 +9,23 @@ int main()
 {
     QuestSystem qs;
     bool ret = qs.Init("sample.csv", "", false);
-    qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+    qs.SetTalk("ãã‚“ã«ãã‚“");
     std::vector<std::string> startedQuest = qs.GetStartQuest();
     std::cout << startedQuest.at(0) << std::endl; // "Q1"
 
     std::vector<std::string> startEvent = qs.GetQuestStartEvent("Q1");
-    std::cout << startEvent.at(0) << std::endl; // "<speak><‚«‚ñ‚É‚­‚ñ>ƒ]ƒ“ƒr‚ğ‚R•C“|‚µ‚Ä‚­‚ê"
+    std::cout << startEvent.at(0) << std::endl; // "<speak><ãã‚“ã«ãã‚“>ã‚¾ãƒ³ãƒ“ã‚’ï¼“åŒ¹å€’ã—ã¦ãã‚Œ"
 
-    qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-    qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-    qs.SetDefeatEnemy("ƒXƒ‰ƒCƒ€");
-    qs.SetTalk("‚«‚ñ‚É‚­‚ñ");
+    qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+    qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+    qs.SetDefeatEnemy("ã‚¹ãƒ©ã‚¤ãƒ ");
+    qs.SetTalk("ãã‚“ã«ãã‚“");
 
     std::vector<std::string> finishQuest = qs.GetFinishQuest();
     std::cout << finishQuest.at(0) << std::endl; // "Q1"
 
     std::vector<std::string> finishEvent = qs.GetQuestFinishEvent("Q1");
-    std::cout << finishEvent.at(0) << std::endl; // "<speak><‚«‚ñ‚É‚­‚ñ>ƒ]ƒ“ƒr‚ğ‚R•C“|‚µ‚Ä‚­‚ê"
+    std::cout << finishEvent.at(0) << std::endl; // "<speak><ãã‚“ã«ãã‚“>ã‚¾ãƒ³ãƒ“ã‚’ï¼“åŒ¹å€’ã—ã¦ãã‚Œ"
 
     return 0;
 }
