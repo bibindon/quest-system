@@ -5,16 +5,17 @@
 #include "Shlwapi.h"
 #include "CaesarCipher.h"
 #include "HeaderOnlyCsv.hpp"
+#include <tchar.h>
 
 #pragma comment( lib, "Shlwapi.lib" ) 
 
 using namespace NSQuestSystem;
 
-static std::vector<std::string> split(const std::string& s, char delim)
+static std::vector<std::wstring> split(const std::wstring& s, wchar_t delim)
 {
-    std::vector<std::string> result;
-    std::stringstream ss(s);
-    std::string item;
+    std::vector<std::wstring> result;
+    std::wstringstream ss(s);
+    std::wstring item;
 
     while (getline(ss, item, delim))
     {
@@ -28,27 +29,27 @@ QuestSystem::QuestSystem()
 {
 }
 
-static void ltrim(std::string& s)
+static void ltrim(std::wstring& s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-        [](unsigned char ch)
+        [](wchar_t ch)
         {
             return !std::isspace(ch);
         }
     ));
 }
 
-static void rtrim(std::string& s)
+static void rtrim(std::wstring& s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(),
-        [](unsigned char ch)
+        [](wchar_t ch)
         {
             return !std::isspace(ch);
         }
     ).base(), s.end());
 }
 
-static void trim(std::string& s)
+static void trim(std::wstring& s)
 {
     rtrim(s);
     ltrim(s);
@@ -76,8 +77,8 @@ Q4,"人と話したら
 Q3",<speak><シュワちゃん>なんかようですか,自動完了,,,
 
 */
-bool QuestSystem::Init(const std::string& csvFilePath,
-                       const std::string& savefile,
+bool QuestSystem::Init(const std::wstring& csvFilePath,
+                       const std::wstring& savefile,
                        const bool encrypt)
 {
     int result = PathFileExists(csvFilePath.c_str());
@@ -86,7 +87,7 @@ bool QuestSystem::Init(const std::string& csvFilePath,
         throw std::exception();
     }
 
-    std::stringstream ss;
+    std::wstringstream ss;
 
     if (encrypt == false)
     {
@@ -96,12 +97,12 @@ bool QuestSystem::Init(const std::string& csvFilePath,
     }
     else
     {
-        std::string work = CaesarCipher::DecryptFromFile(csvFilePath);
+        std::wstring work = CaesarCipher::DecryptFromFile(csvFilePath);
         ss.str(work);
     }
 
-    std::string buff;
-    std::string buffComma;
+    std::wstring buff;
+    std::wstring buffComma;
     QuestData questData;
     int row = 0;
     int col = 0;
@@ -116,12 +117,12 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             row = 1;
             continue;
         }
-        std::istringstream iss(buff);
+        std::wistringstream iss(buff);
 
-        while (std::getline(iss, buffComma, ','))
+        while (std::getline(iss, buffComma, wchar_t(',')))
         {
             trim(buffComma);
-            if (buffComma.find('"') != std::string::npos)
+            if (buffComma.find('"') != std::wstring::npos)
             {
                 doubleQuote = true;
 
@@ -147,87 +148,91 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             {
                 std::vector<eStartType> work = questData.GetStartType();
                 std::deque<bool> work2 = questData.GetStartFlag();
-                if (buffComma == "人と話したら")
+                if (buffComma == _T("人と話したら"))
                 {
                     work.push_back(eStartType::TALK);
                     work2.push_back(false);
                 }
-                else if (buffComma == "クエストが完了していたら")
+                else if (buffComma == _T("クエストが完了していたら"))
                 {
                     work.push_back(eStartType::QUEST_FINISHED);
                     work2.push_back(false);
                 }
-                else if (buffComma == "クエストが完了していないなら")
+                else if (buffComma == _T("クエストが完了していないなら"))
                 {
                     work.push_back(eStartType::QUEST_NOT_FINISHED);
                     work2.push_back(true);
                 }
-                else if (buffComma == "位置")
+                else if (buffComma == _T("位置"))
                 {
                     work.push_back(eStartType::POS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "調べたら")
+                else if (buffComma == _T("調べたら"))
                 {
                     work.push_back(eStartType::EXAMINE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "一つでもクエストが完了していたら")
+                else if (buffComma == _T("一つでもクエストが完了していたら"))
                 {
                     work.push_back(eStartType::QUEST_FINISH_OR);
                     work2.push_back(false);
                 }
-                else if (buffComma == "インベントリにXがY個あったら")
+                else if (buffComma == _T("インベントリにXがY個あったら"))
                 {
                     work.push_back(eStartType::INVENTORY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "倉庫AにXがY個あったら")
+                else if (buffComma == _T("倉庫AにXがY個あったら"))
                 {
                     work.push_back(eStartType::STOREHOUSE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "インベントリに強化値XのYがZ個あったら")
+                else if (buffComma == _T("インベントリに強化値XのYがZ個あったら"))
                 {
                     work.push_back(eStartType::INVENTORY_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "倉庫Aに強化値XのYがZ個あったら")
+                else if (buffComma == _T("倉庫Aに強化値XのYがZ個あったら"))
                 {
                     work.push_back(eStartType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "体の体力がX以下だったら")
+                else if (buffComma == _T("体の体力がX以下だったら"))
                 {
                     work.push_back(eStartType::BODY_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "脳の体力がX以下だったら")
+                else if (buffComma == _T("脳の体力がX以下だったら"))
                 {
                     work.push_back(eStartType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "位置が範囲外")
+                else if (buffComma == _T("位置が範囲外"))
                 {
                     work.push_back(eStartType::POS_OUT);
                     work2.push_back(false);
                 }
                 else
                 {
-                    throw std::exception(buffComma.c_str());
+                    int size = WideCharToMultiByte(CP_UTF8, 0, buffComma.c_str(), -1, nullptr, 0, nullptr, nullptr);
+                    std::string result(size - 1, 0);
+                    WideCharToMultiByte(CP_UTF8, 0, buffComma.c_str(), -1, &result[0], size, nullptr, nullptr);
+
+                    throw std::exception(result.c_str());
                 }
                 questData.SetStartType(work);
                 questData.SetStartFlag(work2);
             }
             else if (col == 2)
             {
-                std::vector<std::string> work = questData.GetStartOption1();
+                std::vector<std::wstring> work = questData.GetStartOption1();
                 work.push_back(buffComma);
                 questData.SetStartOption1(work);
             }
             else if (col == 3)
             {
-                std::vector<std::string> work = questData.GetStartEvent();
+                std::vector<std::wstring> work = questData.GetStartEvent();
                 work.push_back(buffComma);
                 questData.SetStartEvent(work);
             }
@@ -235,119 +240,123 @@ bool QuestSystem::Init(const std::string& csvFilePath,
             {
                 std::vector<eFinishType> work = questData.GetFinishType();
                 std::deque<bool> work2 = questData.GetFinishFlag();
-                if (buffComma == "敵を倒したら")
+                if (buffComma == _T("敵を倒したら"))
                 {
                     work.push_back(eFinishType::DEFEAT_ENEMY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "人と話したら")
+                else if (buffComma == _T("人と話したら"))
                 {
                     work.push_back(eFinishType::TALK);
                     work2.push_back(false);
                 }
-                else if (buffComma == "自動完了")
+                else if (buffComma == _T("自動完了"))
                 {
                     work.push_back(eFinishType::AUTO);
                     work2.push_back(true);
                 }
-                else if (buffComma == "位置")
+                else if (buffComma == _T("位置"))
                 {
                     work.push_back(eFinishType::POS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "クエストが完了していたら")
+                else if (buffComma == _T("クエストが完了していたら"))
                 {
                     work.push_back(eFinishType::QUEST_FINISHED);
                     work2.push_back(false);
                 }
-                else if (buffComma == "調べたら")
+                else if (buffComma == _T("調べたら"))
                 {
                     work.push_back(eFinishType::EXAMINE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "インベントリにXがY個あったら")
+                else if (buffComma == _T("インベントリにXがY個あったら"))
                 {
                     work.push_back(eFinishType::INVENTORY);
                     work2.push_back(false);
                 }
-                else if (buffComma == "倉庫AにXがY個あったら")
+                else if (buffComma == _T("倉庫AにXがY個あったら"))
                 {
                     work.push_back(eFinishType::STOREHOUSE);
                     work2.push_back(false);
                 }
-                else if (buffComma == "インベントリに強化値XのYがZ個あったら")
+                else if (buffComma == _T("インベントリに強化値XのYがZ個あったら"))
                 {
                     work.push_back(eFinishType::INVENTORY_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "倉庫Aに強化値XのYがZ個あったら")
+                else if (buffComma == _T("倉庫Aに強化値XのYがZ個あったら"))
                 {
                     work.push_back(eFinishType::STOREHOUSE_LEVEL);
                     work2.push_back(false);
                 }
-                else if (buffComma == "体の体力がX以下だったら")
+                else if (buffComma == _T("体の体力がX以下だったら"))
                 {
                     work.push_back(eFinishType::BODY_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "脳の体力がX以下だったら")
+                else if (buffComma == _T("脳の体力がX以下だったら"))
                 {
                     work.push_back(eFinishType::BRAIN_STAMINA_LESS);
                     work2.push_back(false);
                 }
-                else if (buffComma == "位置が範囲外")
+                else if (buffComma == _T("位置が範囲外"))
                 {
                     work.push_back(eFinishType::POS_OUT);
                     work2.push_back(false);
                 }
-                else if (buffComma == "時間が経過したら")
+                else if (buffComma == _T("時間が経過したら"))
                 {
                     work.push_back(eFinishType::TIME_PAST);
                     work2.push_back(false);
                 }
-                else if (buffComma == "夜だったら")
+                else if (buffComma == _T("夜だったら"))
                 {
                     work.push_back(eFinishType::AT_NIGHT);
                     work2.push_back(false);
                 }
-                else if (buffComma == "昼だったら")
+                else if (buffComma == _T("昼だったら"))
                 {
                     work.push_back(eFinishType::AT_DAYTIME);
                     work2.push_back(false);
                 }
-                else if (buffComma == "NPCのXが生存")
+                else if (buffComma == _T("NPCのXが生存"))
                 {
                     work.push_back(eFinishType::NPC_ALIVE);
                     work2.push_back(false);
                 }
                 else
                 {
-                    throw std::exception(buffComma.c_str());
+                    int size = WideCharToMultiByte(CP_UTF8, 0, buffComma.c_str(), -1, nullptr, 0, nullptr, nullptr);
+                    std::string result(size - 1, 0);
+                    WideCharToMultiByte(CP_UTF8, 0, buffComma.c_str(), -1, &result[0], size, nullptr, nullptr);
+
+                    throw std::exception(result.c_str());
                 }
                 questData.SetFinishType(work);
                 questData.SetFinishFlag(work2);
             }
             else if (col == 5)
             {
-                std::vector<std::string> work = questData.GetFinishOption1();
+                std::vector<std::wstring> work = questData.GetFinishOption1();
                 work.push_back(buffComma);
                 questData.SetFinishOption1(work);
             }
             else if (col == 6)
             {
-                std::vector<std::string> work = questData.GetFinishOption2();
+                std::vector<std::wstring> work = questData.GetFinishOption2();
                 work.push_back(buffComma);
                 questData.SetFinishOption2(work);
 
                 std::unordered_map<int, int> work2 = questData.GetCurrentFinishOpt2();
                 int work3 = 0;
-                std::stringstream(buffComma) >> work3;
+                std::wstringstream(buffComma) >> work3;
                 work2[(int)work.size() - 1] = work3;
                 questData.SetCurrentFinishOpt2(work2);
             }
             else if (col == 7)
             {
-                std::vector<std::string> work = questData.GetFinishEvent();
+                std::vector<std::wstring> work = questData.GetFinishEvent();
                 work.push_back(buffComma);
                 questData.SetFinishEvent(work);
             }
@@ -378,14 +387,14 @@ bool QuestSystem::Init(const std::string& csvFilePath,
 
     // セーブデータを読む
     {
-        std::vector<std::vector<std::string>> vvs;
+        std::vector<std::vector<std::wstring>> vvs;
         if (encrypt == false)
         {
             vvs = csv::Read(savefile);
         }
         else
         {
-            std::string work = CaesarCipher::DecryptFromFile(savefile);
+            std::wstring work = CaesarCipher::DecryptFromFile(savefile);
             csv::ReadFromString(work);
         }
 
@@ -402,29 +411,29 @@ bool QuestSystem::Init(const std::string& csvFilePath,
                 throw std::exception();
             }
 
-            if (vvs.at(i).at(1) == "NOT_START")
+            if (vvs.at(i).at(1) == _T("NOT_START"))
             {
                 it->SetState(eQuestState::NOT_START);
             }
-            else if (vvs.at(i).at(1) == "START")
+            else if (vvs.at(i).at(1) == _T("START"))
             {
                 it->SetState(eQuestState::START);
             }
-            else if (vvs.at(i).at(1) == "STARTED")
+            else if (vvs.at(i).at(1) == _T("STARTED"))
             {
                 it->SetState(eQuestState::STARTED);
             }
-            else if (vvs.at(i).at(1) == "FINISH")
+            else if (vvs.at(i).at(1) == _T("FINISH"))
             {
                 it->SetState(eQuestState::FINISH);
             }
-            else if (vvs.at(i).at(1) == "FINISHED")
+            else if (vvs.at(i).at(1) == _T("FINISHED"))
             {
                 it->SetState(eQuestState::FINISHED);
             }
 
             {
-                std::string work = vvs.at(i).at(2);
+                std::wstring work = vvs.at(i).at(2);
                 auto vs = split(work, ':');
 
                 int startYear = std::stoi(vs.at(0));
@@ -442,41 +451,41 @@ bool QuestSystem::Init(const std::string& csvFilePath,
     return true;
 }
 
-void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool encrypt)
+void NSQuestSystem::QuestSystem::Save(const std::wstring& filename, const bool encrypt)
 {
-    std::vector<std::vector<std::string>> vvs;
-    std::vector<std::string> vs;
-    vs.push_back("クエストID");
-    vs.push_back("状況");
-    vs.push_back("クエスト開始時刻");
+    std::vector<std::vector<std::wstring>> vvs;
+    std::vector<std::wstring> vs;
+    vs.push_back(_T("クエストID"));
+    vs.push_back(_T("状況"));
+    vs.push_back(_T("クエスト開始時刻"));
     vvs.push_back(vs);
     vs.clear();
 
     for (size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
-        std::string work;
+        std::wstring work;
         work = m_vecQuestData.at(i).GetId();
         vs.push_back(work);
 
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
         {
-            vs.push_back("NOT_START");
+            vs.push_back(_T("NOT_START"));
         }
         else if (m_vecQuestData.at(i).GetState() == eQuestState::START)
         {
-            vs.push_back("START");
+            vs.push_back(_T("START"));
         }
         else if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED)
         {
-            vs.push_back("STARTED");
+            vs.push_back(_T("STARTED"));
         }
         else if (m_vecQuestData.at(i).GetState() == eQuestState::FINISH)
         {
-            vs.push_back("FINISH");
+            vs.push_back(_T("FINISH"));
         }
         else if (m_vecQuestData.at(i).GetState() == eQuestState::FINISHED)
         {
-            vs.push_back("FINISHED");
+            vs.push_back(_T("FINISHED"));
         }
 
         {
@@ -489,19 +498,19 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
 
             m_vecQuestData.at(i).GetStartDateTime(&startYear, &startMonth, &startDay, &startHour, &startMinute, &startSecond);
 
-            std::string year = std::to_string(startYear);
-            std::string month = std::to_string(startMonth);
-            std::string day = std::to_string(startDay);
-            std::string hour = std::to_string(startHour);
-            std::string minute = std::to_string(startMinute);
-            std::string second = std::to_string(startSecond);
+            std::wstring year = std::to_wstring(startYear);
+            std::wstring month = std::to_wstring(startMonth);
+            std::wstring day = std::to_wstring(startDay);
+            std::wstring hour = std::to_wstring(startHour);
+            std::wstring minute = std::to_wstring(startMinute);
+            std::wstring second = std::to_wstring(startSecond);
 
-            std::string work;
-            work = year + ":";
-            work += month + ":";
-            work += day + ":";
-            work += hour + ":";
-            work += minute + ":";
+            std::wstring work;
+            work = year + _T(":");
+            work += month + _T(":");
+            work += day + _T(":");
+            work += hour + _T(":");
+            work += minute + _T(":");
             work += second;
 
             vs.push_back(work);
@@ -517,7 +526,7 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
     }
     else
     {
-        std::stringstream ss;
+        std::wstringstream ss;
         for (std::size_t i = 0; i < vvs.size(); ++i)
         {
             for (std::size_t j = 0; j < vvs.at(i).size(); ++j)
@@ -534,9 +543,9 @@ void NSQuestSystem::QuestSystem::Save(const std::string& filename, const bool en
     }
 }
 
-std::vector<std::string> QuestSystem::GetStartQuest()
+std::vector<std::wstring> QuestSystem::GetStartQuest()
 {
-    std::vector<std::string> result;
+    std::vector<std::wstring> result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::START)
@@ -548,9 +557,9 @@ std::vector<std::string> QuestSystem::GetStartQuest()
     return result;
 }
 
-std::vector<std::string> NSQuestSystem::QuestSystem::GetStartedQuest()
+std::vector<std::wstring> NSQuestSystem::QuestSystem::GetStartedQuest()
 {
-    std::vector<std::string> result;
+    std::vector<std::wstring> result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED)
@@ -562,9 +571,9 @@ std::vector<std::string> NSQuestSystem::QuestSystem::GetStartedQuest()
     return result;
 }
 
-std::vector<std::string> QuestSystem::GetFinishQuest()
+std::vector<std::wstring> QuestSystem::GetFinishQuest()
 {
-    std::vector<std::string> result;
+    std::vector<std::wstring> result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::FINISH)
@@ -576,7 +585,7 @@ std::vector<std::string> QuestSystem::GetFinishQuest()
     return result;
 }
 
-void QuestSystem::SetTalk(const std::string& npc)
+void QuestSystem::SetTalk(const std::wstring& npc)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
@@ -632,8 +641,8 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -693,8 +702,8 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -806,8 +815,8 @@ void QuestSystem::UpdateQuestStatus()
             {
                 if (startType.at(j) == eStartType::QUEST_FINISHED)
                 {
-                    std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
-                    std::string questId = vs.at(j);
+                    std::vector<std::wstring> vs = m_vecQuestData.at(i).GetStartOption1();
+                    std::wstring questId = vs.at(j);
                     for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
                         if (m_vecQuestData.at(k).GetId() == questId)
@@ -836,8 +845,8 @@ void QuestSystem::UpdateQuestStatus()
             {
                 if (startType.at(j) == eStartType::QUEST_NOT_FINISHED)
                 {
-                    std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
-                    std::string questId = vs.at(j);
+                    std::vector<std::wstring> vs = m_vecQuestData.at(i).GetStartOption1();
+                    std::wstring questId = vs.at(j);
                     for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
                         if (m_vecQuestData.at(k).GetId() == questId)
@@ -865,8 +874,8 @@ void QuestSystem::UpdateQuestStatus()
             {
                 if (startType.at(j) == eStartType::QUEST_FINISH_OR)
                 {
-                    std::vector<std::string> vs = m_vecQuestData.at(i).GetStartOption1();
-                    std::vector<std::string> questIds = split(vs.at(j), ':');
+                    std::vector<std::wstring> vs = m_vecQuestData.at(i).GetStartOption1();
+                    std::vector<std::wstring> questIds = split(vs.at(j), ':');
                     for (size_t l = 0; l < questIds.size(); ++l)
                     {
                         for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
@@ -905,8 +914,8 @@ void QuestSystem::UpdateQuestStatus()
             {
                 if (finishType.at(j) == eFinishType::QUEST_FINISHED)
                 {
-                    std::vector<std::string> vs = m_vecQuestData.at(i).GetFinishOption1();
-                    std::string questId = vs.at(j);
+                    std::vector<std::wstring> vs = m_vecQuestData.at(i).GetFinishOption1();
+                    std::wstring questId = vs.at(j);
                     for (std::size_t k = 0; k < m_vecQuestData.size(); ++k)
                     {
                         if (m_vecQuestData.at(k).GetId() == questId)
@@ -977,7 +986,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 }
 
-void QuestSystem::SetDefeatEnemy(const std::string& enemy)
+void QuestSystem::SetDefeatEnemy(const std::wstring& enemy)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
@@ -1007,7 +1016,7 @@ void QuestSystem::SetDefeatEnemy(const std::string& enemy)
     UpdateQuestStatus();
 }
 
-std::vector<std::string> QuestSystem::GetQuestStartEvent(const std::string& id)
+std::vector<std::wstring> QuestSystem::GetQuestStartEvent(const std::wstring& id)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
@@ -1016,10 +1025,10 @@ std::vector<std::string> QuestSystem::GetQuestStartEvent(const std::string& id)
             return m_vecQuestData.at(i).GetStartEvent();
         }
     }
-    return std::vector<std::string>();
+    return std::vector<std::wstring>();
 }
 
-std::vector<std::string> QuestSystem::GetQuestFinishEvent(const std::string& id)
+std::vector<std::wstring> QuestSystem::GetQuestFinishEvent(const std::wstring& id)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
@@ -1028,7 +1037,7 @@ std::vector<std::string> QuestSystem::GetQuestFinishEvent(const std::string& id)
             return m_vecQuestData.at(i).GetFinishEvent();
         }
     }
-    return std::vector<std::string>();
+    return std::vector<std::wstring>();
 }
 
 void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const float z)
@@ -1042,8 +1051,8 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::EXAMINE)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -1078,8 +1087,8 @@ void NSQuestSystem::QuestSystem::SetExamine(const float x, const float y, const 
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::EXAMINE)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -1117,9 +1126,9 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY)
                 {
                     // トマト:5だったらトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
-                    std::string itemName = vs.at(0);
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
+                    std::wstring itemName = vs.at(0);
                     int num = std::stoi(vs.at(1));
 
                     int work = 0;
@@ -1141,10 +1150,10 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY_LEVEL)
                 {
                     // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
-                    std::string itemName = vs.at(1);
+                    std::wstring itemName = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     int work = 0;
@@ -1177,9 +1186,9 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY)
                 {
                     // トマト:5だったらトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
-                    std::string itemName = vs.at(0);
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
+                    std::wstring itemName = vs.at(0);
                     int num = std::stoi(vs.at(1));
 
                     int work = 0;
@@ -1201,10 +1210,10 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY_LEVEL)
                 {
                     // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
-                    std::string itemName = vs.at(1);
+                    std::wstring itemName = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     int work = 0;
@@ -1246,11 +1255,11 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE)
                 {
                     // 1:トマト:5だったら倉庫1にトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
-                    std::string itemName = vs.at(1);
+                    std::wstring itemName = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     if (storehouseId != storehouseId2)
@@ -1278,12 +1287,12 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE_LEVEL)
                 {
                     // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
                     int level = std::stoi(vs.at(1));
-                    std::string itemName = vs.at(2);
+                    std::wstring itemName = vs.at(2);
                     int num = std::stoi(vs.at(3));
 
                     if (storehouseId != storehouseId2)
@@ -1323,11 +1332,11 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 {
                     // 1:トマト:5だったら倉庫1にトマトが5個以上あったらの意味
                     // （倉庫はゲーム内に複数存在する）
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
-                    std::string itemName = vs.at(1);
+                    std::wstring itemName = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     if (storehouseId != storehouseId2)
@@ -1355,12 +1364,12 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE_LEVEL)
                 {
                     // 1:2:トマト:5だったら倉庫1に強化値＋２のトマトが5個以上あったらの意味
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(opt, ':');
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
                     int level = std::stoi(vs.at(1));
-                    std::string itemName = vs.at(2);
+                    std::wstring itemName = vs.at(2);
                     int num = std::stoi(vs.at(3));
 
                     if (storehouseId != storehouseId2)
@@ -1407,7 +1416,7 @@ void NSQuestSystem::QuestSystem::SetBodyStamina(const int stamina)
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::BODY_STAMINA_LESS)
                 {
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     int stamina = std::stoi(opt);
                     if (m_bodyStamina < stamina)
                     {
@@ -1429,7 +1438,7 @@ void NSQuestSystem::QuestSystem::SetBodyStamina(const int stamina)
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::BODY_STAMINA_LESS)
                 {
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     int stamina = std::stoi(opt);
                     if (m_bodyStamina < stamina)
                     {
@@ -1456,7 +1465,7 @@ void NSQuestSystem::QuestSystem::SetBrainStamina(const int stamina)
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::BRAIN_STAMINA_LESS)
                 {
-                    std::string opt = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     int stamina = std::stoi(opt);
                     if (m_brainStamina < stamina)
                     {
@@ -1478,7 +1487,7 @@ void NSQuestSystem::QuestSystem::SetBrainStamina(const int stamina)
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::BRAIN_STAMINA_LESS)
                 {
-                    std::string opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     int stamina = std::stoi(opt);
                     if (m_brainStamina < stamina)
                     {
@@ -1493,11 +1502,11 @@ void NSQuestSystem::QuestSystem::SetBrainStamina(const int stamina)
     UpdateQuestStatus();
 }
 
-std::string NSQuestSystem::QuestSystem::GetQuestIdStartByExamine(const float x,
+std::wstring NSQuestSystem::QuestSystem::GetQuestIdStartByExamine(const float x,
                                                                  const float y,
                                                                  const float z)
 {
-    std::string result;
+    std::wstring result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -1507,8 +1516,8 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdStartByExamine(const float x,
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::EXAMINE)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetStartOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -1532,11 +1541,11 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdStartByExamine(const float x,
     return result;
 }
 
-std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
+std::wstring NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
                                                                   const float y,
                                                                   const float z)
 {
-    std::string result;
+    std::wstring result;
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
@@ -1548,8 +1557,8 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::EXAMINE)
                 {
                     // 0.0:1.0:2.0:3.0だったら座標(0.0, 1.0, 2.0)で半径が3.0、の意味
-                    std::string xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                    std::vector<std::string> vs = split(xyzr, ':');
+                    std::wstring xyzr = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::vector<std::wstring> vs = split(xyzr, ':');
                     float startX = std::stof(vs.at(0));
                     float startY = std::stof(vs.at(1));
                     float startZ = std::stof(vs.at(2));
@@ -1573,7 +1582,7 @@ std::string NSQuestSystem::QuestSystem::GetQuestIdFinishByExamine(const float x,
     return result;
 }
 
-void NSQuestSystem::QuestSystem::SetQuestFinish(const std::string& id)
+void NSQuestSystem::QuestSystem::SetQuestFinish(const std::wstring& id)
 {
     auto it = std::find_if(m_vecQuestData.begin(), m_vecQuestData.end(),
                            [&](const QuestData& x)
@@ -1628,8 +1637,8 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
                         m_vecQuestData.at(i).GetStartDateTime(&startYear, &startMonth, &startDay,
                                                               &startHour, &startMinute, &startSecond);
 
-                        std::string datetime = m_vecQuestData.at(i).GetFinishOption1().at(j);
-                        std::vector<std::string> work = split(datetime, ':');
+                        std::wstring datetime = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                        std::vector<std::wstring> work = split(datetime, ':');
 
                         int timeLimitYear = std::stoi(work.at(0));
                         int timeLimitMonth = std::stoi(work.at(1));
@@ -1813,7 +1822,7 @@ void NSQuestSystem::QuestSystem::SetCurrentDateTime(const int year, const int mo
     }
 }
 
-void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::string& npcKey, const bool bAlive, const bool update)
+void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::wstring& npcKey, const bool bAlive, const bool update)
 {
     m_NpcAlive[npcKey] = bAlive;
 
@@ -1828,7 +1837,7 @@ void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::string& npcKey, const 
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::NPC_ALIVE)
                 {
-                    std::string npcKey_ = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    std::wstring npcKey_ = m_vecQuestData.at(i).GetFinishOption1().at(j);
 
                     if (m_NpcAlive.find(npcKey_) != m_NpcAlive.end())
                     {

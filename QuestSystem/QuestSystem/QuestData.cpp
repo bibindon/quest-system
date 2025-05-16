@@ -2,12 +2,12 @@
 
 using namespace NSQuestSystem;
 
-std::string QuestData::GetId() const
+std::wstring QuestData::GetId() const
 {
     return m_id;
 }
 
-void QuestData::SetId(const std::string& id)
+void QuestData::SetId(const std::wstring& id)
 {
     m_id = id;
 }
@@ -22,22 +22,22 @@ void QuestData::SetStartType(const std::vector<eStartType>& vecStartType)
     m_vecStartType = vecStartType;
 }
 
-std::vector<std::string> QuestData::GetStartOption1()
+std::vector<std::wstring> QuestData::GetStartOption1()
 {
     return m_vecStartOption1;
 }
 
-void QuestData::SetStartOption1(const std::vector<std::string>& vecStartOption1)
+void QuestData::SetStartOption1(const std::vector<std::wstring>& vecStartOption1)
 {
     m_vecStartOption1 = vecStartOption1;
 }
 
-std::vector<std::string> QuestData::GetStartEvent()
+std::vector<std::wstring> QuestData::GetStartEvent()
 {
     return m_vecStartEvent;
 }
 
-void QuestData::SetStartEvent(const std::vector<std::string>& vecStartEvent)
+void QuestData::SetStartEvent(const std::vector<std::wstring>& vecStartEvent)
 {
     m_vecStartEvent = vecStartEvent;
 }
@@ -62,32 +62,32 @@ void QuestData::SetFinishType(const std::vector<eFinishType>& vecFinishType)
     m_vecFinishType = vecFinishType;
 }
 
-std::vector<std::string> QuestData::GetFinishOption1()
+std::vector<std::wstring> QuestData::GetFinishOption1()
 {
     return m_vecFinishOption1;
 }
 
-void QuestData::SetFinishOption1(const std::vector<std::string>& vecFinishOption1)
+void QuestData::SetFinishOption1(const std::vector<std::wstring>& vecFinishOption1)
 {
     m_vecFinishOption1 = vecFinishOption1;
 }
 
-std::vector<std::string> QuestData::GetFinishOption2()
+std::vector<std::wstring> QuestData::GetFinishOption2()
 {
     return m_vecFinishOption2;
 }
 
-void QuestData::SetFinishOption2(const std::vector<std::string>& vecFinishOption2)
+void QuestData::SetFinishOption2(const std::vector<std::wstring>& vecFinishOption2)
 {
     m_vecFinishOption2 = vecFinishOption2;
 }
 
-std::vector<std::string> QuestData::GetFinishEvent()
+std::vector<std::wstring> QuestData::GetFinishEvent()
 {
     return m_vecFinishEvent;
 }
 
-void QuestData::SetFinishEvent(const std::vector<std::string>& vecFinishEvent)
+void QuestData::SetFinishEvent(const std::vector<std::wstring>& vecFinishEvent)
 {
     m_vecFinishEvent = vecFinishEvent;
 }

@@ -57,7 +57,7 @@ enum class eQuestState
 
 struct ItemInfo
 {
-    std::string m_itemName;
+    std::wstring m_itemName;
     int m_level = -1;
 };
 
@@ -65,17 +65,17 @@ class QuestData
 {
 public:
 
-    std::string GetId() const;
-    void SetId(const std::string& id);
+    std::wstring GetId() const;
+    void SetId(const std::wstring& id);
 
     std::vector<eStartType> GetStartType();
     void SetStartType(const std::vector<eStartType>& vecStartType);
 
-    std::vector<std::string> GetStartOption1();
-    void SetStartOption1(const std::vector<std::string>&);
+    std::vector<std::wstring> GetStartOption1();
+    void SetStartOption1(const std::vector<std::wstring>&);
 
-    std::vector<std::string> GetStartEvent();
-    void SetStartEvent(const std::vector<std::string>&);
+    std::vector<std::wstring> GetStartEvent();
+    void SetStartEvent(const std::vector<std::wstring>&);
 
     std::deque<bool> GetStartFlag();
     void SetStartFlag(const std::deque<bool>&);
@@ -83,14 +83,14 @@ public:
     std::vector<eFinishType> GetFinishType();
     void SetFinishType(const std::vector<eFinishType>& vecFinishType);
 
-    std::vector<std::string> GetFinishOption1();
-    void SetFinishOption1(const std::vector<std::string>&);
+    std::vector<std::wstring> GetFinishOption1();
+    void SetFinishOption1(const std::vector<std::wstring>&);
 
-    std::vector<std::string> GetFinishOption2();
-    void SetFinishOption2(const std::vector<std::string>&);
+    std::vector<std::wstring> GetFinishOption2();
+    void SetFinishOption2(const std::vector<std::wstring>&);
 
-    std::vector<std::string> GetFinishEvent();
-    void SetFinishEvent(const std::vector<std::string>&);
+    std::vector<std::wstring> GetFinishEvent();
+    void SetFinishEvent(const std::vector<std::wstring>&);
 
     std::deque<bool> GetFinishFlag();
     void SetFinishFlag(const std::deque<bool>&);
@@ -106,17 +106,17 @@ public:
 
 private:
 
-    std::string m_id;
+    std::wstring m_id;
 
     std::vector<eStartType> m_vecStartType;
-    std::vector<std::string> m_vecStartOption1;
-    std::vector<std::string> m_vecStartEvent;
+    std::vector<std::wstring> m_vecStartOption1;
+    std::vector<std::wstring> m_vecStartEvent;
     std::deque<bool> m_vecStartFlag;
 
     std::vector<eFinishType> m_vecFinishType;
-    std::vector<std::string> m_vecFinishOption1;
-    std::vector<std::string> m_vecFinishOption2;
-    std::vector<std::string> m_vecFinishEvent;
+    std::vector<std::wstring> m_vecFinishOption1;
+    std::vector<std::wstring> m_vecFinishOption2;
+    std::vector<std::wstring> m_vecFinishEvent;
     std::deque<bool> m_vecFinishFlag;
 
     eQuestState m_eQuestState = eQuestState::NOT_START;
@@ -136,25 +136,25 @@ public:
 
     QuestSystem();
 
-    bool Init(const std::string& csvFilePath,
-              const std::string& savefile,
+    bool Init(const std::wstring& csvFilePath,
+              const std::wstring& savefile,
               const bool encrypt);
 
-    void Save(const std::string& savefile, const bool encrypt);
+    void Save(const std::wstring& savefile, const bool encrypt);
 
     //-------------------------------------------------
     // この関数を実行すると、クエストの状態が「START」だったクエストは「STARTED」になる
     //-------------------------------------------------
-    std::vector<std::string> GetStartQuest();
+    std::vector<std::wstring> GetStartQuest();
 
-    std::vector<std::string> GetStartedQuest();
-    std::vector<std::string> GetFinishQuest();
-    void SetTalk(const std::string& npc);
+    std::vector<std::wstring> GetStartedQuest();
+    std::vector<std::wstring> GetFinishQuest();
+    void SetTalk(const std::wstring& npc);
     void SetPos(const float x, const float y, const float z, const bool update = true);
     void UpdateQuestStatus();
-    void SetDefeatEnemy(const std::string& enemy);
-    std::vector<std::string> GetQuestStartEvent(const std::string& id);
-    std::vector<std::string> GetQuestFinishEvent(const std::string& id);
+    void SetDefeatEnemy(const std::wstring& enemy);
+    std::vector<std::wstring> GetQuestStartEvent(const std::wstring& id);
+    std::vector<std::wstring> GetQuestFinishEvent(const std::wstring& id);
     void SetExamine(const float x, const float y, const float z);
 
     // インベントリの内容を登録
@@ -172,23 +172,23 @@ public:
     // 該当するクエストが複数あっても一つだけ返す
     // まだ開始していないクエストだけが対象であり、
     // 開始済みだったり、完了しているクエストは対象とならない。
-    std::string GetQuestIdStartByExamine(const float x, const float y, const float z);
+    std::wstring GetQuestIdStartByExamine(const float x, const float y, const float z);
 
     // 完了タイプが「調べたら」なクエストを取得
     // 座標を渡して、その座標で完了するクエストを取得
     // 該当するクエストが複数あっても一つだけ返す
     // 進行中で、まだ完了していないクエストだけが対象であり、
     // 開始していなかったり、完了しているクエストは対象とならない。
-    std::string GetQuestIdFinishByExamine(const float x, const float y, const float z);
+    std::wstring GetQuestIdFinishByExamine(const float x, const float y, const float z);
 
-    void SetQuestFinish(const std::string& id);
+    void SetQuestFinish(const std::wstring& id);
 
     void SetCurrentDateTime(const int year, const int month, const int day,
                             const int hour, const int minute, const int second,
                             const bool update = true);
 
     // NPCが生きているか。主に死亡したときに使う。
-    void SetNpcIsAlive(const std::string& npcKey, const bool bAlive, const bool update);
+    void SetNpcIsAlive(const std::wstring& npcKey, const bool bAlive, const bool update);
 
 private:
 
@@ -209,7 +209,7 @@ private:
     int m_currentMinute = 0;
     int m_currentSecond = 0;
 
-    std::unordered_map<std::string, bool> m_NpcAlive;
+    std::unordered_map<std::wstring, bool> m_NpcAlive;
 
 };
 }
