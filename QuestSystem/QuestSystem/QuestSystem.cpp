@@ -11,6 +11,25 @@
 
 using namespace NSQuestSystem;
 
+std::wstring Utf8ToWstring(const std::string& utf8)
+{
+    if (utf8.empty())
+    {
+        return std::wstring();
+    }
+
+    int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);
+    if (len == 0)
+    {
+        throw std::runtime_error("UTF-8 to UTF-16 conversion failed.");
+    }
+
+    std::wstring result(len - 1, 0);
+    MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &result[0], len);
+
+    return result;
+}
+
 static std::vector<std::wstring> split(const std::wstring& s, wchar_t delim)
 {
     std::vector<std::wstring> result;
@@ -87,19 +106,35 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
         throw std::exception();
     }
 
-    std::wstringstream ss;
+    std::stringstream ss;
 
     if (encrypt == false)
     {
         std::ifstream ifs(csvFilePath);
         ss << ifs.rdbuf();
         ifs.close();
+//        
+//		// ファイル全体を読み込み
+//		std::string content((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+//
+//		// BOM削除（0xEF 0xBB 0xBF）
+//		if (content.size() >= 3 &&
+//			static_cast<unsigned char>(content[0]) == 0xEF &&
+//			static_cast<unsigned char>(content[1]) == 0xBB &&
+//			static_cast<unsigned char>(content[2]) == 0xBF)
+//		{
+//			content = content.substr(3);
+//		}
+//
+//		// UTF-8 → wstring 変換
+//		std::wstring wcontent = Utf8ToWstring(content);
     }
     else
     {
-        std::wstring work = CaesarCipher::DecryptFromFile(csvFilePath);
+        std::string work = CaesarCipher::DecryptFromFile(csvFilePath);
         ss.str(work);
     }
+
 
     std::wstring buff;
     std::wstring buffComma;

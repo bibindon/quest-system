@@ -31,12 +31,12 @@ public:
         ofs.write(buff.data(), buff.size()); // ignore NULL
     }
 
-    static std::wstring Decrypt(const std::wstring& text)
+    static std::string Decrypt(const std::string& text)
     {
-        std::wstring result;
-        wchar_t* work = nullptr;
+        std::string result;
+        char* work = nullptr;
         std::size_t len = text.length();
-        work = new wchar_t[len]; // +1しない。暗号化時にヌル文字を+10した記号が末尾にあるから。
+        work = new char[len]; // +1しない。暗号化時にヌル文字を+10した記号が末尾にあるから。
 
         // 途中にnull文字があっても指定バイト数までコピーする
         memcpy(work, text.c_str(), len);
@@ -44,21 +44,21 @@ public:
         {
             work[i] = work[i] - 10;
         }
-        result = std::wstring(work);
+        result = std::string(work);
         delete[] work;
         return result;
     }
 
-    static std::wstring DecryptFromFile(const std::wstring& text)
+    static std::string DecryptFromFile(const std::wstring& text)
     {
-        std::wifstream ifs(text);
+        std::ifstream ifs(text);
         if (!ifs)
         {
-            return std::wstring();
+            return std::string();
         }
-        std::istreambuf_iterator<wchar_t> itBegin(ifs);
-        std::istreambuf_iterator<wchar_t> itEnd;
-        std::wstring work(itBegin, itEnd);
+        std::istreambuf_iterator<char> itBegin(ifs);
+        std::istreambuf_iterator<char> itEnd;
+        std::string work(itBegin, itEnd);
 
         work = Decrypt(work);
         return work;
