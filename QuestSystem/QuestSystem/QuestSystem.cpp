@@ -107,34 +107,32 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
     }
 
     std::stringstream ss;
+    std::string content;
+    std::wstring wcontent;
 
     if (encrypt == false)
     {
         std::ifstream ifs(csvFilePath);
         ss << ifs.rdbuf();
         ifs.close();
-//        
-//		// ファイル全体を読み込み
-//		std::string content((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
-//
-//		// BOM削除（0xEF 0xBB 0xBF）
-//		if (content.size() >= 3 &&
-//			static_cast<unsigned char>(content[0]) == 0xEF &&
-//			static_cast<unsigned char>(content[1]) == 0xBB &&
-//			static_cast<unsigned char>(content[2]) == 0xBF)
-//		{
-//			content = content.substr(3);
-//		}
-//
-//		// UTF-8 → wstring 変換
-//		std::wstring wcontent = Utf8ToWstring(content);
+        
+        content = ss.str();
+
+        // BOM削除（0xEF 0xBB 0xBF）
+        if (content.size() >= 3 &&
+            static_cast<unsigned char>(content[0]) == 0xEF &&
+            static_cast<unsigned char>(content[1]) == 0xBB &&
+            static_cast<unsigned char>(content[2]) == 0xBF)
+        {
+            content = content.substr(3);
+        }
+
+        wcontent = Utf8ToWstring(content);
     }
     else
     {
-        std::string work = CaesarCipher::DecryptFromFile(csvFilePath);
-        ss.str(work);
+        wcontent = CaesarCipher::DecryptFromFile(csvFilePath);
     }
-
 
     std::wstring buff;
     std::wstring buffComma;
@@ -144,7 +142,9 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
     bool doubleQuote = false;
     bool doubleQuoteMode = false;
 
-    while (std::getline(ss, buff))
+    std::wstringstream wss(wcontent);
+
+    while (std::getline(wss, buff))
     {
         // 先頭行は無視
         if (row == 0)
@@ -154,14 +154,14 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
         }
         std::wistringstream iss(buff);
 
-        while (std::getline(iss, buffComma, wchar_t(',')))
+        while (std::getline(iss, buffComma, L','))
         {
             trim(buffComma);
-            if (buffComma.find('"') != std::wstring::npos)
+            if (buffComma.find(L'"') != std::wstring::npos)
             {
                 doubleQuote = true;
 
-                if (buffComma.at(0) == '"')
+                if (buffComma.at(0) == L'"')
                 {
                     doubleQuoteMode = true;
                 }
@@ -169,7 +169,7 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
                 {
                     doubleQuoteMode = false;
                 }
-                buffComma.erase(std::remove(buffComma.begin(), buffComma.end(), '"'), buffComma.end());
+                buffComma.erase(std::remove(buffComma.begin(), buffComma.end(), L'"'), buffComma.end());
             }
             if (col == 0)
             {
@@ -430,7 +430,7 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
         else
         {
             std::wstring work = CaesarCipher::DecryptFromFile(savefile);
-            csv::ReadFromString(work);
+            vvs = csv::ReadFromString(work);
         }
 
         for (size_t i = 1; i < vvs.size(); ++i)

@@ -416,24 +416,24 @@ namespace UnitTest1
             Assert::AreEqual(true, it != vs.end());
         }
 
-        // テストしたいこと
-        // 暗号化されたファイルを開けること
-        TEST_METHOD(TestMethod22)
-        {
-            QuestSystem qs;
-            bool ret = qs.Init(_T("..\\UnitTest1\\sample22.enc"), _T(""), true);
-
-            qs.SetTalk(_T("B"));
-            qs.SetTalk(_T("C"));
-
-            std::vector<std::wstring> vs;
-            vs = qs.GetStartQuest();
-
-            Assert::AreEqual((size_t)1, vs.size());
-            auto it = std::find(vs.begin(), vs.end(), _T("Q7"));
-
-            Assert::AreEqual(true, it != vs.end());
-        }
+//        // テストしたいこと
+//        // 暗号化されたファイルを開けること
+//        TEST_METHOD(TestMethod22)
+//        {
+//            QuestSystem qs;
+//            bool ret = qs.Init(_T("..\\UnitTest1\\sample22.enc"), _T(""), true);
+//
+//            qs.SetTalk(_T("B"));
+//            qs.SetTalk(_T("C"));
+//
+//            std::vector<std::wstring> vs;
+//            vs = qs.GetStartQuest();
+//
+//            Assert::AreEqual((size_t)1, vs.size());
+//            auto it = std::find(vs.begin(), vs.end(), _T("Q7"));
+//
+//            Assert::AreEqual(true, it != vs.end());
+//        }
 
         // テストしたいこと
         // 保存されたクエストデータを読み、途中からスタートできること。

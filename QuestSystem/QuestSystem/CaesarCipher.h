@@ -49,18 +49,37 @@ public:
         return result;
     }
 
-    static std::string DecryptFromFile(const std::wstring& text)
+    static std::wstring Utf8ToWstring(const std::string& utf8)
     {
-        std::ifstream ifs(text);
+        if (utf8.empty()) return std::wstring();
+
+        int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);
+        if (len == 0) throw std::runtime_error("UTF-8 to UTF-16 conversion failed.");
+
+        std::wstring result(len - 1, 0);
+        MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &result[0], len);
+        return result;
+    }
+
+    static std::wstring DecryptFromFile(const std::wstring& text)
+    {
+        int size = WideCharToMultiByte(CP_UTF8, 0, text.c_str(), -1, nullptr, 0, nullptr, nullptr);
+        std::string narrowPath(size - 1, 0);
+        WideCharToMultiByte(CP_UTF8, 0, text.c_str(), -1, &narrowPath[0], size, nullptr, nullptr);
+
+        std::ifstream ifs(narrowPath);
         if (!ifs)
         {
-            return std::string();
+            return std::wstring();
         }
         std::istreambuf_iterator<char> itBegin(ifs);
         std::istreambuf_iterator<char> itEnd;
         std::string work(itBegin, itEnd);
 
         work = Decrypt(work);
-        return work;
+
+        std::wstring work2 = Utf8ToWstring(work);
+
+        return work2;
     }
 };
