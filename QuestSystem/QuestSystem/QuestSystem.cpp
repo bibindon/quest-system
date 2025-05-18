@@ -6,6 +6,7 @@
 #include "CaesarCipher.h"
 #include "HeaderOnlyCsv.hpp"
 #include <tchar.h>
+#include <cwctype>
 
 #pragma comment( lib, "Shlwapi.lib" ) 
 
@@ -53,7 +54,7 @@ static void ltrim(std::wstring& s)
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
         [](wchar_t ch)
         {
-            return !std::isspace(ch);
+            return !std::iswspace(ch);
         }
     ));
 }
@@ -63,7 +64,7 @@ static void rtrim(std::wstring& s)
     s.erase(std::find_if(s.rbegin(), s.rend(),
         [](wchar_t ch)
         {
-            return !std::isspace(ch);
+            return !std::iswspace(ch);
         }
     ).base(), s.end());
 }
