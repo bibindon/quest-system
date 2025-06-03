@@ -621,6 +621,29 @@ std::vector<std::wstring> QuestSystem::GetFinishQuest()
     return result;
 }
 
+bool NSQuestSystem::QuestSystem::GetQuestFinished(const std::wstring& id)
+{
+    bool bFinished = false;
+
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        if (m_vecQuestData.at(i).GetId() == id)
+        {
+            if (m_vecQuestData.at(i).GetState() == eQuestState::FINISHED)
+            {
+                bFinished = true;
+            }
+            else
+            {
+                bFinished = false;
+            }
+            break;
+        }
+    }
+
+    return bFinished;
+}
+
 void QuestSystem::SetTalk(const std::wstring& npc)
 {
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)

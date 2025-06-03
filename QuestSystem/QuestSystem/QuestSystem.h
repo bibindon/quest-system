@@ -149,6 +149,9 @@ public:
 
     std::vector<std::wstring> GetStartedQuest();
     std::vector<std::wstring> GetFinishQuest();
+
+    bool GetQuestFinished(const std::wstring& id);
+
     void SetTalk(const std::wstring& npc);
     void SetPos(const float x, const float y, const float z, const bool update = true);
     void UpdateQuestStatus();
