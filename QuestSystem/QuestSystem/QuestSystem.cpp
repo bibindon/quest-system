@@ -717,11 +717,16 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     float dy = startY - y;
                     float dz = startZ - z;
 
-                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+                    // 円ではなく立方体で考える
+                    bool bHit = false;
+                    if (dx <= startR && dz <= startR && dy <= startR)
+                    {
+                        bHit = true;
+                    }
 
                     if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS)
                     {
-                        if (r <= startR)
+                        if (bHit)
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
                             work.at(j) = true;
@@ -736,7 +741,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     }
                     else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::POS_OUT)
                     {
-                        if (r >= startR)
+                        if (!bHit)
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
                             work.at(j) = true;
@@ -778,11 +783,16 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     float dy = startY - y;
                     float dz = startZ - z;
 
-                    float r = std::sqrt(dx * dx + dy * dy + dz * dz);
+                    // 円ではなく立方体で考える
+                    bool bHit = false;
+                    if (dx <= startR && dz <= startR && dy <= startR)
+                    {
+                        bHit = true;
+                    }
 
                     if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS)
                     {
-                        if (r <= startR)
+                        if (bHit)
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                             work.at(j) = true;
@@ -797,7 +807,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     }
                     else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::POS_OUT)
                     {
-                        if (r >= startR)
+                        if (!bHit)
                         {
                             std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                             work.at(j) = true;
