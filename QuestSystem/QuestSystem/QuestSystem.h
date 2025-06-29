@@ -193,6 +193,9 @@ public:
     // NPCが生きているか。主に死亡したときに使う。
     void SetNpcIsAlive(const std::wstring& npcKey, const bool bAlive, const bool update);
 
+    void SetRaftNum(const int arg) { m_raftNum = arg; }
+    int GetRaftNum() const { return m_raftNum; }
+
 private:
 
     std::vector<QuestData> m_vecQuestData;
@@ -213,6 +216,9 @@ private:
     int m_currentSecond = 0;
 
     std::unordered_map<std::wstring, bool> m_NpcAlive;
+
+    // イカダの個数
+    int m_raftNum = 0;
 
 };
 }
