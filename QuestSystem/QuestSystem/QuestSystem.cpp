@@ -713,9 +713,9 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     float startZ = std::stof(vs.at(2));
                     float startR = std::stof(vs.at(3));
 
-                    float dx = startX - x;
-                    float dy = startY - y;
-                    float dz = startZ - z;
+                    float dx = std::abs(startX - x);
+                    float dy = std::abs(startY - y);
+                    float dz = std::abs(startZ - z);
 
                     // 円ではなく立方体で考える
                     bool bHit = false;
@@ -779,9 +779,9 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
                     float startZ = std::stof(vs.at(2));
                     float startR = std::stof(vs.at(3));
 
-                    float dx = startX - x;
-                    float dy = startY - y;
-                    float dz = startZ - z;
+                    float dx = std::abs(startX - x);
+                    float dy = std::abs(startY - y);
+                    float dz = std::abs(startZ - z);
 
                     // 円ではなく立方体で考える
                     bool bHit = false;
