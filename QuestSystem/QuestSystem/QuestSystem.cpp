@@ -172,6 +172,7 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
                 }
                 buffComma.erase(std::remove(buffComma.begin(), buffComma.end(), L'"'), buffComma.end());
             }
+
             if (col == 0)
             {
                 if (buffComma.empty())
@@ -359,6 +360,11 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
                 else if (buffComma == _T("NPCのXが生存"))
                 {
                     work.push_back(eFinishType::NPC_ALIVE);
+                    work2.push_back(false);
+                }
+                else if (buffComma == _T("イカダの個数"))
+                {
+                    work.push_back(eFinishType::RAFT_NUM);
                     work2.push_back(false);
                 }
                 else
@@ -1912,6 +1918,38 @@ void NSQuestSystem::QuestSystem::SetNpcIsAlive(const std::wstring& npcKey, const
                             work.at(j) = false;
                             m_vecQuestData.at(i).SetFinishFlag(work);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    if (update)
+    {
+        UpdateQuestStatus();
+    }
+}
+
+void NSQuestSystem::QuestSystem::SetRaftNum(const int arg, const bool update)
+{
+    // イカダの個数で完了のクエスト
+    for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
+    {
+        // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
+        if (m_vecQuestData.at(i).GetState() == eQuestState::STARTED ||
+            m_vecQuestData.at(i).GetState() == eQuestState::START)
+        {
+            for (std::size_t j = 0; j < m_vecQuestData.at(i).GetFinishType().size(); ++j)
+            {
+                if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::RAFT_NUM)
+                {
+                    std::wstring raftNum = m_vecQuestData.at(i).GetFinishOption1().at(j);
+                    int nRaftNum = std::stoi(raftNum);
+                    if (m_raftNum >= nRaftNum)
+                    {
+                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
+                        work.at(j) = true;
+                        m_vecQuestData.at(i).SetFinishFlag(work);
                     }
                 }
             }

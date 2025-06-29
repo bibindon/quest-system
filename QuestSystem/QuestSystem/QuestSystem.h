@@ -44,6 +44,7 @@ enum class eFinishType
               // （具体的には18時から6時）
     AT_DAYTIME, // 昼だったら（具体的には6時から18時）
     NPC_ALIVE, // NPCが生存していたら
+    RAFT_NUM, // イカダの個数
 };
 
 enum class eQuestState
@@ -193,8 +194,8 @@ public:
     // NPCが生きているか。主に死亡したときに使う。
     void SetNpcIsAlive(const std::wstring& npcKey, const bool bAlive, const bool update);
 
-    void SetRaftNum(const int arg) { m_raftNum = arg; }
-    int GetRaftNum() const { return m_raftNum; }
+    // イカダの個数
+    void SetRaftNum(const int arg, const bool update);
 
 private:
 
