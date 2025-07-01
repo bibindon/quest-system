@@ -1514,5 +1514,36 @@ namespace UnitTest1
             auto it = std::find(vs.begin(), vs.end(), _T("Q1"));
             Assert::IsTrue(it != vs.end());
         }
+
+        // テストしたいこと
+        // クエスト完了条件のオプションが複数行あり、その中に空行があっても正しく処理されるか
+        TEST_METHOD(TestMethod39)
+        {
+            QuestSystem qs;
+            std::vector<std::wstring> vs;
+
+            bool ret = qs.Init(_T("..\\UnitTest1\\sample39.csv"), _T(""), false);
+            qs.SetPos(100.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetExamine(0.f, 0.f, 0.f);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetPos(200.f, 0.f, 0.f);
+            vs = qs.GetStartQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+
+            qs.SetTalk(L"太郎");
+            qs.SetTalk(L"三郎");
+            qs.SetCurrentDateTime(1,2,3,4,5,6);
+            vs = qs.GetFinishQuest();
+
+            Assert::AreEqual<size_t>(1, vs.size());
+        }
     };
 }

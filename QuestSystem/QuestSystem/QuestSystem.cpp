@@ -145,6 +145,8 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
 
     std::wstringstream wss(wcontent);
 
+    // なぜ、CSVファイル読み込みをやってから処理をするのではなく、読みながら処理をするのか・・・
+    // 不思議でならない・・・。
     while (std::getline(wss, buff))
     {
         // 先頭行は無視
@@ -408,6 +410,7 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
                 col++;
             }
         }
+
         // 0,1,2,3,4,5,6,7
         // 通常のクエストデータは上記のようなデータであるが
         // 0,1,2,3,4,5,6,
@@ -419,6 +422,14 @@ bool QuestSystem::Init(const std::wstring& csvFilePath,
             col = 0;
             m_vecQuestData.push_back(questData);
             questData = QuestData();
+        }
+
+        // 空行は空行として正しく処理されなければならない。
+        if (col == 5 && doubleQuoteMode && buffComma.empty())
+        {
+            std::vector<std::wstring> work = questData.GetFinishOption1();
+            work.push_back(L"");
+            questData.SetFinishOption1(work);
         }
     }
 
