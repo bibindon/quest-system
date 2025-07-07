@@ -1211,16 +1211,16 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY)
                 {
-                    // トマト:5だったらトマトが5個以上あったらの意味
+                    // tomato:5だったらtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
-                    std::wstring itemName = vs.at(0);
+                    std::wstring itemId = vs.at(0);
                     int num = std::stoi(vs.at(1));
 
                     int work = 0;
                     for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
                     {
-                        if (it->m_itemName == itemName)
+                        if (it->m_itemId == itemId)
                         {
                             ++work;
                         }
@@ -1235,17 +1235,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY_LEVEL)
                 {
-                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    // 3:tomato:5だったら強化値3のtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
-                    std::wstring itemName = vs.at(1);
+                    std::wstring itemId = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     int work = 0;
                     for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
                     {
-                        if (it->m_itemName == itemName && it->m_level == level)
+                        if (it->m_itemId == itemId && it->m_level == level)
                         {
                             ++work;
                         }
@@ -1271,16 +1271,16 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY)
                 {
-                    // トマト:5だったらトマトが5個以上あったらの意味
+                    // tomato:5だったらtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
-                    std::wstring itemName = vs.at(0);
+                    std::wstring itemId = vs.at(0);
                     int num = std::stoi(vs.at(1));
 
                     int work = 0;
                     for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
                     {
-                        if (it->m_itemName == itemName)
+                        if (it->m_itemId == itemId)
                         {
                             ++work;
                         }
@@ -1295,17 +1295,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY_LEVEL)
                 {
-                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    // 3:tomato:5だったら強化値3のtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
                     int level = std::stoi(vs.at(0));
-                    std::wstring itemName = vs.at(1);
+                    std::wstring itemId = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     int work = 0;
                     for (auto it = m_inventory.begin(); it != m_inventory.end(); ++it)
                     {
-                        if (it->m_itemName == itemName && it->m_level == level)
+                        if (it->m_itemId == itemId && it->m_level == level)
                         {
                             ++work;
                         }
@@ -1340,12 +1340,12 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
             {
                 if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE)
                 {
-                    // 1:トマト:5だったら倉庫1にトマトが5個以上あったらの意味
+                    // 1:tomato:5だったら倉庫1にtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
-                    std::wstring itemName = vs.at(1);
+                    std::wstring itemId = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     if (storehouseId != storehouseId2)
@@ -1357,7 +1357,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                     for (auto it = m_storehouseMap.at(storehouseId).begin();
                          it != m_storehouseMap.at(storehouseId).end(); ++it)
                     {
-                        if (it->m_itemName == itemName)
+                        if (it->m_itemId == itemId)
                         {
                             ++work;
                         }
@@ -1372,13 +1372,13 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE_LEVEL)
                 {
-                    // 3:トマト:5だったら強化値3のトマトが5個以上あったらの意味
+                    // 3:tomato:5だったら強化値3のtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetStartOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
                     int level = std::stoi(vs.at(1));
-                    std::wstring itemName = vs.at(2);
+                    std::wstring itemId = vs.at(2);
                     int num = std::stoi(vs.at(3));
 
                     if (storehouseId != storehouseId2)
@@ -1390,7 +1390,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                     for (auto it = m_storehouseMap.at(storehouseId).begin();
                          it != m_storehouseMap.at(storehouseId).end(); ++it)
                     {
-                        if (it->m_itemName == itemName && it->m_level == level)
+                        if (it->m_itemId == itemId && it->m_level == level)
                         {
                             ++work;
                         }
@@ -1416,13 +1416,13 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
             {
                 if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE)
                 {
-                    // 1:トマト:5だったら倉庫1にトマトが5個以上あったらの意味
+                    // 1:tomato:5だったら倉庫1にtomatoが5個以上あったらの意味
                     // （倉庫はゲーム内に複数存在する）
                     std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
-                    std::wstring itemName = vs.at(1);
+                    std::wstring itemId = vs.at(1);
                     int num = std::stoi(vs.at(2));
 
                     if (storehouseId != storehouseId2)
@@ -1434,7 +1434,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                     for (auto it = m_storehouseMap.at(storehouseId).begin();
                          it != m_storehouseMap.at(storehouseId).end(); ++it)
                     {
-                        if (it->m_itemName == itemName)
+                        if (it->m_itemId == itemId)
                         {
                             ++work;
                         }
@@ -1449,13 +1449,13 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE_LEVEL)
                 {
-                    // 1:2:トマト:5だったら倉庫1に強化値＋２のトマトが5個以上あったらの意味
+                    // 1:2:tomato:5だったら倉庫1に強化値＋２のtomatoが5個以上あったらの意味
                     std::wstring opt = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     std::vector<std::wstring> vs = split(opt, ':');
 
                     int storehouseId2 = std::stoi(vs.at(0));
                     int level = std::stoi(vs.at(1));
-                    std::wstring itemName = vs.at(2);
+                    std::wstring itemId = vs.at(2);
                     int num = std::stoi(vs.at(3));
 
                     if (storehouseId != storehouseId2)
@@ -1467,7 +1467,7 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                     for (auto it = m_storehouseMap.at(storehouseId).begin();
                          it != m_storehouseMap.at(storehouseId).end(); ++it)
                     {
-                        if (it->m_itemName == itemName && it->m_level == level)
+                        if (it->m_itemId == itemId && it->m_level == level)
                         {
                             ++work;
                         }

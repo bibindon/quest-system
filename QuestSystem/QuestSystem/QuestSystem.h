@@ -58,7 +58,7 @@ enum class eQuestState
 
 struct ItemInfo
 {
-    std::wstring m_itemName;
+    std::wstring m_itemId;
     int m_level = -1;
 };
 

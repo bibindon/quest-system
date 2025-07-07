@@ -474,7 +474,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
 
                 qs.SetInventoryContent(vs);
@@ -489,7 +489,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -507,7 +507,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -529,7 +529,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -548,7 +548,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -572,7 +572,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -588,7 +588,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -608,7 +608,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample24.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -618,7 +618,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -667,7 +667,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
 
                 qs.SetStorehouseContent(1, vs);
@@ -682,7 +682,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -700,7 +700,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -722,7 +722,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -741,7 +741,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -765,7 +765,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -781,7 +781,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -801,7 +801,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample25.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -811,7 +811,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -861,7 +861,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
 
                 qs.SetInventoryContent(vs);
@@ -876,7 +876,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -895,7 +895,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -918,7 +918,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -940,7 +940,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -965,7 +965,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -982,7 +982,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1003,7 +1003,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample26.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1014,7 +1014,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1065,7 +1065,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
 
                 qs.SetStorehouseContent(1, vs);
@@ -1080,7 +1080,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1099,7 +1099,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1122,7 +1122,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1144,7 +1144,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1169,7 +1169,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1186,7 +1186,7 @@ namespace UnitTest1
                 vs2 = qs.GetStartQuest();
                 Assert::AreEqual((size_t)1, vs2.size());
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1207,7 +1207,7 @@ namespace UnitTest1
                 bool ret = qs.Init(_T("..\\UnitTest1\\sample27.csv"), _T(""), false);
                 std::vector<ItemInfo> vs;
                 ItemInfo itemInfo;
-                itemInfo.m_itemName = _T("トマト");
+                itemInfo.m_itemId = _T("tomato");
                 itemInfo.m_level = 3;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
@@ -1218,7 +1218,7 @@ namespace UnitTest1
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
 
-                itemInfo.m_itemName = _T("バナナ");
+                itemInfo.m_itemId = _T("banana");
                 itemInfo.m_level = 4;
                 vs.push_back(itemInfo);
                 vs.push_back(itemInfo);
