@@ -1966,7 +1966,7 @@ void NSQuestSystem::QuestSystem::SetRaftNum(const int arg, const bool update)
                 {
                     std::wstring raftNum = m_vecQuestData.at(i).GetFinishOption1().at(j);
                     int nRaftNum = std::stoi(raftNum);
-                    if (m_raftNum >= nRaftNum)
+                    if (arg >= nRaftNum)
                     {
                         std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
                         work.at(j) = true;

@@ -218,9 +218,6 @@ private:
 
     std::unordered_map<std::wstring, bool> m_NpcAlive;
 
-    // イカダの個数
-    int m_raftNum = 0;
-
 };
 }
 
