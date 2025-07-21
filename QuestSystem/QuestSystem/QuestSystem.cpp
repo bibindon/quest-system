@@ -1226,12 +1226,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                         }
                     }
 
+                    std::deque<bool> workFlag = m_vecQuestData.at(i).GetStartFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
+                        workFlag.at(j) = true;
                     }
+                    else
+                    {
+                        workFlag.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetStartFlag(workFlag);
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::INVENTORY_LEVEL)
                 {
@@ -1251,12 +1256,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                         }
                     }
 
+                    std::deque<bool> workFlag = m_vecQuestData.at(i).GetStartFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
+                        workFlag.at(j) = true;
                     }
+                    else
+                    {
+                        workFlag.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetStartFlag(workFlag);
                 }
             }
         }
@@ -1286,12 +1296,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                         }
                     }
 
+                    std::deque<bool> workFlag = m_vecQuestData.at(i).GetFinishFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        workFlag.at(j) = true;
                     }
+                    else
+                    {
+                        workFlag.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetFinishFlag(workFlag);
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::INVENTORY_LEVEL)
                 {
@@ -1311,12 +1326,17 @@ void NSQuestSystem::QuestSystem::SetInventoryContent(const std::vector<ItemInfo>
                         }
                     }
 
+                    std::deque<bool> workFlags = m_vecQuestData.at(i).GetFinishFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        workFlags.at(j) = true;
                     }
+                    else
+                    {
+                        workFlags.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetFinishFlag(workFlags);
                 }
             }
         }
@@ -1363,12 +1383,17 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                         }
                     }
 
+                    std::deque<bool> workFlags = m_vecQuestData.at(i).GetStartFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
+                        workFlags.at(j) = true;
                     }
+                    else
+                    {
+                        workFlags.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetStartFlag(workFlags);
                 }
                 else if (m_vecQuestData.at(i).GetStartType().at(j) == eStartType::STOREHOUSE_LEVEL)
                 {
@@ -1396,12 +1421,17 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                         }
                     }
 
+                    std::deque<bool> workFlags = m_vecQuestData.at(i).GetStartFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetStartFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetStartFlag(work);
+                        workFlags.at(j) = true;
                     }
+                    else
+                    {
+                        workFlags.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetStartFlag(workFlags);
                 }
             }
         }
@@ -1440,12 +1470,17 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                         }
                     }
 
+                    std::deque<bool> workFlags = m_vecQuestData.at(i).GetFinishFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        workFlags.at(j) = true;
                     }
+                    else
+                    {
+                        workFlags.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetFinishFlag(workFlags);
                 }
                 else if (m_vecQuestData.at(i).GetFinishType().at(j) == eFinishType::STOREHOUSE_LEVEL)
                 {
@@ -1473,12 +1508,17 @@ void NSQuestSystem::QuestSystem::SetStorehouseContent(const int storehouseId, co
                         }
                     }
 
+                    std::deque<bool> workFlags = m_vecQuestData.at(i).GetFinishFlag();
                     if (work >= num)
                     {
-                        std::deque<bool> work = m_vecQuestData.at(i).GetFinishFlag();
-                        work.at(j) = true;
-                        m_vecQuestData.at(i).SetFinishFlag(work);
+                        workFlags.at(j) = true;
                     }
+                    else
+                    {
+                        workFlags.at(j) = false;
+                    }
+
+                    m_vecQuestData.at(i).SetFinishFlag(workFlags);
                 }
             }
         }
