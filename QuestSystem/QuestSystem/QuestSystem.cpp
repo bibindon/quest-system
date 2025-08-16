@@ -846,6 +846,7 @@ void NSQuestSystem::QuestSystem::SetPos(const float x, const float y, const floa
 void QuestSystem::UpdateQuestStatus()
 {
     // クエスト開始チェック
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 全部trueならクエスト開始とする
@@ -868,6 +869,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエスト完了チェック
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
@@ -892,6 +894,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエストの開始条件「クエストが完了していたら」の処理
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -922,6 +925,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエストの開始条件「クエストが完了していないなら」の処理
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -951,6 +955,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエストの開始条件「一つでもクエストが完了していたら」の処理
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::NOT_START)
@@ -990,6 +995,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエストの完了条件「クエストが完了していたら」の処理
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         if (m_vecQuestData.at(i).GetState() == eQuestState::START ||
@@ -1026,6 +1032,7 @@ void QuestSystem::UpdateQuestStatus()
     // 改めて、クエスト開始・完了チェック
  
     // クエスト開始チェック
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 全部trueならクエスト開始とする
@@ -1048,6 +1055,7 @@ void QuestSystem::UpdateQuestStatus()
     }
 
     // クエスト完了チェック
+#pragma omp parallel for schedule(static)
     for (std::size_t i = 0; i < m_vecQuestData.size(); ++i)
     {
         // 開始済みのクエストの完了フラグが全部trueならクエスト完了とする
