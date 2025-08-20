@@ -11,12 +11,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "Sample\Sample.vcx
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_VisualStudio2019|x64 = Debug_VisualStudio2019|x64
+		Debug_VisualStudio2019|x86 = Debug_VisualStudio2019|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug_VisualStudio2019|x64.ActiveCfg = Debug_VisualStudio2019|x64
+		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug_VisualStudio2019|x64.Build.0 = Debug_VisualStudio2019|x64
+		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug_VisualStudio2019|x86.ActiveCfg = Debug_VisualStudio2019|Win32
+		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug_VisualStudio2019|x86.Build.0 = Debug_VisualStudio2019|Win32
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug|x64.ActiveCfg = Debug|x64
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug|x64.Build.0 = Debug|x64
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Debug|x86.ActiveCfg = Debug|Win32
@@ -25,6 +31,10 @@ Global
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Release|x64.Build.0 = Release|x64
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Release|x86.ActiveCfg = Release|Win32
 		{6EB7AC8B-9808-4D18-BA77-2DC3C638455D}.Release|x86.Build.0 = Release|Win32
+		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug_VisualStudio2019|x64.ActiveCfg = Debug_VisualStudio2019|x64
+		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug_VisualStudio2019|x64.Build.0 = Debug_VisualStudio2019|x64
+		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug_VisualStudio2019|x86.ActiveCfg = Debug_VisualStudio2019|Win32
+		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug_VisualStudio2019|x86.Build.0 = Debug_VisualStudio2019|Win32
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug|x64.ActiveCfg = Debug|x64
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug|x64.Build.0 = Debug|x64
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Debug|x86.ActiveCfg = Debug|Win32
@@ -33,6 +43,10 @@ Global
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Release|x64.Build.0 = Release|x64
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Release|x86.ActiveCfg = Release|Win32
 		{2C0B00A0-3967-41B0-A56B-C2888F0D9757}.Release|x86.Build.0 = Release|Win32
+		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug_VisualStudio2019|x64.ActiveCfg = Debug_VisualStudio2019|x64
+		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug_VisualStudio2019|x64.Build.0 = Debug_VisualStudio2019|x64
+		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug_VisualStudio2019|x86.ActiveCfg = Debug_VisualStudio2019|Win32
+		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug_VisualStudio2019|x86.Build.0 = Debug_VisualStudio2019|Win32
 		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug|x64.ActiveCfg = Debug|x64
 		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug|x64.Build.0 = Debug|x64
 		{E0B89C0E-661B-4265-AF40-1B6EF62DAC36}.Debug|x86.ActiveCfg = Debug|Win32
